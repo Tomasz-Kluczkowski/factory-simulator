@@ -1,0 +1,15 @@
+language: python
+python:
+  - "3.6"
+# install dependencies
+install:
+  - pip install -r requirements.txt
+# run test scripts
+script:
+  - flake8
+  - coverage erase
+  - pytest --cov
+# run code coverage check after successful tests
+after_success:
+  - pip install codecov
+  - codecov
