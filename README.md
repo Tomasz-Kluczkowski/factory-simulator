@@ -1,6 +1,6 @@
 # Factory Floor Simulator
 
-[![Build Status](https://travis-ci.org/Tomasz-Kluczkowski/factory-simulator.svg?branch=master)](https://travis-ci.org/Tomasz-Kluczkowski/factory-simulator) [![codecov](https://codecov.io/gh/Tomasz-Kluczkowski/Conveyor_belt/branch/master/graph/badge.svg)](https://codecov.io/gh/Tomasz-Kluczkowski/Conveyor_belt)
+[![Build Status](https://travis-ci.org/Tomasz-Kluczkowski/factory-simulator.svg?branch=master)](https://travis-ci.org/Tomasz-Kluczkowski/factory-simulator) [![codecov](https://codecov.io/gh/Tomasz-Kluczkowski/factory-simulator/branch/master/graph/badge.svg)](https://codecov.io/gh/Tomasz-Kluczkowski/factory-simulator)
 
 In this project I am simulating a factory floor operation.
 
