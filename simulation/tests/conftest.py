@@ -1,6 +1,13 @@
 import factory
 
-from simulation.models import Feeder, Component
+from simulation.models import Feeder, Component, Receiver, Product
+
+
+class ProductFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = Product
+
+    name = factory.Sequence(lambda n: f'product_{n}')
 
 
 class ComponentFactory(factory.DjangoModelFactory):
@@ -13,3 +20,11 @@ class ComponentFactory(factory.DjangoModelFactory):
 class FeederFactory(factory.DjangoModelFactory):
     class Meta:
         model = Feeder
+
+
+class ReceiverFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = Receiver
+
+
+
