@@ -25,6 +25,3 @@ class FeederFactory(factory.DjangoModelFactory):
 class ReceiverFactory(factory.DjangoModelFactory):
     class Meta:
         model = Receiver
-
-
-
