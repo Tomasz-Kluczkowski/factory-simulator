@@ -1,8 +1,6 @@
 import random
-from unittest import mock
 
 import pytest
-from devtools import debug
 
 from simulation.exceptions.exceptions import FeederConfigError
 from simulation.tests.conftest import FeederFactory, ComponentFactory
@@ -11,6 +9,12 @@ pytestmark = pytest.mark.django_db
 
 
 class TestFeeder:
+    def test_it_can_be_instantiated(self):
+        feeder = FeederFactory()
+        component = ComponentFactory(feeder=feeder)
+
+        assert list(feeder.components.all()) == [component]
+
     def test_feed_single_element_list(self):
         feeder = FeederFactory(feed_input=[1])
         assert feeder.feed() == 1
