@@ -16,20 +16,23 @@ class TestFeeder:
         assert list(feeder.components.all()) == [component]
 
     def test_feed_single_element_list(self):
-        feeder = FeederFactory(feed_input=[1])
-        assert feeder.feed() == 1
+        component = ComponentFactory()
+        feeder = FeederFactory(feed_input=[component])
+        assert feeder.feed() == component
 
     def test_feed_multiple_element_list(self):
-        feeder = FeederFactory(feed_input=[1, 2, 3])
-        assert feeder.feed() == 1
-        assert feeder.feed() == 2
-        assert feeder.feed() == 3
+        components = [ComponentFactory() for _ in range(3)]
+        feeder = FeederFactory(feed_input=components)
+        assert feeder.feed() == components[0]
+        assert feeder.feed() == components[1]
+        assert feeder.feed() == components[2]
 
     def test_feed_with_generator(self):
-        feeder = FeederFactory(feed_input=(item for item in [1, 2, 3]))
-        assert feeder.feed() == 1
-        assert feeder.feed() == 2
-        assert feeder.feed() == 3
+        components = (ComponentFactory(name=f'name_{i}') for i in range(3))
+        feeder = FeederFactory(feed_input=components)
+        assert feeder.feed().name == 'name_0'
+        assert feeder.feed().name == 'name_1'
+        assert feeder.feed().name == 'name_2'
 
     def test_feed_not_iterable(self):
 
@@ -46,11 +49,11 @@ class TestFeeder:
     def test_default_feed(self):
         random.seed(0)
         feeder = FeederFactory()
-        ComponentFactory(name='A', feeder=feeder)
-        ComponentFactory(name='B', feeder=feeder)
+        component_a = ComponentFactory(name='A', feeder=feeder)
+        component_b = ComponentFactory(name='B', feeder=feeder)
 
         result = []
         for i in range(4):
             result.append(feeder.feed())
 
-        assert result == ['B', 'B', 'A', 'B']
+        assert result == [component_b, component_b, component_a, component_b]
