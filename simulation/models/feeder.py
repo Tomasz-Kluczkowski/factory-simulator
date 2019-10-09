@@ -5,7 +5,6 @@ from simulation.exceptions.exceptions import FeederConfigError
 from simulation.exceptions.messages import INVALID_FEED_INPUT
 from simulation.models import BaseModel
 from typing import TYPE_CHECKING
-
 if TYPE_CHECKING:
     from simulation.models import Component
 
@@ -17,17 +16,14 @@ class Feeder(BaseModel):
     """
     def __init__(self, feed_input: Union[Iterable['Component'], Sequence['Component']] = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.__feed_input = self.get_feed_input(feed_input) if feed_input else self.__default_feed_input()
+        self.__feed_input = self.__get_feed_input(feed_input) if feed_input else self.__default_feed_input()
 
     def __default_feed_input(self):
         while True:
             yield random.choice(self.components.all())
 
     @staticmethod
-    def get_feed_input(feed_input: Union[Iterable, Sequence]):
-        """
-        Iterates over and returns items from feed_input.
-        """
+    def __get_feed_input(feed_input: Union[Iterable['Component'], Sequence['Component']]):
         if hasattr(feed_input, '__next__'):
             return feed_input
         try:
@@ -36,5 +32,8 @@ class Feeder(BaseModel):
         except TypeError:
             raise FeederConfigError(INVALID_FEED_INPUT.format(object_type=feed_input.__class__.__name__))
 
-    def feed(self):
+    def feed(self) -> 'Component':
+        """
+        Return components in a sequence.
+        """
         return next(self.__feed_input)
