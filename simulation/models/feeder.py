@@ -23,7 +23,9 @@ class Feeder(BaseModel):
             yield random.choice(self.components.all())
 
     @staticmethod
-    def __get_feed_input(feed_input: Union[Iterable['Component'], Sequence['Component']]):
+    def __get_feed_input(
+            feed_input: Union[Iterable['Component'], Sequence['Component']]
+    ) -> Iterable['Component']:
         if hasattr(feed_input, '__next__'):
             return feed_input
         try:
