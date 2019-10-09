@@ -34,6 +34,10 @@ class Feeder(BaseModel):
 
     def feed(self) -> 'Component':
         """
-        Return components in a sequence.
+        Return components from feed_input sequentially. If they were passed in as feed_input, set the feeder attribute
+        on each before it is returned.
         """
-        return next(self.__feed_input)
+        component = next(self.__feed_input)
+        if component.feeder_id is None:
+            component.feeder = self
+        return component

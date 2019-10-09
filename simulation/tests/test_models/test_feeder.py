@@ -30,9 +30,10 @@ class TestFeeder:
     def test_feed_with_generator(self):
         components = (ComponentFactory(name=f'name_{i}') for i in range(3))
         feeder = FeederFactory(feed_input=components)
-        assert feeder.feed().name == 'name_0'
-        assert feeder.feed().name == 'name_1'
-        assert feeder.feed().name == 'name_2'
+        for i in range(3):
+            component = feeder.feed()
+            assert component.name == f'name_{i}'
+            assert component.feeder == feeder
 
     def test_feed_not_iterable(self):
 
