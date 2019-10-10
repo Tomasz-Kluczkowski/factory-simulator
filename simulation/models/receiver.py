@@ -1,4 +1,6 @@
-from simulation.models import BaseModel
+from typing import Union
+
+from simulation.models import BaseModel, Component, Product
 
 
 class Receiver(BaseModel):
@@ -14,5 +16,6 @@ class Receiver(BaseModel):
     # def received_items(self):
     #     return self.__received_items
     #
-    # def receive(self, item):
-    #     self.__received_items.append(item)
+
+    def receive(self, item: Union[Component, Product]):
+        item.receiver = self
