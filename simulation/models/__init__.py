@@ -4,3 +4,4 @@ from .component import Component
 from .product import Product
 from .feeder import Feeder
 from .receiver import Receiver
+from .worker import WorkerOperationTimes
