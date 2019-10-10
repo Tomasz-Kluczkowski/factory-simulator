@@ -38,8 +38,8 @@ class WorkerOperationTimes(BaseModel):
 #         Guides work process of the worker. Below please find general assumptions.
 #
 #         To simulate discrete worker's operation time we have to update state at the beginning of each period,
-#         then update operation time if necessary and re-update state at the end of the period to take change in operation
-#         time into account.
+#         then update operation time if necessary and re-update state at the end of the period to take change in
+#         operation time into account.
 #
 #         For example an operation which takes 1 period (picking up and dropping by default) starts and ends in the same
 #         tick of time.
