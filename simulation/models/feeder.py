@@ -1,44 +1,46 @@
 import random
-from typing import Union, Sequence, Iterator
+from typing import Iterator, Callable, Tuple
 
-from simulation.exceptions.exceptions import FeederConfigError
-from simulation.exceptions.messages import INVALID_FEED_INPUT
 from simulation.models import BaseModel
-from typing import TYPE_CHECKING
-if TYPE_CHECKING:
-    from simulation.models import Component
+from simulation.models import Component
+
+
+def sequential_feed_function(component_names: Tuple[str, ...]) -> Iterator['Component']:
+    return (Component(name=name) for name in component_names)
 
 
 class Feeder(BaseModel):
     """
-    Use to provide feed for the conveyor belt. If no feed function specified will select random item from components
-    list and return every time feed() is called on an instance.
+    Use to provide feed for the conveyor belt.
+
+    If feed_function is specified then it will be used to generate components.
+    If no feed_function is provided we randomly generate a component with name from component_names and yield it.
     """
-    def __init__(self, feed_input: Union[Iterator['Component'], Sequence['Component']] = None, *args, **kwargs):
+    def __init__(
+            self,
+            component_names: Tuple[str, ...] = ('A', 'B'),
+            feed_function: Callable[[Tuple[str, ...]], Iterator['Component']] = None,
+            *args,
+            **kwargs
+    ):
         super().__init__(*args, **kwargs)
-        self.__feed_input = self.__get_feed_input(feed_input) if feed_input else self.__default_feed_input()
+        self.__component_names = component_names
+        self.__feed_function = (
+            feed_function(component_names=component_names) if feed_function else self.__default_feed_function()
+        )
 
-    def __default_feed_input(self) -> Iterator['Component']:
+    def __default_feed_function(self) -> Iterator['Component']:
         while True:
-            yield random.choice(self.components.all())
-
-    @staticmethod
-    def __get_feed_input(
-            feed_input: Union[Iterator['Component'], Sequence['Component']]
-    ) -> Iterator['Component']:
-        if hasattr(feed_input, '__next__'):
-            return feed_input
-        try:
-            feed_iterator = iter(feed_input)
-            return feed_iterator
-        except TypeError:
-            raise FeederConfigError(INVALID_FEED_INPUT.format(object_type=feed_input.__class__.__name__))
+            component = Component(
+                name=random.choice(self.__component_names),
+            )
+            yield component
 
     def feed(self) -> 'Component':
         """
-        Return components sequentially and set the feeder attribute on each if missing.
+        Returns components according to __feed_function and sets the feeder attribute on each component if missing.
         """
-        component = next(self.__feed_input)
+        component = next(self.__feed_function)
         if component.feeder_id is None:
             component.feeder = self
         return component
