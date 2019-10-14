@@ -19,7 +19,7 @@ class Feeder(BaseModel):
     def __init__(
             self,
             component_names: Tuple[str, ...] = ('A', 'B'),
-            feed_function: Callable[[Tuple[str, ...]], Iterator['Component']] = None,
+            feed_function: Callable[[Tuple[str, ...]], Iterator[Component]] = None,
             *args,
             **kwargs
     ):
@@ -29,14 +29,14 @@ class Feeder(BaseModel):
             feed_function(component_names=component_names) if feed_function else self.__default_feed_function()
         )
 
-    def __default_feed_function(self) -> Iterator['Component']:
+    def __default_feed_function(self) -> Iterator[Component]:
         while True:
             component = Component(
                 name=random.choice(self.__component_names),
             )
             yield component
 
-    def feed(self) -> 'Component':
+    def feed(self) -> Component:
         """
         Returns components according to __feed_function and sets the feeder attribute on each component if missing.
         """
