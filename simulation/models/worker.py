@@ -23,7 +23,10 @@ class WorkerOperationTimes(BaseModel):
 #                  slot_number: int,
 #                  operation_times: Type[WorkerOperationTimes],
 #                  name: str = '',
+#                  *args,
+#                  **kwargs
 #                  ):
+#         super().__init__(*args, **kwargs)
 #         self.name = name
 #         self._slot_number = slot_number
 #         self._config = config
