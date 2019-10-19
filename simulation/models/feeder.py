@@ -41,6 +41,5 @@ class Feeder(BaseModel):
         Returns components according to __feed_function and sets the feeder attribute on each component if missing.
         """
         component = next(self.__feed_function)
-        if component.feeder_id is None:
-            component.feeder = self
+        component.feeder = self
         return component
