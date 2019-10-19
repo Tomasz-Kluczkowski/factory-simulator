@@ -8,6 +8,11 @@ pytestmark = pytest.mark.django_db
 
 
 class TestFeedFunctions:
+    def test_sequential_feed_function_with_empty_component_names(self):
+        components_iterator = sequential_feed_function(component_names=(),)
+
+        assert next(components_iterator, None) is None
+
     def test_sequential_feed_function(self):
         component_names = ('A', 'B', 'C')
         components_iterator = sequential_feed_function(component_names=component_names)
