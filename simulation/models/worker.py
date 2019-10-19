@@ -1,6 +1,7 @@
 from django.db import models
 
 from simulation.models import BaseModel
+from simulation.models.factory_config import FactoryConfig
 
 
 class WorkerState:
@@ -11,18 +12,18 @@ class WorkerState:
 
 
 class WorkerOperationTimes(BaseModel):
-    pick_up_time = models.PositiveSmallIntegerField(null=False, default=1)
-    drop_time = models.PositiveSmallIntegerField(null=False, default=1)
-    build_time = models.PositiveSmallIntegerField(null=False, default=4)
+    pick_up_time = models.PositiveSmallIntegerField(default=1)
+    drop_time = models.PositiveSmallIntegerField(default=1)
+    build_time = models.PositiveSmallIntegerField(default=4)
 
 
 # class Worker(BaseModel):
-#     name = models.CharField(max_length=30, blank=False, null=True, default='')
+#     name = models.CharField(max_length=30, blank=True, null=True, default='')
 #     operation_times = models.ForeignKey(WorkerOperationTimes, on_delete=models.CASCADE, related_name='workers')
-#     slot_number = models.PositiveSmallIntegerField(null=False)
+#     slot_number = models.PositiveSmallIntegerField()
+#     factory_config = models.ForeignKey(FactoryConfig, on_delete=models.CASCADE, related_name='workers')
 #     # TODO: imports for foreign keys!
-#     factory_config = models.ForeignKey(FactoryConfig, on_delete=models.CASCADE, related_name='workers', null=False)
-#     conveyor_belt = models.ForeignKey(ConveyorBelt, on_delete=models.CASCADE, related_name='workers', null=False)
+#     conveyor_belt = models.ForeignKey(ConveyorBelt, on_delete=models.CASCADE, related_name='workers')
 #
 #     def __init__(self, *args, **kwargs):
 #         super().__init__(*args, **kwargs)
@@ -104,14 +105,14 @@ class WorkerOperationTimes(BaseModel):
 #         return self._remaining_time_of_operation == 0
 #
 #     def _is_ready_for_building(self):
-#         return len(self._components) == len(self.factory_config.required_items)
+#         return len(self._components) == len(self.factory_config.required_component_names)
 #
 #     def _is_component_required(self):
 #         item_on_belt = self.conveyor_belt.check_item_at_slot(self.slot_number)
 #         return (
 #                 not self._has_product() and
 #                 item_on_belt not in self._components and
-#                 item_on_belt in self.factory_config.required_items
+#                 item_on_belt in self.factory_config.required_component_names
 #         )
 #
 #     def _on_picking_up_component(self):
