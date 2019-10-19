@@ -1,15 +1,24 @@
+services:
+  - postgresql
+
 language: python
+
 python:
   - "3.7"
-# install dependencies
+
+before_script:
+  - psql -c 'create database factory_simulator;' -U postgres
+
 install:
   - pip install -r requirements.txt
-# run test scripts
+
 script:
   - flake8
   - coverage erase
+  - python manage.py makemigrations
+  - python manage.py migrate
   - pytest --cov
-# run code coverage check after successful tests
+
 after_success:
   - pip install codecov
   - codecov
