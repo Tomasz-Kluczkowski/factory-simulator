@@ -1,21 +1,20 @@
-# from typing import List
-#
-# from simulation.models import BaseModel
-#
-#
-# class FactoryConfig(BaseModel):
-#     def __init__(
-#             self,
-#             required_items: List[str] = None,
-#             product_code: str = None,
-#             num_steps: int = None,
-#             empty_code: str = None,
-#             conveyor_belt_slots: int = None,
-#             num_pairs: int = None
-#     ):
-#         self.required_items = required_items or ['A', 'B']
-#         self.product_code = product_code or 'P'
-#         self.num_steps = num_steps or 10
-#         self.empty_code = empty_code or 'E'
-#         self.conveyor_belt_slots = conveyor_belt_slots or 3
-#         self.num_pairs = num_pairs or 3
+from django.contrib.postgres.fields import ArrayField
+from django.db import models
+
+from simulation.models import BaseModel
+
+
+def get_default_required_names():
+    return ['A', 'B']
+
+
+class FactoryConfig(BaseModel):
+    required_component_names = ArrayField(
+        models.CharField(max_length=30), default=get_default_required_names
+    )
+    product_code = models.CharField(max_length=30, default='P')
+    empty_code = models.CharField(max_length=30, default='E')
+    number_of_simulation_steps = models.PositiveIntegerField(default=10)
+    number_of_conveyor_belt_slots = models.PositiveSmallIntegerField(default=3)
+    number_of_worker_pairs = models.PositiveSmallIntegerField(default=3)
+
