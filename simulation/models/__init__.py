@@ -2,6 +2,8 @@ from .base import BaseModel
 from .item import Item
 from .component import Component
 from .product import Product
+from .factory_config import FactoryConfig
+from .conveyor_belt import ConveyorBelt
 from .feeder import Feeder
 from .receiver import Receiver
 from .worker import WorkerOperationTimes
