@@ -20,6 +20,8 @@ class ConveyorBelt(BaseModel, Queue):
         self._set_slot_states_to_free()
         self._set_slots_to_empty()
 
+    # TODO: override enqueue, deque and include typing for input/output
+
     @property
     def slot_states(self):
         return self._slot_states
