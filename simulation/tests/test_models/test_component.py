@@ -6,7 +6,7 @@ pytestmark = pytest.mark.django_db
 
 
 class TestComponent:
-    def test_it_can_be_instantiated(self, db):
+    def test_it_can_be_instantiated(self):
         receiver = ReceiverFactory()
         feeder = FeederFactory()
         component = ComponentFactory(name='A', receiver=receiver, feeder=feeder)
