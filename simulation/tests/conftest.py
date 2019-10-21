@@ -1,6 +1,6 @@
 import factory
 
-from simulation.models import Feeder, Component, Receiver, Product, WorkerOperationTimes
+from simulation.models import Feeder, Component, Receiver, Product, WorkerOperationTimes, ConveyorBelt
 from simulation.models.factory_config import FactoryConfig
 
 
@@ -36,3 +36,10 @@ class WorkerOperationTimesFactory(factory.DjangoModelFactory):
 class FactoryConfigFactory(factory.DjangoModelFactory):
     class Meta:
         model = FactoryConfig
+
+
+class ConveyorBeltFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = ConveyorBelt
+
+    factory_config = factory.SubFactory(FactoryConfigFactory)
