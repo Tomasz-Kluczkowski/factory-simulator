@@ -2,7 +2,6 @@ from typing import List, Any
 
 
 class Queue:
-
     def __init__(self):
         self._items = []
 
@@ -43,7 +42,3 @@ class Queue:
         Returns contents of the queue as a list.
         """
         return self._items
-
-
-class MaxSizeQueue(Queue):
-    pass
