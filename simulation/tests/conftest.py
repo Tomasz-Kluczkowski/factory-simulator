@@ -2,6 +2,7 @@ import factory
 
 from simulation.models import Feeder, Component, Receiver, Product, WorkerOperationTimes, ConveyorBelt
 from simulation.models.factory_config import FactoryConfig
+from simulation.models.worker import Worker
 
 
 class ProductFactory(factory.DjangoModelFactory):
@@ -43,3 +44,13 @@ class ConveyorBeltFactory(factory.DjangoModelFactory):
         model = ConveyorBelt
 
     factory_config = factory.SubFactory(FactoryConfigFactory)
+
+
+class WorkerFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = Worker
+
+    operation_times = factory.SubFactory(WorkerOperationTimesFactory)
+    slot_number = factory.Sequence(lambda n: n)
+    factory_config = factory.SubFactory(FactoryConfigFactory)
+    conveyor_belt = factory.SubFactory(ConveyorBeltFactory)
