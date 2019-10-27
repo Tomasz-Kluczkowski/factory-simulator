@@ -25,6 +25,7 @@ class Worker(BaseModel):
     slot_number = models.PositiveSmallIntegerField()
     factory_config = models.ForeignKey(FactoryConfig, on_delete=models.CASCADE, related_name='workers')
     conveyor_belt = models.ForeignKey(ConveyorBelt, on_delete=models.CASCADE, related_name='workers')
+    factory_floor = models.ForeignKey('FactoryFloor', on_delete=models.CASCADE, related_name='workers')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
