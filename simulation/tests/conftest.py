@@ -1,6 +1,6 @@
 import factory
 
-from simulation.models import Feeder, Component, Receiver, Product, WorkerOperationTimes, ConveyorBelt
+from simulation.models import Feeder, Component, Receiver, Product, WorkerOperationTimes, ConveyorBelt, FactoryFloor
 from simulation.models.factory_config import FactoryConfig
 from simulation.models.worker import Worker
 
@@ -46,6 +46,16 @@ class ConveyorBeltFactory(factory.DjangoModelFactory):
     factory_config = factory.SubFactory(FactoryConfigFactory)
 
 
+class FactoryFloorFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = FactoryFloor
+
+    factory_config = factory.SubFactory(FactoryConfigFactory)
+    feeder = factory.SubFactory(FeederFactory)
+    receiver = factory.SubFactory(ReceiverFactory)
+    conveyor_belt = factory.SubFactory(ConveyorBeltFactory, factory_config=factory.SelfAttribute('..factory_config'))
+
+
 class WorkerFactory(factory.DjangoModelFactory):
     class Meta:
         model = Worker
@@ -53,4 +63,5 @@ class WorkerFactory(factory.DjangoModelFactory):
     operation_times = factory.SubFactory(WorkerOperationTimesFactory)
     slot_number = factory.Sequence(lambda n: n)
     factory_config = factory.SubFactory(FactoryConfigFactory)
-    conveyor_belt = factory.SubFactory(ConveyorBeltFactory)
+    conveyor_belt = factory.SubFactory(ConveyorBeltFactory, factory_config=factory.SelfAttribute('..factory_config'))
+    factory_floor = factory.SubFactory(FactoryFloorFactory, factory_config=factory.SelfAttribute('..factory_config'))
