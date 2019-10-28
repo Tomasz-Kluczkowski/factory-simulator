@@ -22,14 +22,20 @@ class FactoryFloor(BaseModel):
             raise FactoryConfigError(WRONG_FACTORY_CONFIG)
         self.time = 0
 
-    def add_workers(self):
+    def add_workers(self, worker_operation_times: WorkerOperationTimes = None):
         """
-        Creates a pair of workers per num_pairs. Each worker pair is assigned to a slot_number on the conveyor belt.
+        Creates a pair of workers per num_pairs and saves in the database.
+        Each worker pair is assigned to a slot_number on the conveyor belt.
+
+        Parameters
+        ----------
+        worker_operation_times
+            Operation times to be used per worker.
         """
-        operation_times = WorkerOperationTimes()
+        operation_times = worker_operation_times or WorkerOperationTimes.objects.create()
         for slot_number in range(self.factory_config.number_of_worker_pairs):
             for pair_number in range(2):
-                Worker(
+                Worker.objects.create(
                     name=f'slot={slot_number}, pair={pair_number}',
                     operation_times=operation_times,
                     slot_number=slot_number,
