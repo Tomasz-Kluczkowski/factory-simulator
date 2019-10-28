@@ -1,47 +1,70 @@
 import pytest
 
+from simulation.models import FactoryFloor
 from simulation.tests.conftest import FactoryFloorFactory, FeederFactory, ReceiverFactory, FactoryConfigFactory, \
-    ConveyorBeltFactory
+    ConveyorBeltFactory, WorkerOperationTimesFactory
 
 pytestmark = pytest.mark.django_db
 
 
 class TestFactoryFloor:
-    def test_it_can_be_instantiated(self):
-        feeder = FeederFactory()
-        receiver = ReceiverFactory()
-        factory_config = FactoryConfigFactory()
-        conveyor_belt = ConveyorBeltFactory(factory_config=factory_config)
-        factory_floor = FactoryFloorFactory(
+    @pytest.fixture
+    def feeder(self):
+        return FeederFactory()
+
+    @pytest.fixture
+    def receiver(self):
+        return ReceiverFactory()
+
+    @pytest.fixture
+    def factory_config(self):
+        return FactoryConfigFactory()
+
+    @pytest.fixture
+    def conveyor_belt(self, factory_config):
+        return ConveyorBeltFactory(factory_config=factory_config)
+
+    @pytest.fixture
+    def factory_floor(self, factory_config, feeder, receiver, conveyor_belt) -> FactoryFloor:
+        return FactoryFloorFactory(
             factory_config=factory_config, feeder=feeder, receiver=receiver, conveyor_belt=conveyor_belt
         )
 
+    def test_it_can_be_instantiated(self, feeder, receiver, factory_config, conveyor_belt, factory_floor):
         assert factory_floor.factory_config == factory_config
         assert factory_floor.feeder == feeder
         assert factory_floor.receiver == receiver
         assert factory_floor.conveyor_belt == conveyor_belt
         assert factory_floor.time == 0
 
+    def test_add_workers_default_operation_times_used(self, factory_floor):
+        factory_floor.add_workers()
 
+        workers = factory_floor.workers.all()
+        assert len(workers) == 6
 
-        # assert factory_floor.num_pairs == 3
-        # assert len(factory_floor.workers) == 6
-        # assert factory_floor.feeder == basic_feeder
-        # assert factory_floor.receiver == basic_receiver
-        # assert factory_floor.conveyor_belt.size == 3
+        assert sorted([worker.slot_number for worker in workers]) == [0, 0, 1, 1, 2, 2]
 
-    # def test_init_num_pairs(self, basic_feeder, basic_receiver, factory_floor_config):
-    #     factory_floor_config.num_pairs = 1
-    #     factory_floor = FactoryFloor(
-    #         feeder=basic_feeder,
-    #         receiver=basic_receiver,
-    #         config=factory_floor_config
-    #     )
-    #
-    #     assert len(factory_floor.workers) == 2
-    #     assert factory_floor.feeder == basic_feeder
-    #     assert factory_floor.receiver == basic_receiver
-    #     assert factory_floor.conveyor_belt.size == 3
+        for worker in workers:
+            assert worker.factory_config == factory_floor.factory_config
+            assert worker.conveyor_belt == factory_floor.conveyor_belt
+            assert worker.factory_floor == factory_floor
+
+    def test_add_workers_custom_operation_times_used(self, factory_floor):
+        worker_operation_times = WorkerOperationTimesFactory()
+        factory_floor.add_workers(worker_operation_times=worker_operation_times)
+
+        workers = factory_floor.workers.all()
+        assert len(workers) == 6
+
+        assert sorted([worker.slot_number for worker in workers]) == [0, 0, 1, 1, 2, 2]
+
+        for worker in workers:
+            assert worker.factory_config == factory_floor.factory_config
+            assert worker.conveyor_belt == factory_floor.conveyor_belt
+            assert worker.factory_floor == factory_floor
+            assert worker.operation_times == worker_operation_times
+
     #
     # def test_num_pairs_exceeding_num_slots(self, factory_floor_factory, factory_floor_config):
     #     factory_floor_config.num_pairs = 10
