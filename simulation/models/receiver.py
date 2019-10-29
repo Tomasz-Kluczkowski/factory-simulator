@@ -1,5 +1,7 @@
 from typing import Union
 
+from django.utils import timezone
+
 from simulation.models import BaseModel, Component, Product
 
 
@@ -19,3 +21,5 @@ class Receiver(BaseModel):
 
     def receive(self, item: Union[Component, Product]):
         item.receiver = self
+        item.received_at = timezone.now()
+#         TODO: set received_at datetime.now() here!
