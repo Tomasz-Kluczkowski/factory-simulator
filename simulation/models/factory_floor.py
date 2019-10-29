@@ -24,7 +24,7 @@ class FactoryFloor(BaseModel):
 
     def add_workers(self, worker_operation_times: WorkerOperationTimes = None):
         """
-        Creates a pair of workers per num_pairs and saves in the database.
+        Creates a pair of workers per self.factory_config.number_of_worker_pairs and saves in the database.
         Each worker pair is assigned to a slot_number on the conveyor belt.
 
         Parameters
