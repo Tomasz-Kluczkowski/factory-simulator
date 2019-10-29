@@ -1,5 +1,6 @@
 import pytest
 
+from simulation.exceptions.exceptions import FactoryConfigError
 from simulation.models import FactoryFloor
 from simulation.tests.conftest import FactoryFloorFactory, FeederFactory, ReceiverFactory, FactoryConfigFactory, \
     ConveyorBeltFactory, WorkerOperationTimesFactory
@@ -65,24 +66,21 @@ class TestFactoryFloor:
             assert worker.factory_floor == factory_floor
             assert worker.operation_times == worker_operation_times
 
-    #
-    # def test_num_pairs_exceeding_num_slots(self, factory_floor_factory, factory_floor_config):
-    #     factory_floor_config.num_pairs = 10
-    #     with pytest.raises(FactoryConfigError) as exception:
-    #         factory_floor_factory(config=factory_floor_config)
-    #
-    #     assert exception.value.args == (
-    #         'Improperly configured FactoryFloor - num_pairs cannot exceed num_slots.',
-    #     )
-    #
-    # def test_push_item_to_receiver(self, factory_floor_factory):
-    #     factory_floor: FactoryFloor = factory_floor_factory()
-    #     [factory_floor.conveyor_belt.dequeue() for _ in range(3)]
-    #     [factory_floor.conveyor_belt.enqueue(i) for i in range(3)]
-    #     factory_floor.push_item_to_receiver()
-    #     assert factory_floor.receiver.received_items == [0]
-    #     assert factory_floor.conveyor_belt.size == 2
-    #
+    def test_raises_exception_if_number_of_worker_pairs_exceeds_number_of_conveyor_belt_slots(self):
+        factory_config = FactoryConfigFactory(number_of_worker_pairs=3, number_of_conveyor_belt_slots=1)
+        with pytest.raises(FactoryConfigError) as exception:
+            FactoryFloorFactory(factory_config=factory_config)
+
+        assert exception.value.args == (
+                'Improperly configured FactoryFloor - check factory_config. number_of_worker_pairs cannot exceed '
+                'number_of_conveyor_belt_slots.',
+        )
+
+    def test_push_item_to_receiver(self, factory_floor):
+        factory_floor.push_item_to_receiver()
+        # assert factory_floor.receiver.received_items == [0]
+        assert factory_floor.conveyor_belt.size == 2
+
     # def test_add_new_item_to_belt(self, factory_floor_factory, feeder_factory, factory_floor_config):
     #     feeder = feeder_factory(feed_input=[1])
     #     factory_floor: FactoryFloor = factory_floor_factory(feeder=feeder)
