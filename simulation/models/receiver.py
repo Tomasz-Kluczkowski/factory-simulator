@@ -10,16 +10,18 @@ class Receiver(BaseModel):
     Use to receive items from the conveyor belt. Stores items in order of appearance and provides methods to obtain
     efficiency statistics for the plant operation.
     """
-    pass
-
-    # TODO: we have to convert feeder to operate on components and here
-    #  we want to proceed with components/products
-    # @property
-    # def received_items(self):
-    #     return self.__received_items
-    #
-
     def receive(self, item: Union[Component, Product]):
         item.receiver = self
         item.received_at = timezone.now()
-#         TODO: set received_at datetime.now() here!
+        item.save()
+
+    @property
+    def received_items(self):
+        # TODO: improve the query - use prefetch? Switch to one type of object? Just Item?
+        components = list(self.components.all())
+        products = list(self.products.all())
+        return sorted(components + products, key=lambda item: item.received_at)
+
+    @property
+    def received_item_names(self):
+        return [obj.name for obj in self.received_items]
