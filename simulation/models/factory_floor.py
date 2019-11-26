@@ -71,6 +71,15 @@ class FactoryFloor(BaseModel):
                 raise FactoryConfigError(INSUFFICIENT_FEED_INPUT)
 
             # make each pair work
-            for worker in self.workers:
+            for worker in self.workers_group:
                 worker.work()
             self.time += 1
+
+    @property
+    def workers_group(self):
+        if not hasattr(self, '_workers'):
+            workers = self.workers.all()
+            for worker in workers:
+                worker.conveyor_belt = self.conveyor_belt
+            self._workers = workers
+        return self._workers
