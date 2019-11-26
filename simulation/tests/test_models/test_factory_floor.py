@@ -1,9 +1,12 @@
+from unittest.mock import Mock
+
 import pytest
 
 from simulation.exceptions.exceptions import FactoryConfigError
 from simulation.models import FactoryFloor
+from simulation.models.feeder import sequential_feed_function
 from simulation.tests.conftest import FactoryFloorFactory, FeederFactory, ReceiverFactory, FactoryConfigFactory, \
-    ConveyorBeltFactory, WorkerOperationTimesFactory
+    ConveyorBeltFactory, WorkerOperationTimesFactory, ComponentFactory, WorkerFactory
 
 pytestmark = pytest.mark.django_db
 
@@ -78,65 +81,72 @@ class TestFactoryFloor:
 
     def test_push_item_to_receiver(self, factory_floor):
         factory_floor.push_item_to_receiver()
-        # assert factory_floor.receiver.received_items == [0]
         assert factory_floor.conveyor_belt.size == 2
+        assert factory_floor.receiver.received_item_names == [factory_floor.factory_config.empty_code]
 
-    # def test_add_new_item_to_belt(self, factory_floor_factory, feeder_factory, factory_floor_config):
-    #     feeder = feeder_factory(feed_input=[1])
-    #     factory_floor: FactoryFloor = factory_floor_factory(feeder=feeder)
-    #     factory_floor.conveyor_belt.dequeue()
-    #     factory_floor.add_new_item_to_belt()
-    #     assert factory_floor.conveyor_belt.size == 3
-    #     assert [factory_floor.conveyor_belt.dequeue() for i in range(3)] == [
-    #         factory_floor_config.empty_code,
-    #         factory_floor_config.empty_code,
-    #         1
-    #     ]
-    #
-    # def test_basic_run_belt(self, factory_floor_factory, feeder_factory, factory_floor_config):
-    #     feeder = feeder_factory(feed_input=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-    #     factory_floor: FactoryFloor = factory_floor_factory(feeder=feeder)
-    #     factory_floor.run()
-    #     assert factory_floor.receiver.received_items == [
-    #         factory_floor_config.empty_code,
-    #         factory_floor_config.empty_code,
-    #         factory_floor_config.empty_code,
-    #         1,
-    #         2,
-    #         3,
-    #         4,
-    #         5,
-    #         6,
-    #         7
-    #     ]
-    #
-    #     assert factory_floor.time == 10
-    #
-    # def test_basic_run_belt_run_out_of_feed_items(self, factory_floor_factory, feeder_factory):
-    #     feeder = feeder_factory(feed_input=[1])
-    #     factory_floor: FactoryFloor = factory_floor_factory(feeder=feeder)
-    #
-    #     with pytest.raises(FactoryConfigError) as exception:
-    #         factory_floor.run()
-    #
-    #     assert exception.value.args == (
-    #         'Insufficient amount of items available in the feed_input of the Feeder. Please check your configuration.',
-    #     )
-    #
-    # def test_run_factory_one_product_created_by_worker_on_slot_zero(
-    #         self, factory_floor_factory, feeder_factory, factory_floor_config
-    # ):
-    #     factory_floor_config.num_steps = 11
-    #     feeder = feeder_factory(
-    #         feed_input=['A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E']
-    #     )
-    #     factory_floor: FactoryFloor = factory_floor_factory(
-    #         config=factory_floor_config,
-    #         feeder=feeder
-    #     )
-    #     factory_floor.run()
-    #     assert factory_floor.receiver.received_items == ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'P', 'E']
-    #
+    def test_add_new_item_to_belt(self, factory_floor):
+        component = ComponentFactory(name='A')
+        mock_feed = Mock()
+        mock_feed.return_value = component
+        factory_floor.feeder.feed = mock_feed
+
+        factory_floor.conveyor_belt.dequeue()
+        factory_floor.add_new_item_to_belt()
+
+        assert factory_floor.conveyor_belt.size == 3
+        assert [factory_floor.conveyor_belt.dequeue().name for i in range(3)] == [
+            factory_floor.factory_config.empty_code,
+            factory_floor.factory_config.empty_code,
+            component.name
+        ]
+
+    def test_basic_run_belt(self, factory_floor):
+        feeder = FeederFactory(
+            component_names=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            feed_function=sequential_feed_function
+        )
+        factory_floor: FactoryFloor = FactoryFloorFactory(feeder=feeder)
+        factory_floor.run()
+        assert factory_floor.receiver.received_item_names == [
+            factory_floor.factory_config.empty_code,
+            factory_floor.factory_config.empty_code,
+            factory_floor.factory_config.empty_code,
+            '1',
+            '2',
+            '3',
+            '4',
+            '5',
+            '6',
+            '7'
+        ]
+
+        assert factory_floor.time == 10
+
+    def test_basic_run_belt_run_out_of_feed_items(self):
+        feeder = FeederFactory(component_names=['1'], feed_function=sequential_feed_function)
+        factory_floor: FactoryFloor = FactoryFloorFactory(feeder=feeder)
+
+        with pytest.raises(FactoryConfigError) as exception:
+            factory_floor.run()
+
+        assert exception.value.args == (
+            'Insufficient amount of items available in the feed_input of the Feeder. Please check your configuration.',
+        )
+
+    def test_run_factory_one_product_created_by_worker_on_slot_zero(self):
+        feeder = FeederFactory(
+            component_names=['A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
+            feed_function=sequential_feed_function
+        )
+
+        factory_floor: FactoryFloor = FactoryFloorFactory(
+            feeder=feeder
+        )
+        factory_floor.factory_config.number_of_simulation_steps = 11
+        factory_floor.add_workers()
+        factory_floor.run()
+        assert factory_floor.receiver.received_item_names == ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'P', 'E']
+
     # def test_run_factory_two_products_created_by_workers_on_slot_zero(
     #         self, factory_floor_factory, feeder_factory, factory_floor_config
     # ):
