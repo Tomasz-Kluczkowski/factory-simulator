@@ -145,53 +145,54 @@ class TestFactoryFloor:
         factory_floor.factory_config.number_of_simulation_steps = 11
         factory_floor.add_workers()
         factory_floor.run()
+
         assert factory_floor.receiver.received_item_names == ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'P', 'E']
 
-    # def test_run_factory_two_products_created_by_workers_on_slot_zero(
-    #         self, factory_floor_factory, feeder_factory, factory_floor_config
-    # ):
-    #     factory_floor_config.num_steps = 13
-    #     feeder = feeder_factory(
-    #         feed_input=['A', 'B', 'A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E']
-    #     )
-    #     factory_floor: FactoryFloor = factory_floor_factory(
-    #         config=factory_floor_config,
-    #         feeder=feeder
-    #     )
-    #     factory_floor.run()
-    #     assert factory_floor.receiver.received_items == [
-    #         'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'P', 'E', 'P', 'E'
-    #     ]
-    #
-    # def test_run_factory_three_products_created_by_workers_on_slot_zero_and_first_at_slot_one(
-    #         self, factory_floor_factory, feeder_factory, factory_floor_config
-    # ):
-    #     factory_floor_config.num_steps = 15
-    #     feeder = feeder_factory(
-    #         feed_input=['A', 'B', 'A', 'B', 'A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E']
-    #     )
-    #     factory_floor: FactoryFloor = factory_floor_factory(
-    #         config=factory_floor_config,
-    #         feeder=feeder
-    #     )
-    #     factory_floor.run()
-    #     assert factory_floor.receiver.received_items == [
-    #         'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'P', 'E', 'P', 'E', 'P', 'E'
-    #     ]
-    #
-    # def test_run_factory_worker_ignores_item_not_required(
-    #         self, factory_floor_factory, feeder_factory, factory_floor_config
-    # ):
-    #     factory_floor_config.num_steps = 13
-    #     factory_floor_config.num_pairs = 1
-    #     feeder = feeder_factory(
-    #         feed_input=['A', 'A', 'A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E']
-    #     )
-    #     factory_floor: FactoryFloor = factory_floor_factory(
-    #         config=factory_floor_config,
-    #         feeder=feeder
-    #     )
-    #     factory_floor.run()
-    #     assert factory_floor.receiver.received_items == [
-    #         'E', 'E', 'E', 'E', 'E', 'A', 'E', 'E', 'E', 'E', 'E', 'P', 'E'
-    #     ]
+    def test_run_factory_two_products_created_by_workers_on_slot_zero(self):
+        feeder = FeederFactory(
+            component_names=['A', 'B', 'A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
+            feed_function=sequential_feed_function
+        )
+        factory_floor: FactoryFloor = FactoryFloorFactory(
+            feeder=feeder
+        )
+        factory_floor.factory_config.number_of_simulation_steps = 13
+        factory_floor.add_workers()
+        factory_floor.run()
+
+        assert factory_floor.receiver.received_item_names == [
+            'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'P', 'E', 'P', 'E'
+        ]
+
+    def test_run_factory_three_products_created_by_workers_on_slot_zero_and_first_at_slot_one(self):
+        feeder = FeederFactory(
+            component_names=['A', 'B', 'A', 'B', 'A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
+            feed_function=sequential_feed_function
+        )
+        factory_floor: FactoryFloor = FactoryFloorFactory(
+            feeder=feeder
+        )
+        factory_floor.factory_config.number_of_simulation_steps = 15
+        factory_floor.add_workers()
+        factory_floor.run()
+
+        assert factory_floor.receiver.received_item_names == [
+            'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'P', 'E', 'P', 'E', 'P', 'E'
+        ]
+
+    def test_run_factory_worker_ignores_item_not_required(self):
+        feeder = FeederFactory(
+            component_names=['A', 'A', 'A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
+            feed_function=sequential_feed_function
+        )
+        factory_floor: FactoryFloor = FactoryFloorFactory(
+            feeder=feeder
+        )
+        factory_floor.factory_config.number_of_simulation_steps = 13
+        factory_floor.factory_config.number_of_worker_pairs = 1
+        factory_floor.add_workers()
+        factory_floor.run()
+
+        assert factory_floor.receiver.received_item_names == [
+            'E', 'E', 'E', 'E', 'E', 'A', 'E', 'E', 'E', 'E', 'E', 'P', 'E'
+        ]
