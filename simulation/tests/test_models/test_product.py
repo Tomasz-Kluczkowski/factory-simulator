@@ -8,7 +8,7 @@ pytestmark = pytest.mark.django_db
 class TestProduct:
     def test_it_can_be_instantiated(self):
         receiver = ReceiverFactory()
-        product = ProductFactory(name='B', receiver=receiver)
+        product = ProductFactory(id=1, name='B', receiver=receiver)
 
         assert product.id == 1
         assert product.name == 'B'
