@@ -44,5 +44,6 @@ Basic principle of operation:
 - Once a worker collected all required items he begins assembling the product.
 - When the product is assembled and worker can operate on his conveyor belt slot (it is free and empty) the worker
 will drop the product.
-
-
+- At each finished unit of time, the last item in the conveyor belt is moved to the receiver. We register if it is a 
+finished product, component or an empty slot (this is to be able to provide efficiency metrics and optimization in the 
+future)
