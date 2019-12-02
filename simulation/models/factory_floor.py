@@ -39,8 +39,6 @@ class FactoryFloor(BaseModel):
                     name=f'slot={slot_number}, pair={pair_number}',
                     operation_times=operation_times,
                     slot_number=slot_number,
-                    factory_config=self.factory_config,
-                    conveyor_belt=self.conveyor_belt,
                     factory_floor=self
                 )
 
@@ -79,7 +77,5 @@ class FactoryFloor(BaseModel):
     def workers_group(self):
         if not hasattr(self, '_workers'):
             workers = self.workers.all()
-            for worker in workers:
-                worker.conveyor_belt = self.conveyor_belt
             self._workers = workers
         return self._workers

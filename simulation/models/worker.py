@@ -2,8 +2,7 @@ from typing import List, Union
 
 from django.db import models
 
-from simulation.models import BaseModel, ConveyorBelt, Component, Product
-from simulation.models.factory_config import FactoryConfig
+from simulation.models import BaseModel, Component, Product
 
 
 class WorkerState:
@@ -21,10 +20,8 @@ class WorkerOperationTimes(BaseModel):
 
 class Worker(BaseModel):
     name = models.CharField(max_length=30, blank=True, null=True, default='')
-    operation_times = models.ForeignKey(WorkerOperationTimes, on_delete=models.CASCADE, related_name='workers')
     slot_number = models.PositiveSmallIntegerField()
-    factory_config = models.ForeignKey(FactoryConfig, on_delete=models.CASCADE, related_name='workers')
-    conveyor_belt = models.ForeignKey(ConveyorBelt, on_delete=models.CASCADE, related_name='workers')
+    operation_times = models.ForeignKey(WorkerOperationTimes, on_delete=models.CASCADE, related_name='workers')
     factory_floor = models.ForeignKey('FactoryFloor', on_delete=models.CASCADE, related_name='workers')
 
     def __init__(self, *args, **kwargs):
@@ -91,6 +88,14 @@ class Worker(BaseModel):
     @property
     def item_names(self):
         return [item.name for item in self._items]
+
+    @property
+    def factory_config(self):
+        return self.factory_floor.factory_config
+
+    @property
+    def conveyor_belt(self):
+        return self.factory_floor.conveyor_belt
 
     def _can_pickup_component(self):
         return self.conveyor_belt.is_slot_free(self.slot_number)

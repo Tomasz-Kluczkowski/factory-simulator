@@ -62,6 +62,4 @@ class WorkerFactory(factory.DjangoModelFactory):
 
     operation_times = factory.SubFactory(WorkerOperationTimesFactory)
     slot_number = factory.Sequence(lambda n: n)
-    factory_config = factory.SubFactory(FactoryConfigFactory)
-    conveyor_belt = factory.SubFactory(ConveyorBeltFactory, factory_config=factory.SelfAttribute('..factory_config'))
-    factory_floor = factory.SubFactory(FactoryFloorFactory, factory_config=factory.SelfAttribute('..factory_config'))
+    factory_floor = factory.SubFactory(FactoryFloorFactory)
