@@ -11,15 +11,6 @@ class WorkerState:
     DROPPING = 'dropping'
     BUILDING = 'building'
 
-#
-# class WorkerManager(models.Manager):
-#     def get_worker_group_for_factory_floor(self, factory_floor_id):
-#         return (
-#             self.get_queryset()
-#             .filter(factory_floor_id=factory_floor_id)
-#             .select_related('operation_times', )
-#         )
-
 
 class WorkerOperationTimes(BaseModel):
     pick_up_time = models.PositiveSmallIntegerField(default=1)
