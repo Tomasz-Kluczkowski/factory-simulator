@@ -1,3 +1,6 @@
+from typing import List
+
+from django.db.models import QuerySet
 from django.utils import timezone
 
 from simulation.models import BaseModel, Item
@@ -14,9 +17,9 @@ class Receiver(BaseModel):
         item.save()
 
     @property
-    def received_items(self):
+    def received_items(self) -> QuerySet:
         return self.items.all().order_by('received_at')
 
     @property
-    def received_item_names(self):
-        return self.received_items.values_list('name', flat=True)
+    def received_item_names(self) -> List[str]:
+        return list(self.received_items.values_list('name', flat=True))
