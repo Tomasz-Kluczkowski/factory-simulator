@@ -3,7 +3,7 @@ from typing import Any, Union
 from django.db import models
 
 from simulation.helpers.data_structures import Queue
-from simulation.models import BaseModel, FactoryConfig, Component, Product
+from simulation.models import BaseModel, FactoryConfig, Item
 
 
 class ConveyorBeltState:
@@ -26,7 +26,7 @@ class ConveyorBelt(BaseModel, Queue):
     def slot_states(self):
         return self._slot_states
 
-    def check_item_at_slot(self, slot_number: int) -> Union[Component, Product]:
+    def check_item_at_slot(self, slot_number: int) -> Item:
         """
         Returns item at a conveyor belt slot. The item remains in the slot. This is a peek operation.
 
@@ -40,7 +40,7 @@ class ConveyorBelt(BaseModel, Queue):
         """
         return self._items[slot_number]
 
-    def put_item_in_slot(self, slot_number: int, item: Union[Component, Product]):
+    def put_item_in_slot(self, slot_number: int, item: Item):
         """
         Inserts item at a given slot_number.
 
@@ -117,7 +117,7 @@ class ConveyorBelt(BaseModel, Queue):
         """
         self._set_slot_state(slot_number=slot_number, state=ConveyorBeltState.BUSY)
         item = self.check_item_at_slot(slot_number=slot_number)
-        self.put_item_in_slot(slot_number=slot_number, item=Component(name=self.factory_config.empty_code))
+        self.put_item_in_slot(slot_number=slot_number, item=Item(name=self.factory_config.empty_code))
 
         return item
 
@@ -127,7 +127,7 @@ class ConveyorBelt(BaseModel, Queue):
 
     def _set_slots_to_empty(self):
         for slot_number in range(self.factory_config.number_of_conveyor_belt_slots):
-            self.enqueue(Component(name=self.factory_config.empty_code))
+            self.enqueue(Item(name=self.factory_config.empty_code))
 
     def _set_slot_state(self, slot_number: int, state: str):
         self._slot_states[slot_number] = state

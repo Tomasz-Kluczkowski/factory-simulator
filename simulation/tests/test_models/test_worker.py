@@ -1,8 +1,8 @@
 import pytest
 
-from simulation.models import Component, ConveyorBelt, Product
+from simulation.models import Item, ConveyorBelt
 from simulation.models.worker import Worker
-from simulation.tests.conftest import WorkerFactory, ComponentFactory
+from simulation.tests.conftest import WorkerFactory, ItemFactory
 
 pytestmark = pytest.mark.django_db
 

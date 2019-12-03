@@ -2,11 +2,11 @@ import random
 from typing import Iterator, Callable, Tuple
 
 from simulation.models import BaseModel
-from simulation.models import Component
+from simulation.models import Item
 
 
-def sequential_feed_function(component_names: Tuple[str, ...]) -> Iterator['Component']:
-    return (Component(name=name) for name in component_names)
+def sequential_feed_function(item_names: Tuple[str, ...]) -> Iterator['Item']:
+    return (Item(name=name) for name in item_names)
 
 
 class Feeder(BaseModel):
@@ -18,28 +18,28 @@ class Feeder(BaseModel):
     """
     def __init__(
             self,
-            component_names: Tuple[str, ...] = ('A', 'B'),
-            feed_function: Callable[[Tuple[str, ...]], Iterator[Component]] = None,
+            item_names: Tuple[str, ...] = ('A', 'B'),
+            feed_function: Callable[[Tuple[str, ...]], Iterator[Item]] = None,
             *args,
             **kwargs
     ):
         super().__init__(*args, **kwargs)
-        self.__component_names = component_names
-        self.__feed_function = (
-            feed_function(component_names=component_names) if feed_function else self.__default_feed_function()
+        self._item_names = item_names
+        self._feed_function = (
+            feed_function(item_names=item_names) if feed_function else self._default_feed_function()
         )
 
-    def __default_feed_function(self) -> Iterator[Component]:
+    def _default_feed_function(self) -> Iterator[Item]:
         while True:
-            component = Component(
-                name=random.choice(self.__component_names),
+            item = Item(
+                name=random.choice(self._item_names),
             )
-            yield component
+            yield item
 
-    def feed(self) -> Component:
+    def feed(self) -> Item:
         """
         Returns components according to __feed_function and sets the feeder attribute on each component if missing.
         """
-        component = next(self.__feed_function)
-        component.feeder = self
-        return component
+        item = next(self._feed_function)
+        item.feeder = self
+        return item

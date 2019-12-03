@@ -6,7 +6,7 @@ from simulation.exceptions.exceptions import FactoryConfigError
 from simulation.models import FactoryFloor
 from simulation.models.feeder import sequential_feed_function
 from simulation.tests.conftest import FactoryFloorFactory, FeederFactory, ReceiverFactory, FactoryConfigFactory, \
-    ConveyorBeltFactory, WorkerOperationTimesFactory, ComponentFactory
+    ConveyorBeltFactory, WorkerOperationTimesFactory, ItemFactory
 
 pytestmark = pytest.mark.django_db
 
@@ -85,9 +85,9 @@ class TestFactoryFloor:
         assert factory_floor.receiver.received_item_names == [factory_floor.factory_config.empty_code]
 
     def test_add_new_item_to_belt(self, factory_floor):
-        component = ComponentFactory(name='A')
+        item = ItemFactory(name='A')
         mock_feed = Mock()
-        mock_feed.return_value = component
+        mock_feed.return_value = item
         factory_floor.feeder.feed = mock_feed
 
         factory_floor.conveyor_belt.dequeue()
@@ -97,7 +97,7 @@ class TestFactoryFloor:
         assert [factory_floor.conveyor_belt.dequeue().name for i in range(3)] == [
             factory_floor.factory_config.empty_code,
             factory_floor.factory_config.empty_code,
-            component.name
+            item.name
         ]
 
     def test_basic_run_belt(self, factory_floor):

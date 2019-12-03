@@ -1,20 +1,13 @@
 import factory
 
-from simulation.models import Feeder, Component, Receiver, Product, WorkerOperationTimes, ConveyorBelt, FactoryFloor
+from simulation.models import Feeder, Receiver, WorkerOperationTimes, ConveyorBelt, FactoryFloor, Item
 from simulation.models.factory_config import FactoryConfig
 from simulation.models.worker import Worker
 
 
-class ProductFactory(factory.DjangoModelFactory):
+class ItemFactory(factory.DjangoModelFactory):
     class Meta:
-        model = Product
-
-    name = factory.Sequence(lambda n: f'product_{n}')
-
-
-class ComponentFactory(factory.DjangoModelFactory):
-    class Meta:
-        model = Component
+        model = Item
 
     name = factory.Sequence(lambda n: f'component_{n}')
 

@@ -2,20 +2,20 @@ import random
 
 import pytest
 from simulation.models.feeder import sequential_feed_function
-from simulation.tests.conftest import FeederFactory, ComponentFactory
+from simulation.tests.conftest import FeederFactory, ItemFactory
 
 pytestmark = pytest.mark.django_db
 
 
 class TestFeedFunctions:
     def test_sequential_feed_function_with_empty_component_names(self):
-        components_iterator = sequential_feed_function(component_names=(),)
+        components_iterator = sequential_feed_function(item_names=(), )
 
         assert next(components_iterator, None) is None
 
     def test_sequential_feed_function(self):
         component_names = ('A', 'B', 'C')
-        components_iterator = sequential_feed_function(component_names=component_names)
+        components_iterator = sequential_feed_function(item_names=component_names)
 
         for name in component_names:
             assert next(components_iterator).name == name

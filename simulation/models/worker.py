@@ -1,8 +1,8 @@
-from typing import List, Union
+from typing import List
 
 from django.db import models
 
-from simulation.models import BaseModel, Component, Product
+from simulation.models import BaseModel, Item
 
 
 class WorkerState:
@@ -26,7 +26,7 @@ class Worker(BaseModel):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._items: List[Union[Component, Product]] = []
+        self._items: List[Item] = []
         self._current_state: str = WorkerState.IDLE
         self._remaining_time_of_operation: int = 0
 
@@ -144,7 +144,7 @@ class Worker(BaseModel):
 
     def _on_finished_building_product(self):
         self._items = []
-        self._items.append(Product(name=self.factory_config.product_code))
+        self._items.append(Item(name=self.factory_config.product_code))
 
     def _update_operation_time(self):
         self._remaining_time_of_operation -= 1
