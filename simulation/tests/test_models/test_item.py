@@ -9,7 +9,7 @@ class TestItem:
     def test_it_can_be_instantiated(self):
         receiver = ReceiverFactory()
         feeder = FeederFactory()
-        item = ItemFactory(name='A', receiver=receiver, feeder=feeder)
+        item = ItemFactory(id=1, name='A', receiver=receiver, feeder=feeder)
 
         assert item.id == 1
         assert item.name == 'A'

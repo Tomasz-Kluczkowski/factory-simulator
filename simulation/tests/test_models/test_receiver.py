@@ -23,10 +23,8 @@ class TestReceiver:
 
     def test_it_can_be_instantiated(self):
         receiver = ReceiverFactory(id=1)
-        item = ItemFactory(receiver=receiver)
 
         assert receiver.id == 1
-        assert receiver.items == [item]
 
     @patch('django.utils.timezone.now')
     def test_receive_sets_receiver_attribute_on_items(self, mock_now, receiver):
@@ -43,4 +41,4 @@ class TestReceiver:
 
     def test_received_item_names_are_sorted_by_time(self, receiver, items):
         sorted_item_names = [i.name for i in sorted(items, key=lambda i: i.received_at)]
-        assert list(receiver.received_item_names) == sorted_item_names
+        assert receiver.received_item_names == sorted_item_names
