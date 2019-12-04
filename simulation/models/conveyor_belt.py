@@ -1,4 +1,4 @@
-from typing import Any, Union
+from typing import Union, Dict
 
 from django.db import models
 
@@ -16,14 +16,12 @@ class ConveyorBelt(BaseModel, Queue):
 
     def __init__(self, *args, **kwargs):
         super(). __init__(*args, **kwargs)
-        self._slot_states = {}
+        self._slot_states: Dict[int, str] = {}
         self._set_slot_states_to_free()
         self._set_slots_to_empty()
 
-    # TODO: override enqueue, deque and include typing for input/output
-
     @property
-    def slot_states(self):
+    def slot_states(self) -> Dict[int, str]:
         return self._slot_states
 
     def check_item_at_slot(self, slot_number: int) -> Item:
@@ -100,7 +98,7 @@ class ConveyorBelt(BaseModel, Queue):
         """
         return self._get_slot_state(slot_number) == ConveyorBeltState.FREE
 
-    def retrieve_item_from_slot(self, slot_number: int) -> Any:
+    def retrieve_item_from_slot(self, slot_number: int) -> Item:
         """
         Returns an item present in the slot: slot_number, sets the slot to busy and puts an empty Component in
         its place.
