@@ -13,8 +13,8 @@ class Feeder(BaseModel):
     """
     Use to provide feed for the conveyor belt.
 
-    If feed_function is specified then it will be used to generate components.
-    If no feed_function is provided we randomly generate a component with name from component_names and yield it.
+    If feed_function is specified then it will be used to generate items.
+    If no feed_function is provided we randomly generate an item with name from item_names and yield it.
     """
     def __init__(
             self,
@@ -38,7 +38,7 @@ class Feeder(BaseModel):
 
     def feed(self) -> Item:
         """
-        Returns components according to __feed_function and sets the feeder attribute on each component if missing.
+        Returns items according to __feed_function and sets the feeder attribute on each item if missing.
         """
         item = next(self._feed_function)
         item.feeder = self
