@@ -3,6 +3,7 @@ import factory
 from simulation.models import Feeder, Receiver, WorkerOperationTimes, ConveyorBelt, FactoryFloor, Item
 from simulation.models.factory_config import FactoryConfig
 from simulation.models.worker import Worker
+from simulation.reporting.simulation_reporter import SimulationReporter
 
 
 class ItemFactory(factory.DjangoModelFactory):
@@ -56,3 +57,11 @@ class WorkerFactory(factory.DjangoModelFactory):
     operation_times = factory.SubFactory(WorkerOperationTimesFactory)
     slot_number = factory.Sequence(lambda n: n)
     factory_floor = factory.SubFactory(FactoryFloorFactory)
+
+
+class SimulationReporterFactory(factory.Factory):
+    class Meta:
+        model = SimulationReporter
+
+    receiver = factory.SubFactory(ReceiverFactory)
+    factory_config = factory.SubFactory(FactoryConfigFactory)
