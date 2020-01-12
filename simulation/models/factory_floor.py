@@ -17,6 +17,7 @@ class FactoryFloor(BaseModel):
     conveyor_belt = models.OneToOneField(ConveyorBelt, on_delete=models.CASCADE)
 
     def __init__(self, *args, **kwargs, ):
+        self._workers = None
         super().__init__(*args, **kwargs)
         if self.factory_config.number_of_worker_pairs > self.factory_config.number_of_conveyor_belt_slots:
             raise FactoryConfigError(WRONG_FACTORY_CONFIG)
@@ -75,7 +76,7 @@ class FactoryFloor(BaseModel):
 
     @property
     def workers_group(self):
-        if not hasattr(self, '_workers'):
+        if self._workers is None:
             workers = self.workers.all()
             self._workers = workers
         return self._workers
