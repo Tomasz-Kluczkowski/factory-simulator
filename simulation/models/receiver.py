@@ -8,8 +8,7 @@ from simulation.models import BaseModel, Item
 
 class Receiver(BaseModel):
     """
-    Use to receive items from the conveyor belt. Stores items in order of appearance and provides methods to obtain
-    efficiency statistics for the plant operation.
+    Use to receive items from the conveyor belt. Stores items in order of appearance.
     """
     def receive(self, item: Item):
         item.receiver = self
