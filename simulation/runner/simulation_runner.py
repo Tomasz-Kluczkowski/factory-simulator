@@ -7,25 +7,25 @@ from simulation.models import Feeder, Receiver, FactoryConfig, ConveyorBelt, Fac
 
 
 class OptimisationRunner:
-    def __init__(self):
-        pass
+    def __init__(
+        self,
+        feeder: Feeder,
+        receiver: Receiver,
+        factory_config: FactoryConfig,
+        conveyor_belt: ConveyorBelt,
+        factory_floor: FactoryFloor
+    ):
+        self._feeder = feeder
+        self._receiver = receiver
+        self._factory_config = factory_config
+        self._conveyor_belt = conveyor_belt
+        self._factory_floor = factory_floor
 
     def prepare_simulation(self):
         """
         Uses config to create and persist all entities required to run simulation.
         """
-        # TODO: make this from either API or some other form of config.
-        feeder = Feeder.objects.create()
-        receiver = Receiver.objects.create()
-        factory_config = FactoryConfig.objects.create()
-        conveyor_belt = ConveyorBelt.objects.create(factory_config=factory_config)
-        factory_floor = FactoryFloor.objects.create(
-            factory_config=factory_config,
-            feeder=feeder,
-            receiver=receiver,
-            conveyor_belt=conveyor_belt
-        )
-        factory_floor.add_workers()
+        self._factory_floor.add_workers()
 
     def run_simulation(self):
         """
