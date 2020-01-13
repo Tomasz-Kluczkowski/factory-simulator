@@ -22,7 +22,7 @@ class TestSimulationReporter:
         )
 
     def test_it_calculates_production_efficiency(self, factory_config, receiver, product_item):
-        non_product_items = [
+        [
             ItemFactory(
                 name=factory_config.empty_code, receiver=receiver, received_at=timezone.now()
             ) for __ in range(3)
@@ -33,7 +33,7 @@ class TestSimulationReporter:
         assert simulation_reporter.get_production_efficiency() == 1/4
 
     def test_it_works_with_no_products(self, factory_config, receiver):
-        non_product_items = [
+        [
             ItemFactory(
                 name=factory_config.empty_code, receiver=receiver, received_at=timezone.now()
             ) for __ in range(3)

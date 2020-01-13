@@ -21,5 +21,3 @@ class SimulationReporter:
         number_of_products = items.count(self._factory_config.product_code)
 
         return number_of_products/len(items)
-
-
