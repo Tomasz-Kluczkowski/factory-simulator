@@ -1,5 +1,6 @@
 from datetime import datetime
 from unittest.mock import patch
+from django.utils import timezone
 
 import pytest
 
@@ -16,9 +17,9 @@ class TestReceiver:
     @pytest.fixture
     def items(self, receiver):
         return [
-            ItemFactory(receiver=receiver, received_at=datetime(2019, 1, 3, 12, 0)),
-            ItemFactory(receiver=receiver, received_at=datetime(2019, 1, 1, 12, 0)),
-            ItemFactory(receiver=receiver, received_at=datetime(2019, 1, 2, 12, 0)),
+            ItemFactory(receiver=receiver, received_at=datetime(2019, 1, 3, 12, 0, tzinfo=timezone.utc)),
+            ItemFactory(receiver=receiver, received_at=datetime(2019, 1, 1, 12, 0, tzinfo=timezone.utc)),
+            ItemFactory(receiver=receiver, received_at=datetime(2019, 1, 2, 12, 0, tzinfo=timezone.utc)),
         ]
 
     def test_it_can_be_instantiated(self):
@@ -28,7 +29,7 @@ class TestReceiver:
 
     @patch('django.utils.timezone.now')
     def test_receive_sets_receiver_attribute_on_items(self, mock_now, receiver):
-        received_at = datetime(2019, 1, 1, 12, 0)
+        received_at = datetime(2019, 1, 1, 12, 0, tzinfo=timezone.utc)
         mock_now.return_value = received_at
         item = ItemFactory()
         receiver.receive(item)
