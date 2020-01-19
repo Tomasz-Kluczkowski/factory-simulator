@@ -77,6 +77,5 @@ class FactoryFloor(BaseModel):
     @property
     def workers_group(self):
         if self._workers is None:
-            workers = self.workers.all()
-            self._workers = workers
+            self._workers = self.workers.all()
         return self._workers
