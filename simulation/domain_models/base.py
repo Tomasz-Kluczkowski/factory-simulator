@@ -1,7 +1,7 @@
 import abc
 
 
-class BaseModel(abc.ABC):
+class BaseDomainModel(abc.ABC):
     def __str__(self):
         fields = ', '.join(
             f'{field_name}={field_value}' for
