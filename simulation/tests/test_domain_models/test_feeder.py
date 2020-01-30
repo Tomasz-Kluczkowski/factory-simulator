@@ -1,10 +1,7 @@
 import random
 
-import pytest
-from simulation.models.feeder import sequential_feed_function
-from simulation.tests.conftest import FeederFactory, ItemFactory
-
-pytestmark = pytest.mark.django_db
+from simulation.domain_models.feeder import sequential_feed_function
+from simulation.tests.conftest import FeederFactory
 
 
 class TestFeedFunctions:
@@ -24,9 +21,8 @@ class TestFeedFunctions:
 class TestFeeder:
     def test_it_can_be_instantiated(self):
         feeder = FeederFactory()
-        item = ItemFactory(feeder=feeder)
 
-        assert list(feeder.items.all()) == [item]
+        assert feeder
 
     def test_with_sequential_feed_function(self):
         item_names = ('A', 'B', 'C')
@@ -38,7 +34,6 @@ class TestFeeder:
         for name in item_names:
             item = feeder.feed()
             assert item.name == name
-            assert item.feeder_id == feeder.id
 
     def test_default_feed_function_and_default_item_names(self):
         random.seed(0)
@@ -51,4 +46,3 @@ class TestFeeder:
         expected_item_names_sequence = ['B', 'B', 'A', 'B']
         for item, name in zip(generated_items, expected_item_names_sequence):
             assert item.name == name
-            assert item.feeder_id == feeder.id
