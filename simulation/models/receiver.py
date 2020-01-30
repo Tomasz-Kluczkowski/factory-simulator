@@ -3,7 +3,8 @@ from typing import List
 from django.db.models import QuerySet
 from django.utils import timezone
 
-from simulation.models import BaseModel, Item
+from simulation.domain_models.item import Item
+from simulation.models import BaseModel
 
 
 class Receiver(BaseModel):

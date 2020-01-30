@@ -2,7 +2,7 @@ from django.db import models
 
 from simulation.exceptions.exceptions import FactoryConfigError
 from simulation.exceptions.messages import WRONG_FACTORY_CONFIG, INSUFFICIENT_FEED_INPUT
-from simulation.models import BaseModel, FactoryConfig, ConveyorBelt, Receiver, Feeder
+from simulation.models import BaseModel, FactoryConfig, ConveyorBelt, Receiver
 from simulation.models.worker import Worker, WorkerOperationTimes
 
 
@@ -12,7 +12,8 @@ class FactoryFloor(BaseModel):
     By default the number of pairs matches the number of slots on the belt.
     """
     factory_config = models.ForeignKey(FactoryConfig, on_delete=models.CASCADE, related_name='factory_floors')
-    feeder = models.OneToOneField(Feeder, on_delete=models.CASCADE)
+    # TODO: move feeder into the init.
+    # feeder = models.OneToOneField(Feeder, on_delete=models.CASCADE)
     receiver = models.OneToOneField(Receiver, on_delete=models.CASCADE)
     conveyor_belt = models.OneToOneField(ConveyorBelt, on_delete=models.CASCADE)
 

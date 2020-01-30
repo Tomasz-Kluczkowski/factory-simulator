@@ -2,7 +2,8 @@ from typing import List
 
 from django.db import models
 
-from simulation.models import BaseModel, Item
+from simulation.domain_models.item import Item
+from simulation.models import BaseModel
 
 
 class WorkerState:

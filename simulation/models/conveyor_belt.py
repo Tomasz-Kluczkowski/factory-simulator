@@ -2,8 +2,9 @@ from typing import Union, Dict
 
 from django.db import models
 
+from simulation.domain_models.item import Item
 from simulation.helpers.data_structures import Queue
-from simulation.models import BaseModel, FactoryConfig, Item
+from simulation.models import BaseModel, FactoryConfig
 
 
 class ConveyorBeltState:
