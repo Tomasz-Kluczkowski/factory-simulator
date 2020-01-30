@@ -4,7 +4,7 @@ import pytest
 
 from simulation.exceptions.exceptions import FactoryConfigError
 from simulation.models import FactoryFloor
-from simulation.models.feeder import sequential_feed_function
+from simulation.domain_models.feeder import sequential_feed_function
 from simulation.tests.conftest import FactoryFloorFactory, FeederFactory, ReceiverFactory, FactoryConfigFactory, \
     ConveyorBeltFactory, WorkerOperationTimesFactory, ItemFactory
 
