@@ -1,15 +1,15 @@
 import random
 from typing import Iterator, Callable, Tuple
 
-from simulation.models import BaseModel
-from simulation.models import Item
+from simulation.domain_models.base import BaseDomainModel
+from simulation.domain_models.item import Item
 
 
 def sequential_feed_function(item_names: Tuple[str, ...]) -> Iterator['Item']:
     return (Item(name=name) for name in item_names)
 
 
-class Feeder(BaseModel):
+class Feeder(BaseDomainModel):
     """
     Use to provide feed for the conveyor belt.
 
@@ -20,10 +20,7 @@ class Feeder(BaseModel):
             self,
             item_names: Tuple[str, ...] = ('A', 'B'),
             feed_function: Callable[[Tuple[str, ...]], Iterator[Item]] = None,
-            *args,
-            **kwargs
     ):
-        super().__init__(*args, **kwargs)
         self._item_names = item_names
         self._feed_function = (
             feed_function(item_names=item_names) if feed_function else self._default_feed_function()
@@ -41,5 +38,4 @@ class Feeder(BaseModel):
         Returns items according to __feed_function and sets the feeder attribute on each item if missing.
         """
         item = next(self._feed_function)
-        item.feeder = self
         return item
