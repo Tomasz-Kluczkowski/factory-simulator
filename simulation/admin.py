@@ -1,7 +1,5 @@
 from django.contrib import admin
 
-from simulation.models import Feeder, Receiver, Item
+from simulation.models import Receiver
 
-admin.site.register(Item)
-admin.site.register(Feeder)
 admin.site.register(Receiver)
