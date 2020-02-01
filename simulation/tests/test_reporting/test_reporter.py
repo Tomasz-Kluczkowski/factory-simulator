@@ -17,14 +17,12 @@ class TestSimulationReporter:
 
     @pytest.fixture
     def product_item(self, factory_config, receiver):
-        return ItemFactory(
-            name=factory_config.product_code, receiver=receiver, received_at=timezone.now()
-        )
+        return ItemFactory(name=factory_config.product_code, received_at=timezone.now())
 
     def test_it_calculates_production_efficiency(self, factory_config, receiver, product_item):
         [
             ItemFactory(
-                name=factory_config.empty_code, receiver=receiver, received_at=timezone.now()
+                name=factory_config.empty_code, received_at=timezone.now()
             ) for __ in range(3)
         ]
 
@@ -35,7 +33,7 @@ class TestSimulationReporter:
     def test_it_works_with_no_products(self, factory_config, receiver):
         [
             ItemFactory(
-                name=factory_config.empty_code, receiver=receiver, received_at=timezone.now()
+                name=factory_config.empty_code, received_at=timezone.now()
             ) for __ in range(3)
         ]
 
