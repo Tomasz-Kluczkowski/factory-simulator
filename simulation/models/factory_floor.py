@@ -19,7 +19,7 @@ class FactoryFloor(BaseModel):
     def __init__(
             self, feeder: Feeder, receiver: Receiver, conveyor_belt: ConveyorBelt, *args, **kwargs,
     ):
-        self._workers = None
+        self._workers = []
         self.feeder = feeder
         self.receiver = receiver
         self.conveyor_belt = conveyor_belt
@@ -41,12 +41,12 @@ class FactoryFloor(BaseModel):
         operation_times = worker_operation_times or WorkerOperationTimes.objects.create()
         for slot_number in range(self.factory_config.number_of_worker_pairs):
             for pair_number in range(2):
-                Worker.objects.create(
-                    name=f'slot={slot_number}, pair={pair_number}',
+                worker = Worker(
                     operation_times=operation_times,
                     slot_number=slot_number,
                     factory_floor=self
                 )
+                self._workers.append(worker)
 
     def push_item_to_receiver(self):
         """
@@ -75,12 +75,10 @@ class FactoryFloor(BaseModel):
                 raise FactoryConfigError(INSUFFICIENT_FEED_INPUT)
 
             # make each pair work
-            for worker in self.workers_group:
+            for worker in self._workers:
                 worker.work()
             self.time += 1
 
     @property
-    def workers_group(self):
-        if self._workers is None:
-            self._workers = self.workers.all()
+    def workers(self):
         return self._workers
