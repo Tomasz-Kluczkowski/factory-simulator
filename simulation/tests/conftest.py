@@ -2,7 +2,8 @@ import factory
 
 from simulation.domain_models.feeder import Feeder
 from simulation.domain_models.item import Item
-from simulation.models import Receiver, WorkerOperationTimes, ConveyorBelt, FactoryFloor
+from simulation.domain_models.receiver import Receiver
+from simulation.models import WorkerOperationTimes, ConveyorBelt, FactoryFloor
 from simulation.models.factory_config import FactoryConfig
 from simulation.models.worker import Worker
 from simulation.reporting.simulation_reporter import SimulationReporter
@@ -20,7 +21,7 @@ class FeederFactory(factory.Factory):
         model = Feeder
 
 
-class ReceiverFactory(factory.DjangoModelFactory):
+class ReceiverFactory(factory.Factory):
     class Meta:
         model = Receiver
 
