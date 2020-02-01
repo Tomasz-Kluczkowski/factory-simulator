@@ -4,13 +4,13 @@ from django.db import models
 from simulation.models.base_model import BaseModel
 
 
-def get_default_required_names():
+def get_default_required_item_names():
     return ['A', 'B']
 
 
 class FactoryConfig(BaseModel):
-    required_component_names = ArrayField(
-        models.CharField(max_length=30), default=get_default_required_names
+    required_item_names = ArrayField(
+        models.CharField(max_length=30), default=get_default_required_item_names
     )
     product_code = models.CharField(max_length=30, default='P')
     empty_code = models.CharField(max_length=30, default='E')
