@@ -1,8 +1,9 @@
-from __future__ import annotations
-
-from typing import List
+from typing import List, TYPE_CHECKING
 from simulation.domain_models.base_domain_model import BaseDomainModel
 from simulation.domain_models.item import Item
+
+if TYPE_CHECKING:
+    from simulation.models import FactoryFloor
 
 
 class WorkerState:
@@ -14,7 +15,7 @@ class WorkerState:
 
 class Worker(BaseDomainModel):
 
-    def __init__(self, slot_number: int, factory_floor: FactoryFloor):
+    def __init__(self, slot_number: int, factory_floor: 'FactoryFloor'):
         self.slot_number = slot_number
         # TODO: put factory config and conveyor belt here instead of factory floor?
         self.factory_floor = factory_floor

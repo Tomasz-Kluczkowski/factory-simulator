@@ -1,5 +1,5 @@
 from simulation.domain_models.receiver import Receiver
-from simulation.models import FactoryConfig
+from simulation.models.factory_config import FactoryConfig
 
 
 class SimulationReporter:

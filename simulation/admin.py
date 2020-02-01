@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from simulation.models import FactoryConfig
+from simulation.models.factory_config import FactoryConfig
 
 admin.site.register(FactoryConfig)

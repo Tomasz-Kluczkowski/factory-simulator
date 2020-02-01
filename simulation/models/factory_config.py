@@ -1,7 +1,7 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
-from simulation.models import BaseModel
+from simulation.models.base_model import BaseModel
 
 
 def get_default_required_names():

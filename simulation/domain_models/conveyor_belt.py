@@ -3,7 +3,7 @@ from typing import Union, Dict
 from simulation.domain_models.base_domain_model import BaseDomainModel
 from simulation.domain_models.item import Item
 from simulation.helpers.data_structures import Queue
-from simulation.models import FactoryConfig
+from simulation.models.factory_config import FactoryConfig
 
 
 class ConveyorBeltState:
