@@ -2,6 +2,7 @@ from typing import List
 
 from django.db import models
 
+from simulation.domain_models.base import BaseDomainModel
 from simulation.domain_models.item import Item
 from simulation.models import BaseModel
 
@@ -19,14 +20,14 @@ class WorkerOperationTimes(BaseModel):
     build_time = models.PositiveSmallIntegerField(default=4)
 
 
-class Worker(BaseModel):
-    name = models.CharField(max_length=30, blank=True, null=True, default='')
-    slot_number = models.PositiveSmallIntegerField()
-    operation_times = models.ForeignKey(WorkerOperationTimes, on_delete=models.CASCADE, related_name='workers')
-    factory_floor = models.ForeignKey('FactoryFloor', on_delete=models.CASCADE, related_name='workers')
+class Worker(BaseDomainModel):
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(
+            self, slot_number: int, operation_times: WorkerOperationTimes, factory_floor: 'FactoryFloor'
+    ):
+        self.slot_number = slot_number
+        self.operation_times = operation_times
+        self.factory_floor = factory_floor
         self._items: List[Item] = []
         self._current_state: str = WorkerState.IDLE
         self._remaining_time_of_operation: int = 0
