@@ -54,7 +54,7 @@ class FactoryFloorFactory(factory.DjangoModelFactory):
     conveyor_belt = factory.SubFactory(ConveyorBeltFactory, factory_config=factory.SelfAttribute('..factory_config'))
 
 
-class WorkerFactory(factory.DjangoModelFactory):
+class WorkerFactory(factory.Factory):
     class Meta:
         model = Worker
 
