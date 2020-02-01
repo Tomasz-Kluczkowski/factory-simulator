@@ -1,10 +1,9 @@
 from typing import Union, Dict
 
-from django.db import models
-
+from simulation.domain_models.base import BaseDomainModel
 from simulation.domain_models.item import Item
 from simulation.helpers.data_structures import Queue
-from simulation.models import BaseModel, FactoryConfig
+from simulation.models import FactoryConfig
 
 
 class ConveyorBeltState:
@@ -12,11 +11,10 @@ class ConveyorBeltState:
     BUSY = 'busy'
 
 
-class ConveyorBelt(BaseModel, Queue):
-    factory_config = models.ForeignKey(FactoryConfig, on_delete=models.CASCADE, related_name='conveyor_belts')
-
-    def __init__(self, *args, **kwargs):
-        super(). __init__(*args, **kwargs)
+class ConveyorBelt(BaseDomainModel, Queue):
+    def __init__(self, factory_config: FactoryConfig):
+        super().__init__()
+        self.factory_config = factory_config
         self._slot_states: Dict[int, str] = {}
         self._set_slot_states_to_free()
         self._set_slots_to_empty()
