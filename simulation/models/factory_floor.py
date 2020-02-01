@@ -6,7 +6,7 @@ from simulation.domain_models.receiver import Receiver
 from simulation.exceptions.exceptions import FactoryConfigError
 from simulation.exceptions.messages import WRONG_FACTORY_CONFIG, INSUFFICIENT_FEED_INPUT
 from simulation.models import BaseModel, FactoryConfig
-from simulation.domain_models.worker import Worker, WorkerOperationTimes
+from simulation.domain_models.worker import Worker
 
 
 class FactoryFloor(BaseModel):
@@ -28,7 +28,7 @@ class FactoryFloor(BaseModel):
             raise FactoryConfigError(WRONG_FACTORY_CONFIG)
         self.time = 0
 
-    def add_workers(self, worker_operation_times: WorkerOperationTimes = None):
+    def add_workers(self):
         """
         Creates a pair of workers per self.factory_config.number_of_worker_pairs and saves in the database.
         Each worker pair is assigned to a slot_number on the conveyor belt.
@@ -38,11 +38,9 @@ class FactoryFloor(BaseModel):
         worker_operation_times
             Operation times to be used per worker.
         """
-        operation_times = worker_operation_times or WorkerOperationTimes.objects.create()
         for slot_number in range(self.factory_config.number_of_worker_pairs):
             for pair_number in range(2):
                 worker = Worker(
-                    operation_times=operation_times,
                     slot_number=slot_number,
                     factory_floor=self
                 )
