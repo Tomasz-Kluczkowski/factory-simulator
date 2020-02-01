@@ -49,7 +49,7 @@ class TestWorker:
     def test_it_completes_pickup_operation_in_correct_time(self, worker, item_a, conveyor_belt):
         conveyor_belt.enqueue(item_a)
 
-        for i in range(worker.factory_config.pick_up_time):
+        for i in range(worker.factory_config.pickup_time):
             worker.work()
 
         assert conveyor_belt.is_slot_free(slot_number=0)
