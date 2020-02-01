@@ -1,10 +1,8 @@
+from __future__ import annotations
+
 from typing import List
-
-from django.db import models
-
 from simulation.domain_models.base import BaseDomainModel
 from simulation.domain_models.item import Item
-from simulation.models import BaseModel
 
 
 class WorkerState:
@@ -14,19 +12,11 @@ class WorkerState:
     BUILDING = 'building'
 
 
-class WorkerOperationTimes(BaseModel):
-    pick_up_time = models.PositiveSmallIntegerField(default=1)
-    drop_time = models.PositiveSmallIntegerField(default=1)
-    build_time = models.PositiveSmallIntegerField(default=4)
-
-
 class Worker(BaseDomainModel):
 
-    def __init__(
-            self, slot_number: int, operation_times: WorkerOperationTimes, factory_floor: 'FactoryFloor'
-    ):
+    def __init__(self, slot_number: int, factory_floor: FactoryFloor):
         self.slot_number = slot_number
-        self.operation_times = operation_times
+        # TODO: put factory config and conveyor belt here instead of factory floor?
         self.factory_floor = factory_floor
         self._items: List[Item] = []
         self._current_state: str = WorkerState.IDLE
@@ -129,17 +119,17 @@ class Worker(BaseDomainModel):
         )
 
     def _on_picking_up_component(self):
-        self._remaining_time_of_operation = self.operation_times.pick_up_time
+        self._remaining_time_of_operation = self.factory_config.pick_up_time
 
         item_at_slot = self.conveyor_belt.retrieve_item_from_slot(slot_number=self.slot_number)
         self._items.append(item_at_slot)
 
     def _on_dropping_product(self):
-        self._remaining_time_of_operation = self.operation_times.drop_time
+        self._remaining_time_of_operation = self.factory_config.drop_time
         self.conveyor_belt.put_item_in_slot(slot_number=self.slot_number, item=self._items.pop())
 
     def _on_building_product(self):
-        self._remaining_time_of_operation = self.operation_times.build_time
+        self._remaining_time_of_operation = self.factory_config.build_time
 
     def _on_finished_moving_goods(self):
         self.conveyor_belt.confirm_operation_at_slot_finished(slot_number=self.slot_number)
