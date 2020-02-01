@@ -7,6 +7,7 @@ class FactoryConfigSerializer(serializers.ModelSerializer):
     class Meta:
         model = FactoryConfig
         fields = [
+            'id',
             'required_item_names',
             'product_code',
             'empty_code',
