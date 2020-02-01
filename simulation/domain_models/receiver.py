@@ -2,7 +2,7 @@ from typing import List
 
 from django.utils import timezone
 
-from simulation.domain_models.base import BaseDomainModel
+from simulation.domain_models.base_domain_model import BaseDomainModel
 from simulation.domain_models.item import Item
 
 

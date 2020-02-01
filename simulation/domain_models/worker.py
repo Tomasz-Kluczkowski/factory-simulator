@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from typing import List
-from simulation.domain_models.base import BaseDomainModel
+from simulation.domain_models.base_domain_model import BaseDomainModel
 from simulation.domain_models.item import Item
 
 

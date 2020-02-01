@@ -1,6 +1,6 @@
 from typing import Union, Dict
 
-from simulation.domain_models.base import BaseDomainModel
+from simulation.domain_models.base_domain_model import BaseDomainModel
 from simulation.domain_models.item import Item
 from simulation.helpers.data_structures import Queue
 from simulation.models import FactoryConfig

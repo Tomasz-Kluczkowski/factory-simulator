@@ -3,7 +3,7 @@ from datetime import datetime
 
 from django.db import models
 
-from simulation.domain_models.base import BaseDomainModel
+from simulation.domain_models.base_domain_model import BaseDomainModel
 
 
 @dataclass

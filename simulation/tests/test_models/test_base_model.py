@@ -1,4 +1,4 @@
-from simulation.models.base import BaseModel
+from simulation.models.base_model import BaseModel
 
 
 class TestBaseModel:
