@@ -1,6 +1,8 @@
 from typing import List, TYPE_CHECKING
 from simulation.domain_models.base_domain_model import BaseDomainModel
+from simulation.domain_models.conveyor_belt import ConveyorBelt
 from simulation.domain_models.item import Item
+from simulation.models.factory_config import FactoryConfig
 
 if TYPE_CHECKING:
     from simulation.models import FactoryFloor
@@ -75,19 +77,19 @@ class Worker(BaseDomainModel):
                 self._on_finished_building_product()
 
     @property
-    def items(self):
+    def items(self) -> List[Item]:
         return self._items
 
     @property
-    def item_names(self):
+    def item_names(self) -> List[str]:
         return [item.name for item in self._items]
 
     @property
-    def factory_config(self):
+    def factory_config(self) -> FactoryConfig:
         return self.factory_floor.factory_config
 
     @property
-    def conveyor_belt(self):
+    def conveyor_belt(self) -> ConveyorBelt:
         return self.factory_floor.conveyor_belt
 
     def _can_pickup_component(self):
@@ -120,7 +122,7 @@ class Worker(BaseDomainModel):
         )
 
     def _on_picking_up_component(self):
-        self._remaining_time_of_operation = self.factory_config.pick_up_time
+        self._remaining_time_of_operation = self.factory_config.pickup_time
 
         item_at_slot = self.conveyor_belt.retrieve_item_from_slot(slot_number=self.slot_number)
         self._items.append(item_at_slot)
