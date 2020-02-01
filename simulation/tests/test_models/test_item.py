@@ -1,18 +1,16 @@
+from datetime import datetime
+
 import pytest
 
-from simulation.tests.conftest import ItemFactory, FeederFactory, ReceiverFactory
+from simulation.tests.conftest import ItemFactory
 
 pytestmark = pytest.mark.django_db
 
 
 class TestItem:
     def test_it_can_be_instantiated(self):
-        receiver = ReceiverFactory()
-        feeder = FeederFactory()
-        item = ItemFactory(id=1, name='A', receiver=receiver, feeder=feeder)
+        received_at = datetime(2020, 1, 1, 12)
+        item = ItemFactory(name='A', received_at=received_at)
 
-        assert item.id == 1
         assert item.name == 'A'
-        assert item.receiver == receiver
-        assert item.feeder == feeder
-        assert item.received_at is None
+        assert item.received_at == received_at
