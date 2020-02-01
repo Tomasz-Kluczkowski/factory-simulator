@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from simulation.models import FactoryConfig
+from simulation.models.factory_config import FactoryConfig
 
 
 class FactoryConfigSerializer(serializers.ModelSerializer):
@@ -13,4 +13,7 @@ class FactoryConfigSerializer(serializers.ModelSerializer):
             'number_of_simulation_steps',
             'number_of_conveyor_belt_slots',
             'number_of_worker_pairs',
+            'pickup_time',
+            'drop_time',
+            'build_time',
         ]
