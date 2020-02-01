@@ -1,6 +1,7 @@
 import pytest
 
-from simulation.models import Item, ConveyorBelt
+from simulation.domain_models.item import Item
+from simulation.models import ConveyorBelt
 from simulation.models.worker import Worker
 from simulation.tests.conftest import WorkerFactory, ItemFactory
 
