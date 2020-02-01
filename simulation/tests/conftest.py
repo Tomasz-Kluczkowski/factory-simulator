@@ -6,7 +6,7 @@ from simulation.domain_models.item import Item
 from simulation.domain_models.receiver import Receiver
 from simulation.models import WorkerOperationTimes, FactoryFloor
 from simulation.models.factory_config import FactoryConfig
-from simulation.models.worker import Worker
+from simulation.domain_models.worker import Worker
 from simulation.reporting.simulation_reporter import SimulationReporter
 
 

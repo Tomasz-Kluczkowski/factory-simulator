@@ -1,4 +1,4 @@
 from .base import BaseModel
 from .factory_config import FactoryConfig
 from .factory_floor import FactoryFloor
-from .worker import WorkerOperationTimes
+from simulation.domain_models.worker import WorkerOperationTimes

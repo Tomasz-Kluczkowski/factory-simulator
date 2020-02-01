@@ -6,7 +6,7 @@ from simulation.domain_models.receiver import Receiver
 from simulation.exceptions.exceptions import FactoryConfigError
 from simulation.exceptions.messages import WRONG_FACTORY_CONFIG, INSUFFICIENT_FEED_INPUT
 from simulation.models import BaseModel, FactoryConfig
-from simulation.models.worker import Worker, WorkerOperationTimes
+from simulation.domain_models.worker import Worker, WorkerOperationTimes
 
 
 class FactoryFloor(BaseModel):
