@@ -17,3 +17,6 @@ class FactoryConfig(BaseModel):
     number_of_simulation_steps = models.PositiveIntegerField(default=10)
     number_of_conveyor_belt_slots = models.PositiveSmallIntegerField(default=3)
     number_of_worker_pairs = models.PositiveSmallIntegerField(default=3)
+    pick_up_time = models.PositiveSmallIntegerField(default=1)
+    drop_time = models.PositiveSmallIntegerField(default=1)
+    build_time = models.PositiveSmallIntegerField(default=4)
