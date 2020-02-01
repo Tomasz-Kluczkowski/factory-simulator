@@ -1,10 +1,6 @@
 from datetime import datetime
 
-import pytest
-
 from simulation.tests.conftest import ItemFactory
-
-pytestmark = pytest.mark.django_db
 
 
 class TestItem:

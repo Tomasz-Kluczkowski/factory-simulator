@@ -1,7 +1,7 @@
 import pytest
 
+from simulation.domain_models.conveyor_belt import ConveyorBelt
 from simulation.domain_models.item import Item
-from simulation.models import ConveyorBelt
 from simulation.tests.conftest import ConveyorBeltFactory
 
 pytestmark = pytest.mark.django_db
