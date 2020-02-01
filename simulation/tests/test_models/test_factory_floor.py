@@ -44,7 +44,7 @@ class TestFactoryFloor:
     def test_add_workers_default_operation_times_used(self, factory_floor):
         factory_floor.add_workers()
 
-        workers = factory_floor.workers.all()
+        workers = factory_floor.workers
         assert len(workers) == 6
 
         assert sorted([worker.slot_number for worker in workers]) == [0, 0, 1, 1, 2, 2]
@@ -58,7 +58,7 @@ class TestFactoryFloor:
         worker_operation_times = WorkerOperationTimesFactory()
         factory_floor.add_workers(worker_operation_times=worker_operation_times)
 
-        workers = factory_floor.workers.all()
+        workers = factory_floor.workers
         assert len(workers) == 6
 
         assert sorted([worker.slot_number for worker in workers]) == [0, 0, 1, 1, 2, 2]

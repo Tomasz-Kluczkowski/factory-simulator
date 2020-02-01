@@ -22,8 +22,7 @@ class TestWorker:
         return ItemFactory(name='A')
 
     def test_it_can_be_instantiated(self):
-        worker = WorkerFactory(name='Billy Bob', slot_number=123)
-        assert worker.name == 'Billy Bob'
+        worker = WorkerFactory(slot_number=123)
         assert worker.slot_number == 123
 
     def test_it_pickups_up_a_component(self, worker, item_a, conveyor_belt):
