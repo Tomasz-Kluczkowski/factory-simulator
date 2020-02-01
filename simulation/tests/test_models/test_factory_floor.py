@@ -6,7 +6,7 @@ from simulation.exceptions.exceptions import FactoryConfigError
 from simulation.models import FactoryFloor
 from simulation.domain_models.feeder import sequential_feed_function
 from simulation.tests.conftest import FactoryFloorFactory, FeederFactory, ReceiverFactory, FactoryConfigFactory, \
-    ConveyorBeltFactory, WorkerOperationTimesFactory, ItemFactory
+    ConveyorBeltFactory, ItemFactory
 
 pytestmark = pytest.mark.django_db
 
@@ -55,8 +55,7 @@ class TestFactoryFloor:
             assert worker.factory_floor == factory_floor
 
     def test_add_workers_custom_operation_times_used(self, factory_floor):
-        worker_operation_times = WorkerOperationTimesFactory()
-        factory_floor.add_workers(worker_operation_times=worker_operation_times)
+        factory_floor.add_workers()
 
         workers = factory_floor.workers
         assert len(workers) == 6
@@ -67,7 +66,6 @@ class TestFactoryFloor:
             assert worker.factory_config == factory_floor.factory_config
             assert worker.conveyor_belt == factory_floor.conveyor_belt
             assert worker.factory_floor == factory_floor
-            assert worker.operation_times == worker_operation_times
 
     def test_raises_exception_if_number_of_worker_pairs_exceeds_number_of_conveyor_belt_slots(self):
         factory_config = FactoryConfigFactory(number_of_worker_pairs=3, number_of_conveyor_belt_slots=1)
