@@ -1,9 +1,10 @@
 import factory
 
+from simulation.domain_models.conveyor_belt import ConveyorBelt
 from simulation.domain_models.feeder import Feeder
 from simulation.domain_models.item import Item
 from simulation.domain_models.receiver import Receiver
-from simulation.models import WorkerOperationTimes, ConveyorBelt, FactoryFloor
+from simulation.models import WorkerOperationTimes, FactoryFloor
 from simulation.models.factory_config import FactoryConfig
 from simulation.models.worker import Worker
 from simulation.reporting.simulation_reporter import SimulationReporter
@@ -36,7 +37,7 @@ class FactoryConfigFactory(factory.DjangoModelFactory):
         model = FactoryConfig
 
 
-class ConveyorBeltFactory(factory.DjangoModelFactory):
+class ConveyorBeltFactory(factory.Factory):
     class Meta:
         model = ConveyorBelt
 
