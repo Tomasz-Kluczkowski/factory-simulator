@@ -130,6 +130,6 @@ STATIC_URL = '/static/'
 
 # TESTING SETTINGS
 TESTING = config('TESTING', default=False, cast=bool)
-if TESTING:
+if TESTING:  # pragma: no cover
     # Allows to define temporary models during testing.
     INSTALLED_APPS.append('test_application')
