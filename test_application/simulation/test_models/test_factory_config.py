@@ -1,5 +1,5 @@
 from simulation.models.factory_config import FactoryConfig
-from simulation.tests.conftest import FactoryConfigFactory
+from test_application.conftest import FactoryConfigFactory
 
 
 class TestWorkerOperationTimes:

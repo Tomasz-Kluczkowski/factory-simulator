@@ -4,7 +4,7 @@ from unittest.mock import patch
 import pytest
 from django.utils import timezone
 
-from simulation.tests.conftest import ReceiverFactory, ItemFactory
+from test_application.conftest import ReceiverFactory, ItemFactory
 
 
 class TestReceiver:

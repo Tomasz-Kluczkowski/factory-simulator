@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
 
-from simulation.tests.conftest import FactoryConfigFactory
+from test_application.conftest import FactoryConfigFactory
 
 pytestmark = pytest.mark.django_db
 

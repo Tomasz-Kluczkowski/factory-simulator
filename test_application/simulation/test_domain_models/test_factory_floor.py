@@ -5,7 +5,7 @@ import pytest
 from simulation.domain_models.factory_floor import FactoryFloor
 from simulation.exceptions.exceptions import FactoryConfigError
 from simulation.domain_models.feeder import sequential_feed_function
-from simulation.tests.conftest import FactoryFloorFactory, FeederFactory, ReceiverFactory, FactoryConfigFactory, \
+from test_application.conftest import FactoryFloorFactory, FeederFactory, ReceiverFactory, FactoryConfigFactory, \
     ConveyorBeltFactory, ItemFactory
 
 pytestmark = pytest.mark.django_db

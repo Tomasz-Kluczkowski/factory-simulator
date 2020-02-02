@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from simulation.tests.conftest import ItemFactory
+from test_application.conftest import ItemFactory
 
 
 class TestItem:

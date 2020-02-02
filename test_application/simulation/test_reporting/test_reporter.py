@@ -1,7 +1,7 @@
 import pytest
 from django.utils import timezone
 
-from simulation.tests.conftest import ItemFactory, FactoryConfigFactory, ReceiverFactory, SimulationReporterFactory
+from test_application.conftest import ItemFactory, FactoryConfigFactory, ReceiverFactory, SimulationReporterFactory
 
 pytestmark = pytest.mark.django_db
 

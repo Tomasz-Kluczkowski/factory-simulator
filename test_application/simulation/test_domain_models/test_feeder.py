@@ -1,7 +1,7 @@
 import random
 
 from simulation.domain_models.feeder import sequential_feed_function
-from simulation.tests.conftest import FeederFactory
+from test_application.conftest import FeederFactory
 
 
 class TestFeedFunctions:
