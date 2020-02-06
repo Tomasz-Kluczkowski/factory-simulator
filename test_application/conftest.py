@@ -2,7 +2,7 @@ import factory
 
 from simulation.domain_models.conveyor_belt import ConveyorBelt
 from simulation.domain_models.factory_floor import FactoryFloor
-from simulation.domain_models.feeder import Feeder
+from simulation.domain_models.feeder import RandomizedFeeder, SequentialFeeder
 from simulation.domain_models.item import Item
 from simulation.domain_models.receiver import Receiver
 from simulation.models.factory_config import FactoryConfig
@@ -17,9 +17,14 @@ class ItemFactory(factory.Factory):
     name = factory.Sequence(lambda n: f'component_{n}')
 
 
-class FeederFactory(factory.Factory):
+class RandomizedFeederFactory(factory.Factory):
     class Meta:
-        model = Feeder
+        model = RandomizedFeeder
+
+
+class SequentialFeederFactory(factory.Factory):
+    class Meta:
+        model = SequentialFeeder
 
 
 class ReceiverFactory(factory.Factory):
@@ -44,7 +49,7 @@ class FactoryFloorFactory(factory.Factory):
         model = FactoryFloor
 
     factory_config = factory.SubFactory(FactoryConfigFactory)
-    feeder = factory.SubFactory(FeederFactory)
+    feeder = factory.SubFactory(SequentialFeederFactory)
     receiver = factory.SubFactory(ReceiverFactory)
     conveyor_belt = factory.SubFactory(ConveyorBeltFactory, factory_config=factory.SelfAttribute('..factory_config'))
 
