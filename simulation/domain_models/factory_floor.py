@@ -14,7 +14,11 @@ class FactoryFloor(BaseDomainModel):
     By default the number of pairs matches the number of slots on the belt.
     """
     def __init__(
-            self, feeder: Feeder, receiver: Receiver, conveyor_belt: ConveyorBelt, factory_config: FactoryConfig
+            self,
+            feeder: Feeder,
+            receiver: Receiver,
+            conveyor_belt: ConveyorBelt,
+            factory_config: FactoryConfig,
     ):
         self._workers = []
         self.feeder = feeder
