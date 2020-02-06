@@ -4,9 +4,15 @@ import pytest
 
 from simulation.domain_models.factory_floor import FactoryFloor
 from simulation.exceptions.exceptions import FactoryConfigError
-from simulation.domain_models.feeder import sequential_feed_function
-from test_application.conftest import FactoryFloorFactory, FeederFactory, ReceiverFactory, FactoryConfigFactory, \
-    ConveyorBeltFactory, ItemFactory
+from test_application.conftest import (
+    FactoryFloorFactory,
+    RandomizedFeederFactory,
+    ReceiverFactory,
+    FactoryConfigFactory,
+    ConveyorBeltFactory,
+    ItemFactory,
+    SequentialFeederFactory,
+)
 
 pytestmark = pytest.mark.django_db
 
@@ -14,7 +20,7 @@ pytestmark = pytest.mark.django_db
 class TestFactoryFloor:
     @pytest.fixture
     def feeder(self):
-        return FeederFactory()
+        return RandomizedFeederFactory()
 
     @pytest.fixture
     def receiver(self):
@@ -99,10 +105,7 @@ class TestFactoryFloor:
         ]
 
     def test_basic_run_belt(self, factory_floor):
-        feeder = FeederFactory(
-            item_names=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-            feed_function=sequential_feed_function
-        )
+        feeder = SequentialFeederFactory(item_names=['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'])
         factory_floor: FactoryFloor = FactoryFloorFactory(feeder=feeder)
         factory_floor.run()
         assert factory_floor.receiver.received_item_names == [
@@ -121,7 +124,7 @@ class TestFactoryFloor:
         assert factory_floor.time == 10
 
     def test_basic_run_belt_run_out_of_feed_items(self):
-        feeder = FeederFactory(item_names=['1'], feed_function=sequential_feed_function)
+        feeder = SequentialFeederFactory(item_names=['1'])
         factory_floor: FactoryFloor = FactoryFloorFactory(feeder=feeder)
 
         with pytest.raises(FactoryConfigError) as exception:
@@ -132,10 +135,7 @@ class TestFactoryFloor:
         )
 
     def test_run_factory_one_product_created_by_worker_on_slot_zero(self):
-        feeder = FeederFactory(
-            item_names=['A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
-            feed_function=sequential_feed_function
-        )
+        feeder = SequentialFeederFactory(item_names=['A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'])
 
         factory_floor: FactoryFloor = FactoryFloorFactory(
             feeder=feeder
@@ -147,10 +147,7 @@ class TestFactoryFloor:
         assert factory_floor.receiver.received_item_names == ['E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'P', 'E']
 
     def test_run_factory_two_products_created_by_workers_on_slot_zero(self):
-        feeder = FeederFactory(
-            item_names=['A', 'B', 'A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
-            feed_function=sequential_feed_function
-        )
+        feeder = SequentialFeederFactory(item_names=['A', 'B', 'A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'])
         factory_floor: FactoryFloor = FactoryFloorFactory(
             feeder=feeder
         )
@@ -163,9 +160,8 @@ class TestFactoryFloor:
         ]
 
     def test_run_factory_three_products_created_by_workers_on_slot_zero_and_first_at_slot_one(self):
-        feeder = FeederFactory(
-            item_names=['A', 'B', 'A', 'B', 'A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
-            feed_function=sequential_feed_function
+        feeder = SequentialFeederFactory(
+            item_names=['A', 'B', 'A', 'B', 'A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E']
         )
         factory_floor: FactoryFloor = FactoryFloorFactory(
             feeder=feeder
@@ -179,10 +175,7 @@ class TestFactoryFloor:
         ]
 
     def test_run_factory_worker_ignores_item_not_required(self):
-        feeder = FeederFactory(
-            item_names=['A', 'A', 'A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'],
-            feed_function=sequential_feed_function
-        )
+        feeder = SequentialFeederFactory(item_names=['A', 'A', 'A', 'B', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E'])
         factory_floor: FactoryFloor = FactoryFloorFactory(
             feeder=feeder
         )
