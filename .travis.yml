@@ -17,7 +17,7 @@ script:
   - coverage erase
   - python manage.py makemigrations
   - python manage.py migrate
-  - pytest --cov
+  - pytest --cov test_application
 
 after_success:
   - pip install codecov
