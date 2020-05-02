@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FactoryConfigService} from '../../services/factory-config/factory-config.service';
-import {FactoryConfigAPIResponse} from '../../models/factory-config.models';
+import {FactoryConfigAPIResource, FactoryConfigAPIResponse} from '../../models/factory-config.models';
 
 
 @Component({
@@ -9,7 +9,7 @@ import {FactoryConfigAPIResponse} from '../../models/factory-config.models';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  factoryConfigs: FactoryConfigAPIResponse[];
+  factoryConfigs: FactoryConfigAPIResource[];
 
   constructor(private factoryConfigService: FactoryConfigService) { }
 
@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   }
 
   onGetConfigsClicked() {
-    this.factoryConfigService.getAllFactoryConfigs().subscribe(
+    this.factoryConfigService.list().subscribe(
       (data) => {
         console.log(data);
         this.factoryConfigs = data;
