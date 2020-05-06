@@ -5,7 +5,7 @@ certifi==2019.9.11
 coverage==4.5.4
 devtools==0.5
 diff-cover==2.3.0
-Django==2.2.8
+Django==2.2.10
 django-cors-headers==3.2.1
 django-extensions==2.2.3
 django-rest-framework==0.1.0
