@@ -143,3 +143,4 @@ TESTING = config('TESTING', default=False, cast=bool)
 if TESTING:  # pragma: no cover
     # Allows to define temporary models during testing.
     INSTALLED_APPS.append('test_application')
+# fake comment to trigger pipeline
