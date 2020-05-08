@@ -1,3 +1,5 @@
+dist: bionic
+
 stages:
   - testing
 
@@ -40,10 +42,40 @@ jobs:
         - '12'
       cache:
         directories:
-          - ./node_modules
+          - front-end/node_modules
       before_script:
         - cd front-end
         - npm install -g @angular/cli
       script:
         - npm install
         - ng lint
+
+    - stage: testing
+      name: 'Testing: front-end'
+      language: node_js
+      node_js:
+        - '12'
+      cache:
+        directories:
+          - front-end/node_modules
+      before_script:
+        - cd front-end
+        - npm install -g @angular/cli
+      script:
+        - npm install
+        - npm test
+
+    - stage: testing
+      name: 'Build: front-end'
+      language: node_js
+      node_js:
+        - '12'
+      cache:
+        directories:
+          - front-end/node_modules
+      before_script:
+        - cd front-end
+        - npm install -g @angular/cli
+      script:
+        - npm install
+        - ng build --prod
