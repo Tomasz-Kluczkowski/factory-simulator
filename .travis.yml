@@ -42,6 +42,7 @@ jobs:
         directories:
           - ./node_modules
       before_script:
+        - cd front-end
         - npm install -g @angular/cli@9
       script:
         - ng lint
