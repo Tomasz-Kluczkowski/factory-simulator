@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
   onGetConfigsClicked() {
     this.factoryConfigService.list().subscribe(
       (data) => {
-        console.log(data);
         this.factoryConfigs = data;
       }
     );

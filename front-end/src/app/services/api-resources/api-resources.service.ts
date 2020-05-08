@@ -9,22 +9,27 @@ import {map} from 'rxjs/operators';
 const API_URL = environment.apiURL;
 
 
-export class ApiResourcesService<T> {
+export abstract class ApiResourcesService<T> {
 
-  constructor(
-    private httpClient: HttpClient,
-    private endpoint: string,
-    private serializer: ApiSerializer,
-    private url: string = API_URL,
+  protected constructor(
+    protected httpClient: HttpClient,
+    protected endpoint: string,
+    protected serializer: ApiSerializer,
+    protected url: string = API_URL,
   ) { }
 
   list(requestOptions?: RequestOptions): Observable<T[]> {
     return this.httpClient
-      .get(`${this.url}/${this.endpoint}`, requestOptions)
+      .get(this.getUrl(this.endpoint), requestOptions)
       .pipe(
         map(
           (apiData: any) => apiData.map(apiResponse => this.serializer.fromApiResponse(apiResponse))
         )
       );
+  }
+
+  getUrl(endpoint: string, id: any = ''): string {
+    const idSuffix: string = id ? `${id}/` : '';
+    return `${this.url}/${this.endpoint}${idSuffix}`;
   }
 }
