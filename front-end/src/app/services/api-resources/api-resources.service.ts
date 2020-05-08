@@ -20,11 +20,16 @@ export abstract class ApiResourcesService<T> {
 
   list(requestOptions?: RequestOptions): Observable<T[]> {
     return this.httpClient
-      .get(`${this.url}/${this.endpoint}`, requestOptions)
+      .get(this.getUrl(this.endpoint), requestOptions)
       .pipe(
         map(
           (apiData: any) => apiData.map(apiResponse => this.serializer.fromApiResponse(apiResponse))
         )
       );
+  }
+
+  getUrl(endpoint: string, id: any = ''): string {
+    const idSuffix: string = id ? `${id}/` : '';
+    return `${this.url}/${this.endpoint}${idSuffix}`;
   }
 }
