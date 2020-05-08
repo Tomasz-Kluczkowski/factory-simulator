@@ -1,23 +1,55 @@
-services:
-  - postgresql
+stages:
+  - testing
 
-language: python
+jobs:
+  include:
+    - stage: testing
+      name: 'Linting: back-end'
+      language: python
+      python:
+        - '3.7'
+      install:
+        - pip install flake8
+      script:
+        - flake8
 
-python:
-  - "3.7"
+    - stage: testing
+      name: 'Testing: back-end'
+      language: python
+      python:
+        - '3.7'
+      services:
+        - postgresql
+      before_script:
+        - psql -c 'create database factory_simulator;' -U postgres
+      install:
+        - pip install -r requirements.txt
+      script:
+        - coverage erase
+        - python manage.py makemigrations
+        - python manage.py migrate
+        - pytest --cov-config=setup.cfg --cov --cov-report term-missing test_application -v
 
-before_script:
-  - psql -c 'create database factory_simulator;' -U postgres
-
-install:
-  - pip install -r requirements.txt
-
-script:
-  - flake8
-  - coverage erase
-  - python manage.py makemigrations
-  - python manage.py migrate
-  - pytest --cov-config=setup.cfg --cov --cov-report term-missing test_application -v
+#services:
+#  - postgresql
+#
+#language: python
+#
+#python:
+#  - "3.7"
+#
+#before_script:
+#  - psql -c 'create database factory_simulator;' -U postgres
+#
+#install:
+#  - pip install -r requirements.txt
+#
+#script:
+#  - flake8
+#  - coverage erase
+#  - python manage.py makemigrations
+#  - python manage.py migrate
+#  - pytest --cov-config=setup.cfg --cov --cov-report term-missing test_application -v
 
 after_success:
   - pip install codecov
