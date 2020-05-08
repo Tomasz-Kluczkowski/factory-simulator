@@ -1,24 +1,81 @@
-services:
-  - postgresql
+dist: bionic
 
-language: python
+stages:
+  - build
 
-python:
-  - "3.7"
+jobs:
+  include:
+    - stage: build
+      name: 'Linting: back-end'
+      language: python
+      python:
+        - '3.7'
+      install:
+        - pip install flake8
+      script:
+        - flake8 -v
 
-before_script:
-  - psql -c 'create database factory_simulator;' -U postgres
+    - stage: build
+      name: 'Testing: back-end'
+      language: python
+      python:
+        - '3.7'
+      services:
+        - postgresql
+      before_script:
+        - psql -c 'create database factory_simulator;' -U postgres
+      install:
+        - pip install -r requirements.txt
+      script:
+        - coverage erase
+        - python manage.py makemigrations
+        - python manage.py migrate
+        - pytest --cov-config=setup.cfg --cov --cov-report term-missing test_application -v
+      after_success:
+        - pip install codecov
+        - codecov
 
-install:
-  - pip install -r requirements.txt
+    - stage: build
+      name: 'Linting: front-end'
+      language: node_js
+      node_js:
+        - '12'
+      cache:
+        directories:
+          - front-end/node_modules
+      before_script:
+        - cd front-end
+        - npm install -g @angular/cli
+      script:
+        - npm install
+        - ng lint
 
-script:
-  - flake8
-  - coverage erase
-  - python manage.py makemigrations
-  - python manage.py migrate
-  - pytest --cov-config=setup.cfg --cov --cov-report term-missing test_application -v
+    - stage: build
+      name: 'Testing: front-end'
+      language: node_js
+      node_js:
+        - '12'
+      cache:
+        directories:
+          - front-end/node_modules
+      before_script:
+        - cd front-end
+        - npm install -g @angular/cli
+      script:
+        - npm install
+        - npm test
 
-after_success:
-  - pip install codecov
-  - codecov
+    - stage: build
+      name: 'Build: front-end'
+      language: node_js
+      node_js:
+        - '12'
+      cache:
+        directories:
+          - front-end/node_modules
+      before_script:
+        - cd front-end
+        - npm install -g @angular/cli
+      script:
+        - npm install
+        - ng build --prod
