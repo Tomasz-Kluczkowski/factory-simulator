@@ -9,13 +9,13 @@ import {map} from 'rxjs/operators';
 const API_URL = environment.apiURL;
 
 
-export class ApiResourcesService<T> {
+export abstract class ApiResourcesService<T> {
 
-  constructor(
-    private httpClient: HttpClient,
-    private endpoint: string,
-    private serializer: ApiSerializer,
-    private url: string = API_URL,
+  protected constructor(
+    protected httpClient: HttpClient,
+    protected endpoint: string,
+    protected serializer: ApiSerializer,
+    protected url: string = API_URL,
   ) { }
 
   list(requestOptions?: RequestOptions): Observable<T[]> {
