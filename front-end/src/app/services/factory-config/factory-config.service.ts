@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {ApiResourcesService} from '../api-resources/api-resources.service';
 import {FactoryConfigSerializer} from '../../serializers/factory-config.serializer';
 import {FactoryConfigAPIResource} from '../../models/factory-config.models';
+import {ApiEndpoints} from '../../configuration/api-endpoints';
 
 
 @Injectable({
@@ -13,7 +14,7 @@ export class FactoryConfigService extends ApiResourcesService<FactoryConfigAPIRe
   constructor(httpClient: HttpClient) {
     super(
       httpClient,
-      'api/factory-configs/',
+      ApiEndpoints.factoryConfigs,
       new FactoryConfigSerializer()
     );
   }
