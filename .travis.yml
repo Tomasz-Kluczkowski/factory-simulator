@@ -29,6 +29,9 @@ jobs:
         - python manage.py makemigrations
         - python manage.py migrate
         - pytest --cov-config=setup.cfg --cov --cov-report term-missing test_application -v
+      after_success:
+        - pip install codecov
+        - codecov
 
 #services:
 #  - postgresql
@@ -51,6 +54,6 @@ jobs:
 #  - python manage.py migrate
 #  - pytest --cov-config=setup.cfg --cov --cov-report term-missing test_application -v
 
-after_success:
-  - pip install codecov
-  - codecov
+#after_success:
+#  - pip install codecov
+#  - codecov
