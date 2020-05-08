@@ -1,11 +1,11 @@
 dist: bionic
 
 stages:
-  - testing
+  - build
 
 jobs:
   include:
-    - stage: testing
+    - stage: build
       name: 'Linting: back-end'
       language: python
       python:
@@ -15,7 +15,7 @@ jobs:
       script:
         - flake8 -v
 
-    - stage: testing
+    - stage: build
       name: 'Testing: back-end'
       language: python
       python:
@@ -35,7 +35,7 @@ jobs:
         - pip install codecov
         - codecov
 
-    - stage: testing
+    - stage: build
       name: 'Linting: front-end'
       language: node_js
       node_js:
@@ -50,7 +50,7 @@ jobs:
         - npm install
         - ng lint
 
-    - stage: testing
+    - stage: build
       name: 'Testing: front-end'
       language: node_js
       node_js:
@@ -65,7 +65,7 @@ jobs:
         - npm install
         - npm test
 
-    - stage: testing
+    - stage: build
       name: 'Build: front-end'
       language: node_js
       node_js:
