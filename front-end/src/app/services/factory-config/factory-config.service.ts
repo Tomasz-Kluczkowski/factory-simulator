@@ -14,7 +14,7 @@ export class FactoryConfigService extends ApiResourcesService<FactoryConfigAPIRe
   constructor(httpClient: HttpClient) {
     super(
       httpClient,
-      ApiEndpoints.factoryConfigs,
+      ApiEndpoints.FACTORY_CONFIGS,
       new FactoryConfigSerializer()
     );
   }
