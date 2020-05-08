@@ -11,7 +11,7 @@ jobs:
       install:
         - pip install flake8
       script:
-        - flake8
+        - flake8 -v
 
     - stage: testing
       name: 'Testing: back-end'
@@ -33,27 +33,15 @@ jobs:
         - pip install codecov
         - codecov
 
-#services:
-#  - postgresql
-#
-#language: python
-#
-#python:
-#  - "3.7"
-#
-#before_script:
-#  - psql -c 'create database factory_simulator;' -U postgres
-#
-#install:
-#  - pip install -r requirements.txt
-#
-#script:
-#  - flake8
-#  - coverage erase
-#  - python manage.py makemigrations
-#  - python manage.py migrate
-#  - pytest --cov-config=setup.cfg --cov --cov-report term-missing test_application -v
-
-#after_success:
-#  - pip install codecov
-#  - codecov
+    - stage: testing
+      name: 'Linting: front-end'
+      language: node_js
+      node_js:
+        - '12'
+      cache:
+        directories:
+          - ./node_modules
+      before_script:
+        - npm install -g @angular/cli@9
+      script:
+        - ng lint
