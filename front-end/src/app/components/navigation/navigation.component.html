@@ -1,0 +1,79 @@
+<nav>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <mat-toolbar color="primary">
+      <a
+        class="navigation__link"
+        routerLink="/"
+        fxLayoutAlign="start center">
+        <img
+          class="navigation__brand-logo"
+          src="./assets/brand-icon/conveyor.svg"
+          height="45"
+          alt="Factory Simulator Logo">
+        Factory Simulator
+      </a>
+
+      <span class="navigation__fill-space"></span>
+      <a
+        class="navigation__link"
+        routerLink="/simulations"
+      >
+        <button
+          class="navigation__button"
+          mat-button
+          routerLinkActive="active"
+        >
+          Simulations
+        </button>
+      </a>
+      <a
+        class="navigation__link"
+        routerLink="/about"
+      >
+        <button
+          class="navigation__button"
+          mat-button
+          routerLinkActive="active"
+        >
+          About
+        </button>
+      </a>
+      <a
+        class="navigation__link"
+        routerLink="/contact"
+      >
+        <button
+          class="navigation__button"
+          mat-button
+          routerLinkActive="active"
+        >
+          Contact
+        </button>
+      </a>
+      <a *ngIf="'logged out'"
+         class="navigation__link"
+         routerLink="/log-in"
+      >
+        <button
+          class="navigation__button"
+          mat-button
+          routerLinkActive="active"
+        >
+          Log In
+        </button>
+      </a>
+      <a *ngIf="'logged in'"
+         class="navigation__link"
+         routerLink="/log-out"
+      >
+        <button
+          class="navigation__button"
+          mat-button
+          routerLinkActive="active"
+        >
+          Log Out
+        </button>
+      </a>
+    </mat-toolbar>
+  </div>
+</nav>

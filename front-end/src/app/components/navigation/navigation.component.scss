@@ -1,0 +1,20 @@
+.navigation__brand-logo {
+  margin-right: 8px;
+}
+
+.navigation__fill-space {
+  flex: 1 1 auto;
+}
+
+.navigation__link {
+  color: white;
+  text-decoration: none;
+}
+
+.navigation__button {
+  font-size: large;
+  color: white;
+  &.active {
+    color: darken(white, 10);
+  }
+}
