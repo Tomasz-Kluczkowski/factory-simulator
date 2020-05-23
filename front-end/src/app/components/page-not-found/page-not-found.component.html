@@ -1,1 +1,13 @@
-<p>page-not-found!</p>
+<div fxLayout="column" fxLayoutAlign="center center" class="page-not-found__container">
+  <h1>Page Not Found - Error 404</h1>
+  <img
+    class="page-not-found__image"
+    src="./assets/page-not-found/page-not-found.svg"
+    alt="Factory Simulator Logo">
+  <p>The requested page cannot be found.</p>
+  <p *ngIf="path">
+    Did you want to navigate to:
+    <a [routerLink]="[path]">{{path}}</a>
+    ?
+  </p>
+</div>
