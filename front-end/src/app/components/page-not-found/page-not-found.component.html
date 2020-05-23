@@ -7,7 +7,7 @@
   <p>The requested page cannot be found.</p>
   <p *ngIf="path">
     Did you want to navigate to:
-    <a [routerLink]="path">{{path}}</a>
+    <a [routerLink]="[path]">{{path}}</a>
     ?
   </p>
 </div>
