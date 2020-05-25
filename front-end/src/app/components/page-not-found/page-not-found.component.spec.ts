@@ -8,6 +8,7 @@ import {of} from 'rxjs';
 describe('PageNotFoundComponent', () => {
   let component: PageNotFoundComponent;
   let fixture: ComponentFixture<PageNotFoundComponent>;
+  const path = '/about';
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -16,22 +17,44 @@ describe('PageNotFoundComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            data: of({path: '/'})
+            data: of({path})
           }
         }
       ],
       declarations: [ PageNotFoundComponent ]
-    })
-    .compileComponents();
+    });
   }));
 
-  beforeEach(() => {
+  it('should create', () => {
+    TestBed.compileComponents();
     fixture = TestBed.createComponent(PageNotFoundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    expect(component).toBeTruthy();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should show proposed navigation link to the user', () => {
+    TestBed.compileComponents();
+    fixture = TestBed.createComponent(PageNotFoundComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    const nativeElement = fixture.debugElement.nativeElement;
+    expect(nativeElement.querySelector('.page-not-found__proposed-link').textContent).toContain(
+      `Did you want to navigate to: ${path} ?`
+    );
+  });
+
+  it('should not show proposed navigation link to the user if path not provided', () => {
+    TestBed.overrideProvider(ActivatedRoute, {
+      useValue: {
+        data: of({path: null})
+      }
+    });
+    TestBed.compileComponents();
+    fixture = TestBed.createComponent(PageNotFoundComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    const nativeElement = fixture.debugElement.nativeElement;
+    expect(nativeElement.querySelector('.page-not-found__proposed-link')).toBeFalsy();
   });
 });
