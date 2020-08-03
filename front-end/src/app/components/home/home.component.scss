@@ -1,0 +1,33 @@
+@import "~src/app/styles/app-theme";
+
+.home__page-top {
+  position: relative;
+}
+
+.home__image {
+  width: 100%;
+}
+
+.home__title-container {
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  -moz-transform: translate(50%, -50%);
+  -webkit-transform: translate(50%, -50%);
+  -ms-transform: translate(50%, -50%);
+  transform: translate(50%, -50%);
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 100%);
+  height: 20%;
+  width: 100%
+}
+
+.home__title {
+  font-size: 4em;
+  color: $warn;
+}
+
+.home__description {
+  color: $primary;
+  margin-bottom: 0;
+}
