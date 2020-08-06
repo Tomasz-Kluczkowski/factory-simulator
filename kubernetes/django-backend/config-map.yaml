@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: django-backend-config
+  namespace: default
+data:
+  ALLOWED_HOSTS: "192.168.1.156, 127.0.0.1, 0.0.0.0, localhost"
+  DB_NAME: factory_simulator
+  DB_HOST: localhost
+  DB_PORT: "5432"
