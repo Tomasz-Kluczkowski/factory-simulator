@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: factory-simulator-backend
+  labels:
+    app: factory-simulator-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: factory-simulator-backend
+  template:
+    metadata:
+      labels:
+        app: factory-simulator-backend
+    spec:
+      containers:
+        - name: django-backend
+          image: factory-simulator-django:local
+          imagePullPolicy: Never # our image is added to local microk8s
+          ports:
+            - containerPort: 8000
+          env:
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: django-backend-secrets
+                  key: SECRET_KEY
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: django-backend-secrets
+                  key: DB_USER
+            - name: DB_USER_PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: django-backend-secrets
+                  key: DB_USER_PG_PASSWORD
+          envFrom:
+            - configMapRef:
+                name: django-backend-config
