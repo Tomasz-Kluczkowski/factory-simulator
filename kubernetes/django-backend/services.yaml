@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: django-backend-service
 spec:
+  type: NodePort
   selector:
     app: factory-simulator-backend
   ports:
     - protocol: TCP
       port: 8000
       targetPort: 8000
-  type: NodePort
