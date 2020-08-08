@@ -16,8 +16,9 @@ spec:
     spec:
       containers:
         - name: django-backend
-          image: factory-simulator-django:local
-          imagePullPolicy: IfNotPresent
+          image: kilthar/factory-simulator-django:latest
+          imagePullPolicy: Always
+          command: ["gunicorn", "--bind", "0.0.0.0:8000", "factory_simulator.wsgi:application"]
           ports:
             - containerPort: 8000
           env:
