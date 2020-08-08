@@ -17,7 +17,7 @@ spec:
       containers:
         - name: django-backend
           image: factory-simulator-django:local
-          imagePullPolicy: Never # our image is added to local microk8s
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
           env:
