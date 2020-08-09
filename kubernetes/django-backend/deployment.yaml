@@ -18,25 +18,41 @@ spec:
         - name: django-backend
           image: kilthar/factory-simulator-django:latest
           imagePullPolicy: Always
-          command: ["gunicorn", "--bind", "0.0.0.0:8000", "factory_simulator.wsgi:application"]
+#          TODO: remove after testing (use gunicorn to serve)
+          command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+#          command: ["gunicorn", "--bind", "0.0.0.0:8000", "factory_simulator.wsgi:application"]
           ports:
             - containerPort: 8000
           env:
+#            TODO: remove this env var after testing
+            - name: DEBUG
+              value: "True"
+            - name: ALLOWED_HOSTS
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
                   name: django-backend-secrets
                   key: SECRET_KEY
-            - name: DB_USER
+            - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: django-backend-secrets
-                  key: DB_USER
-            - name: DB_USER_PG_PASSWORD
+                  name: postgres-secrets
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: django-backend-secrets
-                  key: DB_USER_PG_PASSWORD
+                  name: postgres-secrets
+                  key: POSTGRES_PASSWORD
           envFrom:
             - configMapRef:
                 name: django-backend-config
+          volumeMounts:
+            - mountPath: /var/lib/busybox
+              name: postgres-volume-mount
+      volumes:
+        - name: postgres-volume-mount
+          persistentVolumeClaim:
+            claimName: postgres-persistent-volume-claim
