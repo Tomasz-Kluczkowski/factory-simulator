@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: postgres-migration
 spec:
-  backoffLimit: 5
+  backoffLimit: 10
   ttlSecondsAfterFinished: 600
   template:
     spec:
