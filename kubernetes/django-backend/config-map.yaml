@@ -4,6 +4,6 @@ metadata:
   name: django-backend-config
   namespace: default
 data:
-  DB_NAME: factory_simulator
-  DB_HOST: localhost
-  DB_PORT: "5432"
+  POSTGRES_DB: factory_simulator
+  POSTGRES_HOST: postgres-service
+  POSTGRES_PORT: "5432"
