@@ -140,6 +140,7 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# Project paths to ignore when making an image for the backend
 front-end/
 kubernetes/
 development.sqlite3
