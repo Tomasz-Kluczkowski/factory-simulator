@@ -18,8 +18,8 @@ spec:
         - name: django-backend
           image: kilthar/factory-simulator-django:latest
           imagePullPolicy: Always
-#          TODO: remove after testing (use gunicorn to serve)
           command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+#          TODO: use gunicorn after test phase
 #          command: ["gunicorn", "--bind", "0.0.0.0:8000", "factory_simulator.wsgi:application"]
           ports:
             - containerPort: 8000
