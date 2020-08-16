@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: django-backend-config
+  namespace: default
+data:
+  POSTGRES_DB: factory_simulator
+  POSTGRES_HOST: postgres-service
+  POSTGRES_PORT: "5432"

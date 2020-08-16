@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postgres-migration
+spec:
+  backoffLimit: 10
+  ttlSecondsAfterFinished: 600
+  template:
+    spec:
+      containers:
+        - name: django-backend
+          image: kilthar/factory-simulator-django:latest
+          imagePullPolicy: Always
+          command: ["python", "manage.py", "migrate"]
+          env:
+            - name: ALLOWED_HOSTS
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: django-backend-secrets
+                  key: SECRET_KEY
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_PASSWORD
+          envFrom:
+            - configMapRef:
+                name: django-backend-config
+      restartPolicy: Never
