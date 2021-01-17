@@ -1,5 +1,5 @@
 <mat-card fxFlex="70" class="form__container mat-elevation-z2">
-    <mat-card-header class="form__header">
+  <mat-card-header class="form__header">
     <mat-card-title>Configure Simulation</mat-card-title>
     <mat-card-subtitle>Provide parameters of simulation to run</mat-card-subtitle>
   </mat-card-header>
@@ -14,6 +14,7 @@
       <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
         <mat-label>Required item names</mat-label>
         <input matInput placeholder="A, B" formControlName="requiredItemNames" required>
+        <mat-hint>Enter comma separated item names</mat-hint>
         <mat-error *ngIf="this.isControlInvalid('requiredItemNames')">This field is required</mat-error>
       </mat-form-field>
 
