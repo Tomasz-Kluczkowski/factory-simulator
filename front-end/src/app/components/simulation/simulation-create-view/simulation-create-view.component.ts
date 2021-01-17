@@ -29,6 +29,26 @@ export class SimulationCreateViewComponent implements OnInit {
 
   onSubmit() {
     console.warn(this.factoryConfigForm.value);
+    let requiredItemNames = this.factoryConfigForm.value.requiredItemNames;
+    console.log(requiredItemNames);
+    requiredItemNames = requiredItemNames.replace(/,/g, ' ');
+    console.log(requiredItemNames);
+    let requiredItemNamesArray = requiredItemNames.split(' ');
+
+    const output = [];
+    for (let item of requiredItemNamesArray) {
+      const cleanItem = item.split(' ').join('');
+      if (cleanItem !== '') {
+        output.push(cleanItem)
+      }
+    }
+
+    // TODO: before patching the value to show what we really care about we have to call the api and try to post.
+
+    this.factoryConfigForm.patchValue({
+      requiredItemNames: output.join(', ')
+    })
+    console.log(output)
   }
 
   isControlInvalid(controlName: string): boolean {
