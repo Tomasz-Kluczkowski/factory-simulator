@@ -16,7 +16,7 @@ export class SimulationCreateViewComponent implements OnInit {
 
 
   factoryConfigForm = new FormGroup({
-    requiredItemNames: new FormControl('A, B', Validators.required),
+    requiredItemNames: new FormControl('A, B', [Validators.required, Validators.pattern('[a-zA-Z\\s]+(?:,[a-zA-Z\\s]*)*')]),
     productCode: new FormControl('P', Validators.required),
     emptyCode: new FormControl('E', Validators.required),
     numberOfSimulationSteps: new FormControl('10', [Validators.min(1), Validators.required] ),
@@ -35,4 +35,12 @@ export class SimulationCreateViewComponent implements OnInit {
     return this.factoryConfigForm.get(controlName).invalid;
   }
 
+  getRequiredItemNamesErrorMessage(): string {
+    let message = 'This field is required';
+    if (this.factoryConfigForm.get('requiredItemNames').hasError('pattern')) {
+      message = 'Only letters, commas and spaces are allowed';
+    }
+
+    return message;
+  }
 }

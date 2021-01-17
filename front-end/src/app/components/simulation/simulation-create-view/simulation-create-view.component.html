@@ -14,8 +14,8 @@
       <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
         <mat-label>Required item names</mat-label>
         <input matInput placeholder="A, B" formControlName="requiredItemNames" required>
-        <mat-hint>Enter comma separated item names</mat-hint>
-        <mat-error *ngIf="this.isControlInvalid('requiredItemNames')">This field is required</mat-error>
+        <mat-hint>Enter comma or space separated item names</mat-hint>
+        <mat-error *ngIf="this.isControlInvalid('requiredItemNames')">{{this.getRequiredItemNamesErrorMessage()}}</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
