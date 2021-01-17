@@ -47,3 +47,42 @@ will drop the product.
 - At each finished unit of time, the last item in the conveyor belt is moved to the receiver. We register if it is a 
 finished product, component or an empty slot (this is to be able to provide efficiency metrics and optimization in the 
 future)
+
+
+## Kubernetes deployments
+
+To deploy locally you have to add in `/etc/hosts`:
+
+`127.0.0.1 factory-simulator.com`
+
+This is to be able to access the application in the front end through `factory-simulator.com` address in your browser.
+
+### Preparing images
+from project root build and push the backend image:
+
+```
+docker build -t kilthar/factory-simulator-django:latest .
+docker push kilthar/factory-simulator-django:latest
+```
+
+Build and push the frontend image:
+
+```
+cd front-end/
+docker build -t kilthar/factory-simulator-angular:latest .
+docker push kilthar/factory-simulator-angular:latest
+```
+
+For convenience just run: `./rebuild_docker_images.sh` which will rebuild front and backend images and push to docker.
+
+### Deployment to kubernetes locally
+
+from root of the project:
+
+Delete existing deployment:
+
+`kubectl delete -f kubernetes/ -R`   
+
+Deploy new version:
+
+`kubectl apply -f kubernetes/ -R` 
