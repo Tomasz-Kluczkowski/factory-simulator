@@ -1,3 +1,3 @@
 export enum ApiEndpoints {
-  FACTORY_CONFIGS = 'api/factory-configs/'
+  FACTORY_CONFIGS = 'factory-configs/'
 }
