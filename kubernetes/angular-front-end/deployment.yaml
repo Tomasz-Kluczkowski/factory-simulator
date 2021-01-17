@@ -19,4 +19,4 @@ spec:
           image: kilthar/factory-simulator-angular:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 4200
