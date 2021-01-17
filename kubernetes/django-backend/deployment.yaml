@@ -28,9 +28,7 @@ spec:
             - name: DEBUG
               value: "True"
             - name: ALLOWED_HOSTS
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
+              value: "factory-simulator.com"
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
