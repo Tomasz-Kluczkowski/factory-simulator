@@ -26,8 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = [config('ALLOWED_HOSTS'), '127.0.0.1']
-CORS_ORIGIN_ALLOW_ALL = False
+ALLOWED_HOSTS = [config('ALLOWED_HOSTS', default=''), '127.0.0.1']
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:4200',
 ]
@@ -138,8 +137,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Development Settings
+if DEBUG:  # pragma: no cover
+    INSTALLED_APPS.append('debug_toolbar')  # noqa
+    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')  # noqa
+
 # TESTING SETTINGS
 TESTING = config('TESTING', default=False, cast=bool)
 if TESTING:  # pragma: no cover
     # Allows to define temporary models during testing.
     INSTALLED_APPS.append('test_application')
+    ALLOWED_HOSTS = ['127.0.0.1']

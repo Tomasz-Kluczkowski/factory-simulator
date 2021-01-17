@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: factory-simulator-front-end
+  labels:
+    app: factory-simulator-front-end
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: factory-simulator-front-end
+  template:
+    metadata:
+      labels:
+        app: factory-simulator-front-end
+    spec:
+      containers:
+        - name: angular-front-end
+          image: kilthar/factory-simulator-angular:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4200

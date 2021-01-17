@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres-service
+  name: angular-front-end-service
 spec:
   type: ClusterIP
   selector:
-    app: postgres
+    app: factory-simulator-front-end
   ports:
     - protocol: TCP
-      port: 5432
+      port: 4200
