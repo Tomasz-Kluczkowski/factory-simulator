@@ -12,6 +12,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import {MaterialModule} from './modules/material.module';
 import {AboutComponent} from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { SimulationComponent } from './components/simulation/simulation.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ContactComponent } from './components/contact/contact.component';
     HomeComponent,
     NavigationComponent,
     AboutComponent,
-    ContactComponent
+    ContactComponent,
+    SimulationComponent
   ],
   imports: [
     BrowserModule,

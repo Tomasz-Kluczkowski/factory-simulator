@@ -6,6 +6,7 @@ import {PathResolveService} from '../services/path-resolve/path-resolve.service'
 import {paths} from '../configuration/app-paths';
 import {AboutComponent} from '../components/about/about.component';
 import {ContactComponent} from '../components/contact/contact.component';
+import {SimulationComponent} from "../components/simulation/simulation.component";
 
 
 const routes: Routes = [
@@ -17,6 +18,10 @@ const routes: Routes = [
   {
     path: paths.home,
     component: HomeComponent,
+  },
+    {
+    path: paths.simulations,
+    component: SimulationComponent,
   },
   {
     path: paths.about,
