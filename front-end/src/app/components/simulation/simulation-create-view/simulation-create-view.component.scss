@@ -1,3 +1,28 @@
+@import "~src/app/styles/app-theme";
+
 .form__container {
-  margin: auto;
+  margin: 0.5% auto;
+  padding-top: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
+
+.form__header {
+  background: $warn;
+  padding: 1%;
+  border-radius: 4px 4px 0 0;
+}
+
+mat-card-header {
+  padding: 0;
+}
+
+.form__content {
+  margin: 1%;
+}
+
+.form__content mat-form-field:nth-child(odd) {
+  margin-right: 1%;
+}
+
+

@@ -16,7 +16,7 @@ export class SimulationCreateViewComponent implements OnInit {
 
 
   factoryConfigForm = new FormGroup({
-    requiredItemNames: new FormControl('', Validators.required),
+    requiredItemNames: new FormControl('A, B', Validators.required),
     productCode: new FormControl('P', Validators.required),
     emptyCode: new FormControl('E', Validators.required),
     numberOfSimulationSteps: new FormControl('10', [Validators.min(1), Validators.required] ),
