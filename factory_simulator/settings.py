@@ -137,6 +137,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Development Settings
+if DEBUG:  # pragma: no cover
+    INSTALLED_APPS.append('debug_toolbar')  # noqa
+    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')  # noqa
+
 # TESTING SETTINGS
 TESTING = config('TESTING', default=False, cast=bool)
 if TESTING:  # pragma: no cover
