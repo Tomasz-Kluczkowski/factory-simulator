@@ -49,13 +49,25 @@ finished product, component or an empty slot (this is to be able to provide effi
 future)
 
 
-## Kubernetes deployments
+# Kubernetes deployments
+Use your web browser to navigate to the server: `factory-simulator.com/home`
+
+Deployment layout:
+
+Currently, the `ingress-service` redirects requests coming from the browser.
+All those for `api/` and `static/` are pushed to `django-backend-service` on port 8000 which maps to the django instance.
+All other requests (so `/`) are pushed to `angular-front-end-service` on port 4200 which maps to nginx proxy serving the 
+static content of the angular app.
+The django app connects to the postgres db through postgres-service on port 5432.
+
+## Local Deployment to Kubernetes
+I use microk8s on linux. Make sure you have enabled DNS and ingress.
 
 To deploy locally you have to add in `/etc/hosts`:
 
 `127.0.0.1 factory-simulator.com`
 
-This is to be able to access the application in the front end through `factory-simulator.com` address in your browser.
+This is to be able to access the application in using `factory-simulator.com` address in your browser.
 
 ### Preparing images
 from project root build and push the backend image:
@@ -85,4 +97,5 @@ Delete existing deployment:
 
 Deploy new version:
 
-`kubectl apply -f kubernetes/ -R` 
+`kubectl apply -f kubernetes/ -R`
+
