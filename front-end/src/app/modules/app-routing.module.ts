@@ -7,6 +7,8 @@ import {paths} from '../configuration/app-paths';
 import {AboutComponent} from '../components/about/about.component';
 import {ContactComponent} from '../components/contact/contact.component';
 import {SimulationComponent} from "../components/simulation/simulation.component";
+import {SimulationListViewComponent} from "../components/simulation/simulation-list-view/simulation-list-view.component";
+import {SimulationCreateViewComponent} from "../components/simulation/simulation-create-view/simulation-create-view.component";
 
 
 const routes: Routes = [
@@ -22,6 +24,16 @@ const routes: Routes = [
     {
     path: paths.simulations,
     component: SimulationComponent,
+    children: [
+      {
+        path: '',
+        component: SimulationListViewComponent
+      },
+      {
+        path: paths.create,
+        component: SimulationCreateViewComponent
+      },
+    ]
   },
   {
     path: paths.about,

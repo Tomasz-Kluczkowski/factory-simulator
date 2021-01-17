@@ -4,6 +4,7 @@ import {FactoryConfigService} from "../../services/factory-config/factory-config
 
 @Component({
   selector: 'app-simulation',
+  providers: [FactoryConfigService],
   templateUrl: './simulation.component.html',
   styleUrls: ['./simulation.component.scss']
 })
@@ -13,11 +14,5 @@ export class SimulationComponent implements OnInit {
   constructor(private factoryConfigService: FactoryConfigService) {
   }
 
-  ngOnInit(): void {
-    this.factoryConfigService.list().subscribe(
-      (data) => {
-        this.factoryConfigs = data;
-      }
-    );
-  }
+  ngOnInit(): void {}
 }

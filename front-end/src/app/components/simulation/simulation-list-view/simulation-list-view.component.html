@@ -1,0 +1,15 @@
+<h1>Simulations</h1>
+<ul>
+  <li *ngFor="let factoryConfig of factoryConfigs">
+    <h3>Factory configuration for experiment</h3>
+    <p>Required item names: {{factoryConfig.requiredItemNames}}</p>
+    <p>Product code:: {{factoryConfig.productCode}}</p>
+    <p>Empty code: {{factoryConfig.emptyCode}}</p>
+    <p>Pickup time: {{factoryConfig.pickupTime}}</p>
+    <p>Drop time: {{factoryConfig.dropTime}}</p>
+    <p>Build time: {{factoryConfig.buildTime}}</p>
+    <p>Number of conveyor belt slots: {{factoryConfig.numberOfConveyorBeltSlots}}</p>
+    <p>Number of worker pairs: {{factoryConfig.numberOfWorkerPairs}}</p>
+    <p>Number of simulation steps: {{factoryConfig.numberOfSimulationSteps}}</p>
+  </li>
+</ul>

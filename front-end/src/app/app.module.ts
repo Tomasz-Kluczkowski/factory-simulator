@@ -13,6 +13,10 @@ import {MaterialModule} from './modules/material.module';
 import {AboutComponent} from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { SimulationComponent } from './components/simulation/simulation.component';
+import { SimulationListViewComponent } from './components/simulation/simulation-list-view/simulation-list-view.component';
+import { SimulationDetailViewComponent } from './components/simulation/simulation-detail-view/simulation-detail-view.component';
+import { SimulationCreateViewComponent } from './components/simulation/simulation-create-view/simulation-create-view.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -22,7 +26,10 @@ import { SimulationComponent } from './components/simulation/simulation.componen
     NavigationComponent,
     AboutComponent,
     ContactComponent,
-    SimulationComponent
+    SimulationComponent,
+    SimulationListViewComponent,
+    SimulationDetailViewComponent,
+    SimulationCreateViewComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +38,7 @@ import { SimulationComponent } from './components/simulation/simulation.componen
     BrowserAnimationsModule,
     FlexLayoutModule,
     MaterialModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
