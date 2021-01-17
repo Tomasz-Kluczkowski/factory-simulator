@@ -3,11 +3,9 @@ kind: Service
 metadata:
   name: angular-front-end-service
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: factory-simulator-front-end
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
-      nodePort: 31002
+      port: 4200
