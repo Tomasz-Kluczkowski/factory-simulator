@@ -1,8 +1,12 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" opened>
     <mat-nav-list>
-      <a mat-list-item [routerLink]="['./']"> View Simulations </a>
-      <a mat-list-item [routerLink]="['./create']"> Create Simulation </a>
+      <a mat-list-item [routerLink]="['./']">
+        <span class="material-icons">analytics</span>
+      </a>
+      <a mat-list-item [routerLink]="['./create']">
+        <span class="material-icons">add_box</span>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
