@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-simulation-create-view',
@@ -9,22 +9,22 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class SimulationCreateViewComponent implements OnInit {
   appearance: string = 'standard'
 
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
   }
 
 
-  factoryConfigForm = new FormGroup({
-    requiredItemNames: new FormControl('A, B', [Validators.required, Validators.pattern('[a-zA-Z\\s]+(?:,[a-zA-Z\\s]*)*')]),
-    productCode: new FormControl('P', Validators.required),
-    emptyCode: new FormControl('E', Validators.required),
-    numberOfSimulationSteps: new FormControl('10', [Validators.min(1), Validators.required] ),
-    numberOfConveyorBeltSlots: new FormControl('3', [Validators.min(1), Validators.required]),
-    numberOfWorkerPairs: new FormControl('3', [Validators.min(1), Validators.required]),
-    pickupTime: new FormControl('1', [Validators.min(1), Validators.required]),
-    dropTime: new FormControl('1', [Validators.min(1), Validators.required]),
-    buildTime: new FormControl('4', [Validators.min(1), Validators.required]),
+  factoryConfigForm = this.formBuilder.group({
+    requiredItemNames: ['A, B', [Validators.required, Validators.pattern('[a-zA-Z\\s]+(?:,[a-zA-Z\\s]*)*')]],
+    productCode: ['P', Validators.required],
+    emptyCode: ['E', Validators.required],
+    numberOfSimulationSteps: ['10', [Validators.min(1), Validators.required]],
+    numberOfConveyorBeltSlots: ['3', [Validators.min(1), Validators.required]],
+    numberOfWorkerPairs: ['3', [Validators.min(1), Validators.required]],
+    pickupTime: ['1', [Validators.min(1), Validators.required]],
+    dropTime: ['1', [Validators.min(1), Validators.required]],
+    buildTime: ['4', [Validators.min(1), Validators.required]],
   })
 
   onSubmit() {
