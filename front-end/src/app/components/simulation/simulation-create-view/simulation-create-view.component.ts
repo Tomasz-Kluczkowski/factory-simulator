@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-simulation-create-view',
@@ -16,7 +16,16 @@ export class SimulationCreateViewComponent implements OnInit {
 
 
   factoryConfigForm = this.formBuilder.group({
-    requiredItemNames: ['A, B', [Validators.required, Validators.pattern('[a-zA-Z\\s]+(?:,[a-zA-Z\\s]*)*')]],
+    requiredItemNames: this.formBuilder.array(
+    [
+      this.formBuilder.control(
+        'A', [
+          Validators.required,
+          Validators.pattern('([\\w\\-]+)')
+        ]
+      )
+    ]
+    ),
     productCode: ['P', Validators.required],
     emptyCode: ['E', Validators.required],
     numberOfSimulationSteps: ['10', [Validators.min(1), Validators.required]],
@@ -27,38 +36,31 @@ export class SimulationCreateViewComponent implements OnInit {
     buildTime: ['4', [Validators.min(1), Validators.required]],
   })
 
+  get requiredItemNames() {
+    return this.factoryConfigForm.get('requiredItemNames') as FormArray;
+  }
+
+  addRequiredItemName() {
+    this.requiredItemNames.push(this.formBuilder.control('A'))
+  }
+
+  deleteRequiredItemName(index: number) {
+    this.requiredItemNames.removeAt(index)
+  }
+
   onSubmit() {
     console.warn(this.factoryConfigForm.value);
-    let requiredItemNames = this.factoryConfigForm.value.requiredItemNames;
-    console.log(requiredItemNames);
-    requiredItemNames = requiredItemNames.replace(/,/g, ' ');
-    console.log(requiredItemNames);
-    let requiredItemNamesArray = requiredItemNames.split(' ');
-
-    const output = [];
-    for (let item of requiredItemNamesArray) {
-      const cleanItem = item.split(' ').join('');
-      if (cleanItem !== '') {
-        output.push(cleanItem)
-      }
-    }
-
-    // TODO: before patching the value to show what we really care about we have to call the api and try to post.
-
-    this.factoryConfigForm.patchValue({
-      requiredItemNames: output.join(', ')
-    })
-    console.log(output)
+    // TODO: implement actual saving to the DB.
   }
 
   isControlInvalid(controlName: string): boolean {
     return this.factoryConfigForm.get(controlName).invalid;
   }
 
-  getRequiredItemNamesErrorMessage(): string {
+  getRequiredItemNamesErrorMessage(index: number): string {
     let message = 'This field is required';
-    if (this.factoryConfigForm.get('requiredItemNames').hasError('pattern')) {
-      message = 'Only letters, commas and spaces are allowed';
+    if (this.requiredItemNames.controls[index].hasError('pattern')) {
+      message = 'Only letters, numbers, - and _ are allowed.';
     }
 
     return message;
