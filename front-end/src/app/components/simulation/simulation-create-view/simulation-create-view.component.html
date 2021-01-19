@@ -1,4 +1,4 @@
-<mat-card fxFlex="70" class="form__container mat-elevation-z2">
+<mat-card fxLayout="column" fxFlex="45" class="form__container mat-elevation-z2">
   <mat-card-header class="form__header">
     <mat-card-title>Configure Simulation</mat-card-title>
     <mat-card-subtitle>Provide parameters of simulation to run</mat-card-subtitle>
@@ -11,65 +11,90 @@
       class="form__content"
     >
 
-      <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
-        <mat-label>Required item names</mat-label>
-        <input matInput placeholder="A, B" formControlName="requiredItemNames" required>
-        <mat-hint>Enter comma or space separated item names</mat-hint>
-        <mat-error *ngIf="this.isControlInvalid('requiredItemNames')">{{this.getRequiredItemNamesErrorMessage()}}</mat-error>
-      </mat-form-field>
+      <div formArrayName="requiredItemNames" fxLayout="row wrap" fxFlex="100">
+        <div *ngFor="let requiredItemName of requiredItemNames.controls; let i=index" fxFlex="100">
+          <mat-form-field
+            fxFlex="100"
+            appearance="{{this.appearance}}">
+            <mat-label>Required item name</mat-label>
+            <input matInput placeholder="A" formControlName="{{i}}" required>
+            <mat-error
+              *ngIf="this.requiredItemNames.controls[i].invalid">{{this.getRequiredItemNamesErrorMessage(i)}}</mat-error>
 
-      <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
-        <mat-label>Product code</mat-label>
-        <input matInput placeholder="P" formControlName="productCode" required>
-        <mat-error *ngIf="this.isControlInvalid('productCode')">This field is required</mat-error>
-      </mat-form-field>
+          </mat-form-field>
+          <button
+            *ngIf="(i < requiredItemNames.controls.length - 1)"
+            (click)="deleteRequiredItemName(i)"
+            class="form__button-delete mat-icon-button"
+            aria-label="Delete required item name">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+          <button
+            *ngIf="i === requiredItemNames.controls.length - 1"
+            (click)="addRequiredItemName()"
+            class="form__button-add"
+            mat-icon-button aria-label="Add required item name">
+            <mat-icon>add_box</mat-icon>
+          </button>
+        </div>
+      </div>
 
-      <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
-        <mat-label>Empty code</mat-label>
-        <input matInput placeholder="E" formControlName="emptyCode" required>
-        <mat-error *ngIf="this.isControlInvalid('emptyCode')">This field is required</mat-error>
-      </mat-form-field>
+      <div fxLayout="row wrap" fxFlex="100" class="form__set-fields">
+        <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5" fxFlex.xs="100">
+          <mat-label>Product code</mat-label>
+          <input matInput placeholder="P" formControlName="productCode" required>
+          <mat-error *ngIf="this.isControlInvalid('productCode')">This field is required</mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
-        <mat-label>Number of simulation steps</mat-label>
-        <input matInput type="number" placeholder="10" formControlName="numberOfSimulationSteps" min="1" required>
-        <mat-error *ngIf="this.isControlInvalid('numberOfSimulationSteps')">Min number of simulation steps: 1
-        </mat-error>
-      </mat-form-field>
+        <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
+          <mat-label>Empty code</mat-label>
+          <input matInput placeholder="E" formControlName="emptyCode" required>
+          <mat-error *ngIf="this.isControlInvalid('emptyCode')">This field is required</mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
-        <mat-label>Number of conveyor belt slots</mat-label>
-        <input matInput type="number" placeholder="3" formControlName="numberOfConveyorBeltSlots" min="1" required>
-        <mat-error *ngIf="this.isControlInvalid('numberOfConveyorBeltSlots')">Min number of conveyor belt slots: 1
-        </mat-error>
-      </mat-form-field>
+        <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
+          <mat-label>Number of simulation steps</mat-label>
+          <input matInput type="number" placeholder="10" formControlName="numberOfSimulationSteps" min="1" required>
+          <mat-error *ngIf="this.isControlInvalid('numberOfSimulationSteps')">Min number of simulation steps: 1
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
-        <mat-label>Number of worker pairs</mat-label>
-        <input matInput type="number" placeholder="3" formControlName="numberOfWorkerPairs" min="1" required>
-        <mat-error *ngIf="this.isControlInvalid('numberOfWorkerPairs')">Min number of worker pairs: 1</mat-error>
-      </mat-form-field>
+        <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
+          <mat-label>Number of conveyor belt slots</mat-label>
+          <input matInput type="number" placeholder="3" formControlName="numberOfConveyorBeltSlots" min="1" required>
+          <mat-error *ngIf="this.isControlInvalid('numberOfConveyorBeltSlots')">Min number of conveyor belt slots: 1
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
-        <mat-label>Pickup time</mat-label>
-        <input matInput type="number" placeholder="1" formControlName="pickupTime" min="1" required>
-        <mat-error *ngIf="this.isControlInvalid('pickupTime')">Min pickup time: 1</mat-error>
-      </mat-form-field>
+        <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
+          <mat-label>Number of worker pairs</mat-label>
+          <input matInput type="number" placeholder="3" formControlName="numberOfWorkerPairs" min="1" required>
+          <mat-error *ngIf="this.isControlInvalid('numberOfWorkerPairs')">Min number of worker pairs: 1</mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
-        <mat-label>Drop time</mat-label>
-        <input matInput type="number" placeholder="1" formControlName="dropTime" min="1" required>
-        <mat-error *ngIf="this.isControlInvalid('dropTime')">Min drop time: 1</mat-error>
-      </mat-form-field>
+        <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
+          <mat-label>Pickup time</mat-label>
+          <input matInput type="number" placeholder="1" formControlName="pickupTime" min="1" required>
+          <mat-error *ngIf="this.isControlInvalid('pickupTime')">Min pickup time: 1</mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
-        <mat-label>Build time</mat-label>
-        <input matInput type="number" placeholder="4" formControlName="buildTime" min="1" required>
-        <mat-error *ngIf="this.isControlInvalid('buildTime')">Min build time: 1</mat-error>
-      </mat-form-field>
+        <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
+          <mat-label>Drop time</mat-label>
+          <input matInput type="number" placeholder="1" formControlName="dropTime" min="1" required>
+          <mat-error *ngIf="this.isControlInvalid('dropTime')">Min drop time: 1</mat-error>
+        </mat-form-field>
 
-      <button type="submit" [disabled]="!factoryConfigForm.valid" fxFlex="100">Submit</button>
+        <mat-form-field appearance="{{this.appearance}}" fxFlex="49.5">
+          <mat-label>Build time</mat-label>
+          <input matInput type="number" placeholder="4" formControlName="buildTime" min="1" required>
+          <mat-error *ngIf="this.isControlInvalid('buildTime')">Min build time: 1</mat-error>
+        </mat-form-field>
+      </div>
 
+      <button type="submit" [disabled]="!factoryConfigForm.valid"
+              fxFlex="100"
+              class="form__submit-button mat-raised-button">Submit
+      </button>
     </form>
   </mat-card-content>
 </mat-card>
