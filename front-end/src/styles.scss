@@ -12,3 +12,13 @@ app-root {
   left: 0;
   right: 0;
 }
+
+.error-dialog-panel {
+  min-width: 250px;
+  min-height: 100px;
+}
+
+.error-dialog-panel mat-dialog-container {
+  padding: 0;
+  box-shadow: #0f0f0f 1px 1px 1px;
+}
