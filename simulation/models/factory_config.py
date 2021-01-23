@@ -10,13 +10,13 @@ def get_default_required_item_names():
 
 class FactoryConfig(BaseModel):
     required_item_names = ArrayField(
-        models.CharField(max_length=30), default=get_default_required_item_names
+        models.CharField(max_length=30)
     )
-    product_code = models.CharField(max_length=30, default='P')
-    empty_code = models.CharField(max_length=30, default='E')
-    number_of_simulation_steps = models.PositiveIntegerField(default=10)
-    number_of_conveyor_belt_slots = models.PositiveSmallIntegerField(default=3)
-    number_of_worker_pairs = models.PositiveSmallIntegerField(default=3)
-    pickup_time = models.PositiveSmallIntegerField(default=1)
-    drop_time = models.PositiveSmallIntegerField(default=1)
-    build_time = models.PositiveSmallIntegerField(default=4)
+    product_code = models.CharField(max_length=30)
+    empty_code = models.CharField(max_length=30)
+    number_of_simulation_steps = models.PositiveIntegerField()
+    number_of_conveyor_belt_slots = models.PositiveSmallIntegerField()
+    number_of_worker_pairs = models.PositiveSmallIntegerField()
+    pickup_time = models.PositiveSmallIntegerField()
+    drop_time = models.PositiveSmallIntegerField()
+    build_time = models.PositiveSmallIntegerField()
