@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, Validators} from "@angular/forms";
+import {FactoryConfigService} from "../../../services/factory-config/factory-config.service";
 
 @Component({
   selector: 'app-simulation-create-view',
@@ -9,7 +10,7 @@ import {FormArray, FormBuilder, Validators} from "@angular/forms";
 export class SimulationCreateViewComponent implements OnInit {
   appearance: string = 'standard'
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private factoryConfigService: FactoryConfigService) { }
 
   ngOnInit(): void {
   }
@@ -49,8 +50,7 @@ export class SimulationCreateViewComponent implements OnInit {
   }
 
   onSubmit() {
-    console.warn(this.factoryConfigForm.value);
-    // TODO: implement actual saving to the DB.
+    this.factoryConfigService.create(this.factoryConfigForm.value).subscribe();
   }
 
   isControlInvalid(controlName: string): boolean {
