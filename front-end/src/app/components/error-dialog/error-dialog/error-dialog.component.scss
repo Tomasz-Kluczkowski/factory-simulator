@@ -1,0 +1,16 @@
+@import "~src/app/styles/app-theme";
+
+
+.error-dialog__icon {
+  color: $warn;
+  font-size: 40px;
+}
+
+
+.error-dialog__info {
+  color: grey;
+}
+
+.error-dialog__divider {
+  padding-bottom: 5px;
+}
