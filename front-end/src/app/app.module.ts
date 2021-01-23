@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './modules/app-routing.module';
 import {AppComponent} from './app.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {HomeComponent} from './components/home/home.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -17,6 +17,8 @@ import { SimulationListViewComponent } from './components/simulation/simulation-
 import { SimulationDetailViewComponent } from './components/simulation/simulation-detail-view/simulation-detail-view.component';
 import { SimulationCreateViewComponent } from './components/simulation/simulation-create-view/simulation-create-view.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { ErrorDialogComponent } from './components/error-dialog/error-dialog/error-dialog.component';
+import {HttpErrorInterceptor} from "./interceptors/http-error/http-error.interceptor";
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     SimulationComponent,
     SimulationListViewComponent,
     SimulationDetailViewComponent,
-    SimulationCreateViewComponent
+    SimulationCreateViewComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,9 @@ import {ReactiveFormsModule} from "@angular/forms";
     MaterialModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
