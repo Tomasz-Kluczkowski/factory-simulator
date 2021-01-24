@@ -16,11 +16,11 @@ export abstract class ApiResourcesService<T extends ApiResource> {
   ) { }
 
   list(requestOptions?: RequestOptions): Observable<T[]> {
-    return this.httpClient.get<T[]>(this.getUrl(this.endpoint), requestOptions)
+    return this.httpClient.get<T[]>(this.getUrl(this.endpoint), requestOptions);
   }
 
   create(data: T, requestOptions?: RequestOptions): Observable<T> {
-    return this.httpClient.post<T>(this.getUrl(this.endpoint), data, requestOptions)
+    return this.httpClient.post<T>(this.getUrl(this.endpoint), data, requestOptions);
   }
 
   getUrl(endpoint: string, id: any = ''): string {
