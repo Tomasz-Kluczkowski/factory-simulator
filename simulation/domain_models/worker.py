@@ -111,14 +111,14 @@ class Worker(BaseDomainModel):
         return self._remaining_time_of_operation == 0
 
     def _is_ready_for_building(self):
-        return len(self._items) == len(self.factory_config.required_item_names)
+        return len(self._items) == len(self.factory_config.materials)
 
     def _is_component_required(self):
         item_on_belt = self.conveyor_belt.check_item_at_slot(self.slot_number)
         return (
                 not self._has_product() and
                 item_on_belt.name not in self.item_names and
-                item_on_belt.name in self.factory_config.required_item_names
+                item_on_belt.name in self.factory_config.materials
         )
 
     def _on_picking_up_component(self):

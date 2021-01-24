@@ -13,7 +13,7 @@ export class SimulationCreateViewComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private factoryConfigService: FactoryConfigService) { }
 
   factoryConfigForm = this.formBuilder.group({
-    requiredItemNames: this.formBuilder.array(
+    materials: this.formBuilder.array(
     [
       this.formBuilder.control(
         'A', [
@@ -37,16 +37,16 @@ export class SimulationCreateViewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  get requiredItemNames() {
-    return this.factoryConfigForm.get('requiredItemNames') as FormArray;
+  get materials() {
+    return this.factoryConfigForm.get('materials') as FormArray;
   }
 
-  addRequiredItemName() {
-    this.requiredItemNames.push(this.formBuilder.control('A'));
+  addMaterial() {
+    this.materials.push(this.formBuilder.control('A'));
   }
 
-  deleteRequiredItemName(index: number) {
-    this.requiredItemNames.removeAt(index);
+  deleteMaterial(index: number) {
+    this.materials.removeAt(index);
   }
 
   onSubmit() {
@@ -57,9 +57,9 @@ export class SimulationCreateViewComponent implements OnInit {
     return this.factoryConfigForm.get(controlName).invalid;
   }
 
-  getRequiredItemNamesErrorMessage(index: number): string {
+  getMaterialErrorMessage(index: number): string {
     let message = 'This field is required';
-    if (this.requiredItemNames.controls[index].hasError('pattern')) {
+    if (this.materials.controls[index].hasError('pattern')) {
       message = 'Only letters, numbers, - and _ are allowed.';
     }
 

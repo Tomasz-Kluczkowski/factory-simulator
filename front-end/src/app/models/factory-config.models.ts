@@ -1,7 +1,7 @@
 import {ApiResource, ApiResponse} from './api.models';
 
 export interface FactoryConfigAPIResponse extends ApiResponse {
-  required_item_names: string[];
+  materials: string[];
   product_code: string;
   empty_code: string;
   number_of_simulation_steps: number;
@@ -13,7 +13,7 @@ export interface FactoryConfigAPIResponse extends ApiResponse {
 }
 
 export interface FactoryConfigAPIResource extends ApiResource {
-  requiredItemNames: string[];
+  materials: string[];
   productCode: string;
   emptyCode: string;
   numberOfSimulationSteps: number;

@@ -5,7 +5,7 @@ export class FactoryConfigSerializer implements ApiSerializer {
   fromApiResponse(apiResponse: FactoryConfigAPIResponse): FactoryConfigAPIResource {
     return {
       id: apiResponse.id,
-      requiredItemNames: apiResponse.required_item_names,
+      materials: apiResponse.materials,
       productCode: apiResponse.product_code,
       emptyCode: apiResponse.empty_code,
       numberOfSimulationSteps: apiResponse.number_of_simulation_steps,
@@ -20,7 +20,7 @@ export class FactoryConfigSerializer implements ApiSerializer {
   toApiResponse(apiResource: FactoryConfigAPIResource): FactoryConfigAPIResponse {
     return {
       id: apiResource.id,
-      required_item_names: apiResource.requiredItemNames,
+      materials: apiResource.materials,
       product_code: apiResource.productCode,
       empty_code: apiResource.emptyCode,
       number_of_simulation_steps: apiResource.numberOfSimulationSteps,
