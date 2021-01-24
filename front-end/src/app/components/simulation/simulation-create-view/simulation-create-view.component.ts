@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, Validators} from "@angular/forms";
-import {FactoryConfigService} from "../../../services/factory-config/factory-config.service";
+import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import {FactoryConfigService} from '../../../services/factory-config/factory-config.service';
 
 @Component({
   selector: 'app-simulation-create-view',
@@ -8,13 +8,9 @@ import {FactoryConfigService} from "../../../services/factory-config/factory-con
   styleUrls: ['./simulation-create-view.component.scss']
 })
 export class SimulationCreateViewComponent implements OnInit {
-  appearance: string = 'standard'
+  appearance = 'standard';
 
   constructor(private formBuilder: FormBuilder, private factoryConfigService: FactoryConfigService) { }
-
-  ngOnInit(): void {
-  }
-
 
   factoryConfigForm = this.formBuilder.group({
     requiredItemNames: this.formBuilder.array(
@@ -35,18 +31,22 @@ export class SimulationCreateViewComponent implements OnInit {
     pickupTime: ['1', [Validators.min(1), Validators.required]],
     dropTime: ['1', [Validators.min(1), Validators.required]],
     buildTime: ['4', [Validators.min(1), Validators.required]],
-  })
+  });
+
+
+  ngOnInit(): void {
+  }
 
   get requiredItemNames() {
     return this.factoryConfigForm.get('requiredItemNames') as FormArray;
   }
 
   addRequiredItemName() {
-    this.requiredItemNames.push(this.formBuilder.control('A'))
+    this.requiredItemNames.push(this.formBuilder.control('A'));
   }
 
   deleteRequiredItemName(index: number) {
-    this.requiredItemNames.removeAt(index)
+    this.requiredItemNames.removeAt(index);
   }
 
   onSubmit() {

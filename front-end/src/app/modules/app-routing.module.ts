@@ -6,9 +6,11 @@ import {PathResolveService} from '../services/path-resolve/path-resolve.service'
 import {paths} from '../configuration/app-paths';
 import {AboutComponent} from '../components/about/about.component';
 import {ContactComponent} from '../components/contact/contact.component';
-import {SimulationComponent} from "../components/simulation/simulation.component";
-import {SimulationListViewComponent} from "../components/simulation/simulation-list-view/simulation-list-view.component";
-import {SimulationCreateViewComponent} from "../components/simulation/simulation-create-view/simulation-create-view.component";
+import {SimulationComponent} from '../components/simulation/simulation.component';
+import {
+  SimulationListViewComponent
+} from '../components/simulation/simulation-list-view/simulation-list-view.component';
+import {SimulationCreateViewComponent} from '../components/simulation/simulation-create-view/simulation-create-view.component';
 
 
 const routes: Routes = [

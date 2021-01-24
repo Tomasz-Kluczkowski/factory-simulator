@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {FactoryConfigAPIResource} from "../../models/factory-config.models";
-import {FactoryConfigService} from "../../services/factory-config/factory-config.service";
+import {FactoryConfigAPIResource} from '../../models/factory-config.models';
+import {FactoryConfigService} from '../../services/factory-config/factory-config.service';
 
 @Component({
   selector: 'app-simulation',

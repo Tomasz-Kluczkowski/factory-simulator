@@ -6,9 +6,9 @@ import {
   HttpInterceptor, HttpErrorResponse
 } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
-import {ErrorDialogService} from "../../services/error-dialog/error-dialog.service";
-import {catchError} from "rxjs/operators";
-import {HttpErrorData} from "../../models/error.models";
+import {ErrorDialogService} from '../../services/error-dialog/error-dialog.service';
+import {catchError} from 'rxjs/operators';
+import {HttpErrorData} from '../../models/error.models';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { HttpErrorInterceptor } from './http-error.interceptor';
-import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 
 describe('HttpErrorInterceptor', () => {
   beforeEach(() => TestBed.configureTestingModule({

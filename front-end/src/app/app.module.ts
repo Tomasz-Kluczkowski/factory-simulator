@@ -16,9 +16,9 @@ import { SimulationComponent } from './components/simulation/simulation.componen
 import { SimulationListViewComponent } from './components/simulation/simulation-list-view/simulation-list-view.component';
 import { SimulationDetailViewComponent } from './components/simulation/simulation-detail-view/simulation-detail-view.component';
 import { SimulationCreateViewComponent } from './components/simulation/simulation-create-view/simulation-create-view.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {ReactiveFormsModule} from '@angular/forms';
 import { ErrorDialogComponent } from './components/error-dialog/error-dialog/error-dialog.component';
-import {HttpErrorInterceptor} from "./interceptors/http-error/http-error.interceptor";
+import {HttpErrorInterceptor} from './interceptors/http-error/http-error.interceptor';
 
 @NgModule({
   declarations: [

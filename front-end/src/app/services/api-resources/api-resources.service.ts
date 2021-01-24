@@ -34,9 +34,9 @@ export abstract class ApiResourcesService<T extends ApiResource> {
       .pipe(
         map(
           (apiResponse: any) => {
-            return <T>this.serializer.fromApiResponse(apiResponse);
+            return this.serializer.fromApiResponse(apiResponse) as T;
           })
-        )
+        );
   }
 
   getUrl(endpoint: string, id: any = ''): string {
