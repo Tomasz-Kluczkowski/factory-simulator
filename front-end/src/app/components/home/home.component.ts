@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {FactoryConfigService} from '../../services/factory-config/factory-config.service';
-import {FactoryConfigAPIResource, FactoryConfigAPIResponse} from '../../models/factory-config.models';
 
 
 @Component({
