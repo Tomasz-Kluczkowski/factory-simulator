@@ -1,0 +1,19 @@
+<div>
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar>
+        <mat-icon class="error-dialog__icon">warning</mat-icon>
+      </div>
+      <mat-card-title>{{data.name}}</mat-card-title>
+      <mat-card-subtitle><mat-error>{{data.statusText}}</mat-error></mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content fxLayout="column">
+      <div *ngFor="let item of ['message', 'url', 'status', 'reason']">
+        <div *ngIf="data[item] !== ''" fxLayout="row" fxFlex="100">
+          <p fxFlex="20">{{item.toUpperCase()}}</p><p fxFlex="80" class="error-dialog__info">{{data[item]}}</p>
+          <mat-divider class="error-dialog__divider"></mat-divider>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

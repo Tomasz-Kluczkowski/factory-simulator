@@ -5,7 +5,7 @@ from simulation.domain_models.factory_floor import FactoryFloor
 from simulation.domain_models.feeder import RandomizedFeeder, SequentialFeeder
 from simulation.domain_models.item import Item
 from simulation.domain_models.receiver import Receiver
-from simulation.models.factory_config import FactoryConfig
+from simulation.models.factory_config import FactoryConfig, get_default_required_item_names
 from simulation.domain_models.worker import Worker
 from simulation.reporting.simulation_reporter import SimulationReporter
 
@@ -35,6 +35,16 @@ class ReceiverFactory(factory.Factory):
 class FactoryConfigFactory(factory.DjangoModelFactory):
     class Meta:
         model = FactoryConfig
+
+    required_item_names = get_default_required_item_names()
+    product_code = 'P'
+    empty_code = 'E'
+    number_of_simulation_steps = 10
+    number_of_conveyor_belt_slots = 3
+    number_of_worker_pairs = 3
+    pickup_time = 1
+    drop_time = 1
+    build_time = 4
 
 
 class ConveyorBeltFactory(factory.Factory):

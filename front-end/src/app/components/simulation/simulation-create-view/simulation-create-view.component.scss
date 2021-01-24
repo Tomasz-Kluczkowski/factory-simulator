@@ -1,0 +1,42 @@
+@import "~src/app/styles/app-theme";
+
+.form__container {
+  margin: 0.5% auto;
+  padding-top: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.form__header {
+  background: $warn;
+  padding: 1%;
+  border-radius: 4px 4px 0 0;
+}
+
+.form__content {
+  margin: 1%;
+}
+
+.form__button-inline {
+  position: absolute;
+  right: 1%;
+}
+
+.form__button-add {
+  @extend .form__button-inline;
+  color: $warn;
+}
+
+
+.form__button-delete {
+  @extend .form__button-inline;
+  color: $primary;
+}
+
+.form__set-fields mat-form-field:nth-child(odd) {
+  margin-right: 1%;
+}
+
+.form__submit-button {
+  background: $warn;
+}

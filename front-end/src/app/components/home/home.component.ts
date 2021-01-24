@@ -9,18 +9,8 @@ import {FactoryConfigAPIResource, FactoryConfigAPIResponse} from '../../models/f
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  factoryConfigs: FactoryConfigAPIResource[];
-
-  constructor(private factoryConfigService: FactoryConfigService) { }
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  onGetConfigsClicked() {
-    this.factoryConfigService.list().subscribe(
-      (data) => {
-        this.factoryConfigs = data;
-      }
-    );
   }
 }
