@@ -1,9 +1,5 @@
 import {HttpHeaders, HttpParams} from '@angular/common/http';
 
-export interface ApiResponse {
-  id: number;
-}
-
 
 export interface ApiResource {
   id: number;
