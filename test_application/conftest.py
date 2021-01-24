@@ -5,7 +5,7 @@ from simulation.domain_models.factory_floor import FactoryFloor
 from simulation.domain_models.feeder import RandomizedFeeder, SequentialFeeder
 from simulation.domain_models.item import Item
 from simulation.domain_models.receiver import Receiver
-from simulation.models.factory_config import FactoryConfig, get_default_required_item_names
+from simulation.models.factory_config import FactoryConfig, get_default_materials
 from simulation.domain_models.worker import Worker
 from simulation.reporting.simulation_reporter import SimulationReporter
 
@@ -36,7 +36,7 @@ class FactoryConfigFactory(factory.DjangoModelFactory):
     class Meta:
         model = FactoryConfig
 
-    required_item_names = get_default_required_item_names()
+    materials = get_default_materials()
     product_code = 'P'
     empty_code = 'E'
     number_of_simulation_steps = 10

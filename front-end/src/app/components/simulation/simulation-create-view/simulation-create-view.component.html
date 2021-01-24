@@ -11,29 +11,29 @@
       class="form__content"
     >
 
-      <div formArrayName="requiredItemNames" fxLayout="row wrap" fxFlex="100">
-        <div *ngFor="let requiredItemName of requiredItemNames.controls; let i=index" fxFlex="100">
+      <div formArrayName="materials" fxLayout="row wrap" fxFlex="100">
+        <div *ngFor="let material of materials.controls; let i=index" fxFlex="100">
           <mat-form-field
             fxFlex="100"
             appearance="{{this.appearance}}">
-            <mat-label>Required item name</mat-label>
+            <mat-label>Material</mat-label>
             <input matInput placeholder="A" formControlName="{{i}}" required>
             <mat-error
-              *ngIf="this.requiredItemNames.controls[i].invalid">{{this.getRequiredItemNamesErrorMessage(i)}}</mat-error>
+              *ngIf="this.materials.controls[i].invalid">{{this.getMaterialErrorMessage(i)}}</mat-error>
 
           </mat-form-field>
           <button
-            *ngIf="(i < requiredItemNames.controls.length - 1)"
-            (click)="deleteRequiredItemName(i)"
+            *ngIf="(i < materials.controls.length - 1)"
+            (click)="deleteMaterial(i)"
             class="form__button-delete mat-icon-button"
-            aria-label="Delete required item name">
+            aria-label="Delete material">
             <mat-icon>delete_forever</mat-icon>
           </button>
           <button
-            *ngIf="i === requiredItemNames.controls.length - 1"
-            (click)="addRequiredItemName()"
+            *ngIf="i === materials.controls.length - 1"
+            (click)="addMaterial()"
             class="form__button-add"
-            mat-icon-button aria-label="Add required item name">
+            mat-icon-button aria-label="Add material">
             <mat-icon>add_box</mat-icon>
           </button>
         </div>

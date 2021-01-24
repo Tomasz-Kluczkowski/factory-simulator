@@ -15,7 +15,7 @@ The rules are as follows:
 - At each slot of the conveyor belt we place a worker on both sides of it.
 - Only one worker can operate on any given slot at any given time.
 
-Default components required to make a product:
+Default materials required to make a product:
 - A
 - B
 
@@ -39,9 +39,9 @@ A-B-E-E    |   A    |    E   |   E    |     E-E-E-E-P-E-E
 ```
  
 Basic principle of operation:
-- The feeder supplies components required to make a finished product.
+- The feeder supplies materials required to make a finished product.
 - Workers at the conveyor belt slots check if they need and can pickup components.
-- Once a worker collected all required items he begins assembling the product.
+- Once a worker collected all required materials he begins assembling the product.
 - When the product is assembled and worker can operate on his conveyor belt slot (it is free and empty) the worker
 will drop the product.
 - At each finished unit of time, the last item in the conveyor belt is moved to the receiver. We register if it is a 

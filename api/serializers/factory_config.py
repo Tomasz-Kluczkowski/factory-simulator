@@ -8,7 +8,7 @@ class FactoryConfigSerializer(serializers.ModelSerializer):
         model = FactoryConfig
         fields = [
             'id',
-            'required_item_names',
+            'materials',
             'product_code',
             'empty_code',
             'number_of_simulation_steps',

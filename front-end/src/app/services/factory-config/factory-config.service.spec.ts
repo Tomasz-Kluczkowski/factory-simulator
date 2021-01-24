@@ -31,7 +31,7 @@ describe('FactoryConfigService', () => {
     mockFactoryConfigAPIResponse = [
       {
         id: 1,
-        required_item_names: ['A', 'B'],
+        materials: ['A', 'B'],
         product_code: 'P',
         empty_code: 'E',
         number_of_simulation_steps: 10,
@@ -43,7 +43,7 @@ describe('FactoryConfigService', () => {
       },
       {
         id: 2,
-        required_item_names: ['C', 'D', 'E'],
+        materials: ['C', 'D', 'E'],
         product_code: 'P1',
         empty_code: 'E1',
         number_of_simulation_steps: 101,
@@ -58,7 +58,7 @@ describe('FactoryConfigService', () => {
     mockFactoryConfigAPIResource = [
       {
         id: 1,
-        requiredItemNames: ['A', 'B'],
+        materials: ['A', 'B'],
         productCode: 'P',
         emptyCode: 'E',
         numberOfSimulationSteps: 10,
@@ -70,7 +70,7 @@ describe('FactoryConfigService', () => {
       },
       {
         id: 2,
-        requiredItemNames: ['C', 'D', 'E'],
+        materials: ['C', 'D', 'E'],
         productCode: 'P1',
         emptyCode: 'E1',
         numberOfSimulationSteps: 101,
