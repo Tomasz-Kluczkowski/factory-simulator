@@ -2,6 +2,7 @@ from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 from simulation.models.base_model import BaseModel
+from simulation.models.simulation import Simulation
 
 
 def get_default_materials():
@@ -20,3 +21,4 @@ class FactoryConfig(BaseModel):
     pickup_time = models.PositiveSmallIntegerField()
     drop_time = models.PositiveSmallIntegerField()
     build_time = models.PositiveSmallIntegerField()
+    simulation = models.ForeignKey(Simulation, on_delete=models.CASCADE, null=True)
