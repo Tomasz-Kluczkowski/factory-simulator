@@ -1,0 +1,10 @@
+coverage:
+  status:
+    patch: no
+    changes: no
+    project:
+      default:
+        target: auto
+        threshold: 0.5%
+        flags:
+          - unit
