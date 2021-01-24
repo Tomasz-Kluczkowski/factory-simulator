@@ -8,6 +8,7 @@ import {MatListModule} from "@angular/material/list";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatListModule,
     MatInputModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDividerModule
   ],
   exports: [
     MatButtonModule,
@@ -29,7 +31,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatListModule,
     MatInputModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDividerModule,
   ]
 })
 export class MaterialModule {}
