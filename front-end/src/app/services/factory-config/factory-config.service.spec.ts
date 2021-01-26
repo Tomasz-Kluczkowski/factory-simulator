@@ -2,14 +2,13 @@ import {TestBed} from '@angular/core/testing';
 
 import {FactoryConfigService} from './factory-config.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {FactoryConfigAPIResource, FactoryConfigAPIResponse} from '../../models/factory-config.models';
+import {FactoryConfigAPIResource} from '../../models/factory-config.models';
 import {environment} from '../../../environments/environment';
 import {ApiEndpoints} from '../../configuration/api-endpoints';
 
 describe('FactoryConfigService', () => {
   let service: FactoryConfigService;
   let backend: HttpTestingController;
-  let mockFactoryConfigAPIResponse: FactoryConfigAPIResponse[];
   let mockFactoryConfigAPIResource: FactoryConfigAPIResource[];
 
   beforeEach(() => {
@@ -28,33 +27,6 @@ describe('FactoryConfigService', () => {
   });
 
   it('should get the list of factory configs', () => {
-    mockFactoryConfigAPIResponse = [
-      {
-        id: 1,
-        materials: ['A', 'B'],
-        product_code: 'P',
-        empty_code: 'E',
-        number_of_simulation_steps: 10,
-        number_of_conveyor_belt_slots: 3,
-        number_of_worker_pairs: 2,
-        pickup_time: 5,
-        drop_time: 2,
-        build_time: 1,
-      },
-      {
-        id: 2,
-        materials: ['C', 'D', 'E'],
-        product_code: 'P1',
-        empty_code: 'E1',
-        number_of_simulation_steps: 101,
-        number_of_conveyor_belt_slots: 31,
-        number_of_worker_pairs: 21,
-        pickup_time: 51,
-        drop_time: 21,
-        build_time: 11,
-      }
-    ];
-
     mockFactoryConfigAPIResource = [
       {
         id: 1,
@@ -89,7 +61,7 @@ describe('FactoryConfigService', () => {
     backend.expectOne({
       method: 'GET',
       url: `${environment.apiURL}/${ApiEndpoints.FACTORY_CONFIGS}`
-    }).flush(mockFactoryConfigAPIResponse);
+    }).flush(mockFactoryConfigAPIResource);
   });
 });
 
