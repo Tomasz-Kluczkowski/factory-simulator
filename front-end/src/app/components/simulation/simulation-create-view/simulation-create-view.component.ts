@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {FactoryConfigService} from '../../../services/factory-config/factory-config.service';
 
 @Component({
@@ -10,56 +10,74 @@ import {FactoryConfigService} from '../../../services/factory-config/factory-con
 export class SimulationCreateViewComponent implements OnInit {
   appearance = 'standard';
 
-  constructor(private formBuilder: FormBuilder, private factoryConfigService: FactoryConfigService) { }
+  constructor(private fb: FormBuilder, private factoryConfigService: FactoryConfigService) {
+  }
 
-  factoryConfigForm = this.formBuilder.group({
-    materials: this.formBuilder.array(
-    [
-      this.formBuilder.control(
-        'A', [
-          Validators.required,
-          Validators.pattern('([\\w\\-]+)')
-        ]
-      )
-    ]
-    ),
-    productCode: ['P', Validators.required],
-    emptyCode: ['E', Validators.required],
-    numberOfSimulationSteps: ['10', [Validators.min(1), Validators.required]],
-    numberOfConveyorBeltSlots: ['3', [Validators.min(1), Validators.required]],
-    numberOfWorkerPairs: ['3', [Validators.min(1), Validators.required]],
-    pickupTime: ['1', [Validators.min(1), Validators.required]],
-    dropTime: ['1', [Validators.min(1), Validators.required]],
-    buildTime: ['4', [Validators.min(1), Validators.required]],
+  simulationForm = this.fb.group({
+    name: ['', Validators.required],
+    description: [''],
+    factoryConfigs: this.fb.array([this.factoryConfigFormGroup]),
   });
 
 
   ngOnInit(): void {
   }
 
-  get materials() {
-    return this.factoryConfigForm.get('materials') as FormArray;
+  get factoryConfigFormGroup(): FormGroup {
+    return this.fb.group(
+      {
+        materials: this.fb.array([this.materialControl]),
+        productCode: ['P', Validators.required],
+        emptyCode: ['E', Validators.required],
+        numberOfSimulationSteps: ['10', [Validators.min(1), Validators.required]],
+        numberOfConveyorBeltSlots: ['3', [Validators.min(1), Validators.required]],
+        numberOfWorkerPairs: ['3', [Validators.min(1), Validators.required]],
+        pickupTime: ['1', [Validators.min(1), Validators.required]],
+        dropTime: ['1', [Validators.min(1), Validators.required]],
+        buildTime: ['4', [Validators.min(1), Validators.required]],
+      }
+    );
   }
 
-  addMaterial() {
-    this.materials.push(this.formBuilder.control('A'));
+  get materialControl() {
+    return this.fb.control(
+      'A', [Validators.required, Validators.pattern('([\\w\\-]+)')]
+    ) as FormControl;
   }
 
-  deleteMaterial(index: number) {
-    this.materials.removeAt(index);
+  get factoryConfigs() {
+    return this.simulationForm.get('factoryConfigs') as FormArray;
+  }
+
+
+  addMaterial(factoryConfig) {
+    factoryConfig.get('materials').push(this.materialControl);
+  }
+
+  deleteMaterial(factoryConfig, materialIndex: number) {
+    factoryConfig.get('materials').removeAt(materialIndex);
+  }
+
+  getControls(formElement, path: string) {
+    return formElement.get(path)['controls'];
   }
 
   onSubmit() {
-    this.factoryConfigService.create(this.factoryConfigForm.value).subscribe();
+    this.factoryConfigService.create(this.simulationForm.value).subscribe();
   }
 
-  isControlInvalid(controlName: string): boolean {
-    return this.factoryConfigForm.get(controlName).invalid;
+  isControlInvalid(formPart: FormGroup, controlName: string): boolean {
+    return formPart.get(controlName).invalid;
   }
 
-  getMaterialErrorMessage(index: number): string {
+  getFactoryConfig(index: number) {
+    return this.factoryConfigs.controls[index] as FormGroup;
+  }
+
+  getMaterialErrorMessage(factoryConfig, materialIndex: number): string {
     let message = 'This field is required';
-    if (this.materials.controls[index].hasError('pattern')) {
+
+    if (factoryConfig.get('materials')['controls'][materialIndex].hasError('pattern')) {
       message = 'Only letters, numbers, - and _ are allowed.';
     }
 
