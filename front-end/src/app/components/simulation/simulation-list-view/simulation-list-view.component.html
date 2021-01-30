@@ -1,6 +1,11 @@
 <h1>Simulations</h1>
-<ul>
-  <li *ngFor="let factoryConfig of factoryConfigs">
+
+<div *ngFor="let simulation of simulations$ | async">
+
+  <p>Name: {{simulation.name}}</p>
+  <p>Description: {{simulation.description}}</p>
+
+  <div *ngFor="let factoryConfig of simulation.factoryConfigs">
     <h3>Factory configuration for experiment</h3>
     <p>Materials: {{factoryConfig.materials}}</p>
     <p>Product code: {{factoryConfig.productCode}}</p>
@@ -11,5 +16,11 @@
     <p>Number of conveyor belt slots: {{factoryConfig.numberOfConveyorBeltSlots}}</p>
     <p>Number of worker pairs: {{factoryConfig.numberOfWorkerPairs}}</p>
     <p>Number of simulation steps: {{factoryConfig.numberOfSimulationSteps}}</p>
-  </li>
-</ul>
+  </div>
+
+  <div *ngFor="let result of simulation.results">
+    <h3>Results of simulation</h3>
+    <p>Efficiency: {{result.efficiency}}</p>
+  </div>
+
+</div>

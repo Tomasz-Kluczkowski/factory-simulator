@@ -21,4 +21,4 @@ class FactoryConfig(BaseModel):
     pickup_time = models.PositiveSmallIntegerField()
     drop_time = models.PositiveSmallIntegerField()
     build_time = models.PositiveSmallIntegerField()
-    simulation = models.ForeignKey(Simulation, on_delete=models.CASCADE, null=True)
+    simulation = models.ForeignKey(Simulation, on_delete=models.CASCADE, null=True, related_name='factory_configs')

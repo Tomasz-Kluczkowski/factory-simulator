@@ -1,65 +1,75 @@
-import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
-import {FactoryConfigService} from '../../../services/factory-config/factory-config.service';
+import {Component, OnInit} from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {SimulationAPIService} from '../../../services/api/simulation/simulation-api.service';
 
 @Component({
   selector: 'app-simulation-create-view',
   templateUrl: './simulation-create-view.component.html',
   styleUrls: ['./simulation-create-view.component.scss']
 })
-export class SimulationCreateViewComponent implements OnInit {
+export class SimulationCreateViewComponent {
   appearance = 'standard';
 
-  constructor(private formBuilder: FormBuilder, private factoryConfigService: FactoryConfigService) { }
+  constructor(private fb: FormBuilder, private simulationAPIService: SimulationAPIService) {
+  }
 
-  factoryConfigForm = this.formBuilder.group({
-    materials: this.formBuilder.array(
-    [
-      this.formBuilder.control(
-        'A', [
-          Validators.required,
-          Validators.pattern('([\\w\\-]+)')
-        ]
-      )
-    ]
-    ),
-    productCode: ['P', Validators.required],
-    emptyCode: ['E', Validators.required],
-    numberOfSimulationSteps: ['10', [Validators.min(1), Validators.required]],
-    numberOfConveyorBeltSlots: ['3', [Validators.min(1), Validators.required]],
-    numberOfWorkerPairs: ['3', [Validators.min(1), Validators.required]],
-    pickupTime: ['1', [Validators.min(1), Validators.required]],
-    dropTime: ['1', [Validators.min(1), Validators.required]],
-    buildTime: ['4', [Validators.min(1), Validators.required]],
+  simulationForm = this.fb.group({
+    name: ['', Validators.required],
+    description: [''],
+    factoryConfigs: this.fb.array([this.getFactoryConfigFormGroup()]),
   });
 
-
-  ngOnInit(): void {
+  getFactoryConfigFormGroup(): FormGroup {
+    return this.fb.group(
+      {
+        materials: this.fb.array([this.getMaterialControl()]),
+        productCode: ['P', Validators.required],
+        emptyCode: ['E', Validators.required],
+        numberOfSimulationSteps: ['10', [Validators.min(1), Validators.required]],
+        numberOfConveyorBeltSlots: ['3', [Validators.min(1), Validators.required]],
+        numberOfWorkerPairs: ['3', [Validators.min(1), Validators.required]],
+        pickupTime: ['1', [Validators.min(1), Validators.required]],
+        dropTime: ['1', [Validators.min(1), Validators.required]],
+        buildTime: ['4', [Validators.min(1), Validators.required]],
+      }
+    );
   }
 
-  get materials() {
-    return this.factoryConfigForm.get('materials') as FormArray;
+  getMaterialControl() {
+    return this.fb.control(
+      'A', [Validators.required, Validators.pattern('([\\w\\-]+)')]
+    ) as FormControl;
   }
 
-  addMaterial() {
-    this.materials.push(this.formBuilder.control('A'));
+  addMaterial(factoryConfig) {
+    factoryConfig.get('materials').push(this.getMaterialControl());
   }
 
-  deleteMaterial(index: number) {
-    this.materials.removeAt(index);
+  deleteMaterial(factoryConfig, materialIndex: number) {
+    factoryConfig.get('materials').removeAt(materialIndex);
+  }
+
+  getControls(formElement, path: string) {
+    return formElement.get(path).controls;
   }
 
   onSubmit() {
-    this.factoryConfigService.create(this.factoryConfigForm.value).subscribe();
+    this.simulationAPIService.create(this.simulationForm.value).subscribe(
+      data => {
+        this.simulationForm.get('name').reset();
+        this.simulationForm.get('description').reset();
+      }
+    );
   }
 
-  isControlInvalid(controlName: string): boolean {
-    return this.factoryConfigForm.get(controlName).invalid;
+  isControlInvalid(formPart: FormGroup, controlName: string): boolean {
+    return formPart.get(controlName).invalid;
   }
 
-  getMaterialErrorMessage(index: number): string {
+  getMaterialErrorMessage(factoryConfig, materialIndex: number): string {
     let message = 'This field is required';
-    if (this.materials.controls[index].hasError('pattern')) {
+
+    if (factoryConfig.get('materials').controls[materialIndex].hasError('pattern')) {
       message = 'Only letters, numbers, - and _ are allowed.';
     }
 

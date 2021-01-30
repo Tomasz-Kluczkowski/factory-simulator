@@ -155,6 +155,10 @@ REST_FRAMEWORK = {
     ),
 }
 
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
 # Development Settings
 if DEBUG:  # pragma: no cover
     INSTALLED_APPS.append('debug_toolbar')  # noqa

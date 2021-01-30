@@ -1,15 +1,15 @@
 import {TestBed} from '@angular/core/testing';
 
-import {FactoryConfigService} from './factory-config.service';
+import {FactoryConfigAPIService} from './factory-config-api.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {FactoryConfigAPIResource} from '../../models/factory-config.models';
-import {environment} from '../../../environments/environment';
-import {ApiEndpoints} from '../../configuration/api-endpoints';
+import {FactoryConfigAPIResource} from '../../../models/factory-config.models';
+import {environment} from '../../../../environments/environment';
+import {ApiEndpoints} from '../../../configuration/api-endpoints';
 
 describe('FactoryConfigService', () => {
-  let service: FactoryConfigService;
+  let service: FactoryConfigAPIService;
   let backend: HttpTestingController;
-  let mockFactoryConfigAPIResource: FactoryConfigAPIResource[];
+  let mockFactoryConfigAPIResources: FactoryConfigAPIResource[];
 
   beforeEach(() => {
     TestBed.configureTestingModule(
@@ -17,7 +17,7 @@ describe('FactoryConfigService', () => {
         imports: [HttpClientTestingModule],
       }
     );
-    service = TestBed.inject(FactoryConfigService);
+    service = TestBed.inject(FactoryConfigAPIService);
     backend = TestBed.inject(HttpTestingController);
 
   });
@@ -27,7 +27,7 @@ describe('FactoryConfigService', () => {
   });
 
   it('should get the list of factory configs', () => {
-    mockFactoryConfigAPIResource = [
+    mockFactoryConfigAPIResources = [
       {
         id: 1,
         materials: ['A', 'B'],
@@ -55,13 +55,13 @@ describe('FactoryConfigService', () => {
     ];
 
     service.list().subscribe(factoryConfigs => {
-      expect(factoryConfigs).toEqual(mockFactoryConfigAPIResource);
+      expect(factoryConfigs).toEqual(mockFactoryConfigAPIResources);
     });
 
     backend.expectOne({
       method: 'GET',
       url: `${environment.apiURL}/${ApiEndpoints.FACTORY_CONFIGS}`
-    }).flush(mockFactoryConfigAPIResource);
+    }).flush(mockFactoryConfigAPIResources);
   });
 });
 

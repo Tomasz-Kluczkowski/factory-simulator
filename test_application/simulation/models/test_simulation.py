@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pytz import UTC
+import pytz
 
 from simulation.models.simulation import Simulation
 from test_application.conftest import SimulationFactory
@@ -12,5 +12,5 @@ class TestSimulation:
 
         assert simulation.name == 'Experiment 1'
         assert simulation.description == 'Trying if stuff works'
-        assert simulation.start == datetime(2021, 1, 1, 12, tzinfo=UTC)
-        assert simulation.stop == datetime(2021, 1, 1, 13, tzinfo=UTC)
+        assert simulation.start == datetime(2021, 1, 1, 12, tzinfo=pytz.UTC)
+        assert simulation.stop == datetime(2021, 1, 1, 13, tzinfo=pytz.UTC)

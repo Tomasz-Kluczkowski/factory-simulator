@@ -1,7 +1,7 @@
-import {environment} from '../../../environments/environment';
+import {environment} from '../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {ApiResource, RequestOptions} from '../../models/api.models';
+import {ApiResource, RequestOptions} from '../../../models/api.models';
 
 
 const API_URL = environment.apiURL;
