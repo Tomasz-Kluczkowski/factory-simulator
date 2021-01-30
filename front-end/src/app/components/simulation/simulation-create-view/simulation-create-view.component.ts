@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {SimulationAPIService} from '../../../services/api/simulation/simulation-api.service';
 
 @Component({
@@ -7,7 +7,7 @@ import {SimulationAPIService} from '../../../services/api/simulation/simulation-
   templateUrl: './simulation-create-view.component.html',
   styleUrls: ['./simulation-create-view.component.scss']
 })
-export class SimulationCreateViewComponent implements OnInit {
+export class SimulationCreateViewComponent {
   appearance = 'standard';
 
   constructor(private fb: FormBuilder, private simulationAPIService: SimulationAPIService) {
@@ -18,10 +18,6 @@ export class SimulationCreateViewComponent implements OnInit {
     description: [''],
     factoryConfigs: this.fb.array([this.getFactoryConfigFormGroup()]),
   });
-
-
-  ngOnInit(): void {
-  }
 
   getFactoryConfigFormGroup(): FormGroup {
     return this.fb.group(
@@ -54,11 +50,16 @@ export class SimulationCreateViewComponent implements OnInit {
   }
 
   getControls(formElement, path: string) {
-    return formElement.get(path)['controls'];
+    return formElement.get(path).controls;
   }
 
   onSubmit() {
-    this.simulationAPIService.create(this.simulationForm.value).subscribe();
+    this.simulationAPIService.create(this.simulationForm.value).subscribe(
+      data => {
+        this.simulationForm.get('name').reset();
+        this.simulationForm.get('description').reset();
+      }
+    );
   }
 
   isControlInvalid(formPart: FormGroup, controlName: string): boolean {
@@ -68,7 +69,7 @@ export class SimulationCreateViewComponent implements OnInit {
   getMaterialErrorMessage(factoryConfig, materialIndex: number): string {
     let message = 'This field is required';
 
-    if (factoryConfig.get('materials')['controls'][materialIndex].hasError('pattern')) {
+    if (factoryConfig.get('materials').controls[materialIndex].hasError('pattern')) {
       message = 'Only letters, numbers, - and _ are allowed.';
     }
 
