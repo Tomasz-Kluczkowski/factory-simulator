@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Form, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {FactoryConfigService} from '../../../services/factory-config/factory-config.service';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {SimulationAPIService} from '../../../services/api/simulation/simulation-api.service';
 
 @Component({
   selector: 'app-simulation-create-view',
@@ -10,23 +10,23 @@ import {FactoryConfigService} from '../../../services/factory-config/factory-con
 export class SimulationCreateViewComponent implements OnInit {
   appearance = 'standard';
 
-  constructor(private fb: FormBuilder, private factoryConfigService: FactoryConfigService) {
+  constructor(private fb: FormBuilder, private simulationAPIService: SimulationAPIService) {
   }
 
   simulationForm = this.fb.group({
     name: ['', Validators.required],
     description: [''],
-    factoryConfigs: this.fb.array([this.factoryConfigFormGroup]),
+    factoryConfigs: this.fb.array([this.getFactoryConfigFormGroup()]),
   });
 
 
   ngOnInit(): void {
   }
 
-  get factoryConfigFormGroup(): FormGroup {
+  getFactoryConfigFormGroup(): FormGroup {
     return this.fb.group(
       {
-        materials: this.fb.array([this.materialControl]),
+        materials: this.fb.array([this.getMaterialControl()]),
         productCode: ['P', Validators.required],
         emptyCode: ['E', Validators.required],
         numberOfSimulationSteps: ['10', [Validators.min(1), Validators.required]],
@@ -39,19 +39,14 @@ export class SimulationCreateViewComponent implements OnInit {
     );
   }
 
-  get materialControl() {
+  getMaterialControl() {
     return this.fb.control(
       'A', [Validators.required, Validators.pattern('([\\w\\-]+)')]
     ) as FormControl;
   }
 
-  get factoryConfigs() {
-    return this.simulationForm.get('factoryConfigs') as FormArray;
-  }
-
-
   addMaterial(factoryConfig) {
-    factoryConfig.get('materials').push(this.materialControl);
+    factoryConfig.get('materials').push(this.getMaterialControl());
   }
 
   deleteMaterial(factoryConfig, materialIndex: number) {
@@ -63,15 +58,11 @@ export class SimulationCreateViewComponent implements OnInit {
   }
 
   onSubmit() {
-    this.factoryConfigService.create(this.simulationForm.value).subscribe();
+    this.simulationAPIService.create(this.simulationForm.value).subscribe();
   }
 
   isControlInvalid(formPart: FormGroup, controlName: string): boolean {
     return formPart.get(controlName).invalid;
-  }
-
-  getFactoryConfig(index: number) {
-    return this.factoryConfigs.controls[index] as FormGroup;
   }
 
   getMaterialErrorMessage(factoryConfig, materialIndex: number): string {
