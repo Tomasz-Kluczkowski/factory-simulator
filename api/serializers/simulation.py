@@ -1,3 +1,6 @@
+from datetime import datetime
+
+import pytz
 from rest_framework import serializers
 
 from api.serializers.factory_config import FactoryConfigSerializer
@@ -10,6 +13,7 @@ from simulation.models.simulation import Simulation
 class SimulationSerializer(serializers.ModelSerializer):
     factory_configs = FactoryConfigSerializer(many=True, required=False)
     results = ResultSerializer(many=True, required=False)
+    start = serializers.DateTimeField(default=datetime.now(pytz.UTC))
 
     class Meta:
         model = Simulation
