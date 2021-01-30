@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pytz import UTC
+import pytz
 
 from simulation.models.factory_config import FactoryConfig
 from test_application.conftest import FactoryConfigFactory
@@ -18,5 +18,5 @@ class TestFactoryConfig:
         assert factory_config.number_of_worker_pairs == 3
         assert factory_config.simulation.name == 'Experiment 1'
         assert factory_config.simulation.description == 'Trying if stuff works'
-        assert factory_config.simulation.start == datetime(2021, 1, 1, 12, tzinfo=UTC)
-        assert factory_config.simulation.stop == datetime(2021, 1, 1, 13, tzinfo=UTC)
+        assert factory_config.simulation.start == datetime(2021, 1, 1, 12, tzinfo=pytz.UTC)
+        assert factory_config.simulation.stop == datetime(2021, 1, 1, 13, tzinfo=pytz.UTC)

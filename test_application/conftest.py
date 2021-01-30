@@ -1,7 +1,7 @@
 from datetime import datetime
 
 import factory
-from pytz import UTC
+import pytz
 
 from simulation.domain_models.conveyor_belt import ConveyorBelt
 from simulation.domain_models.factory_floor import FactoryFloor
@@ -23,8 +23,8 @@ class SimulationFactory(factory.DjangoModelFactory):
 
     name = 'Experiment 1'
     description = 'Trying if stuff works'
-    start = datetime(2021, 1, 1, 12, tzinfo=UTC)
-    stop = datetime(2021, 1, 1, 13, tzinfo=UTC)
+    start = datetime(2021, 1, 1, 12, tzinfo=pytz.UTC)
+    stop = datetime(2021, 1, 1, 13, tzinfo=pytz.UTC)
 
 
 class FactoryConfigFactory(factory.DjangoModelFactory):
