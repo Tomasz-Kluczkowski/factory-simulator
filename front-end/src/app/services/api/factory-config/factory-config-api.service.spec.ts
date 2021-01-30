@@ -9,7 +9,7 @@ import {ApiEndpoints} from '../../../configuration/api-endpoints';
 describe('FactoryConfigService', () => {
   let service: FactoryConfigAPIService;
   let backend: HttpTestingController;
-  let mockFactoryConfigAPIResource: FactoryConfigAPIResource[];
+  let mockFactoryConfigAPIResources: FactoryConfigAPIResource[];
 
   beforeEach(() => {
     TestBed.configureTestingModule(
@@ -27,7 +27,7 @@ describe('FactoryConfigService', () => {
   });
 
   it('should get the list of factory configs', () => {
-    mockFactoryConfigAPIResource = [
+    mockFactoryConfigAPIResources = [
       {
         id: 1,
         materials: ['A', 'B'],
@@ -55,13 +55,13 @@ describe('FactoryConfigService', () => {
     ];
 
     service.list().subscribe(factoryConfigs => {
-      expect(factoryConfigs).toEqual(mockFactoryConfigAPIResource);
+      expect(factoryConfigs).toEqual(mockFactoryConfigAPIResources);
     });
 
     backend.expectOne({
       method: 'GET',
       url: `${environment.apiURL}/${ApiEndpoints.FACTORY_CONFIGS}`
-    }).flush(mockFactoryConfigAPIResource);
+    }).flush(mockFactoryConfigAPIResources);
   });
 });
 
