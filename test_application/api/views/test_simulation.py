@@ -27,10 +27,10 @@ class TestSimulationViewSet:
             assert get_drf_iso_date(simulation.start) == serialized_simulation['start']
             assert get_drf_iso_date(simulation.stop) == serialized_simulation['stop']
 
-    def test_post_list_endpoint_with_factory_configs_data(self, client):
-        factory_config_data_1 = {
+    def test_post_list_endpoint_with_relationships_data(self, client):
+        salad_factory_config_data = {
             'materials': ['B', 'D'],
-            'product_code': 'Product',
+            'product_code': 'Salad',
             'empty_code': 'Empty',
             'number_of_simulation_steps': 20,
             'number_of_conveyor_belt_slots': 99,
@@ -39,9 +39,10 @@ class TestSimulationViewSet:
             'drop_time': 2,
             'build_time': 5,
         }
-        factory_config_data_2 = {
+
+        burger_factory_config_data = {
             'materials': ['F'],
-            'product_code': 'burger',
+            'product_code': 'Burger',
             'empty_code': 'abyss',
             'number_of_simulation_steps': 11,
             'number_of_conveyor_belt_slots': 22,
@@ -51,14 +52,25 @@ class TestSimulationViewSet:
             'build_time': 66,
         }
 
+        salad_result_data = {
+            'efficiency': 0.99
+        }
+
+        burger_result_data = {
+            'efficiency': 0.34
+        }
+
         simulation_data = {
             'name': 'test simulation',
             'description': 'some experiment to prove something',
             'start': '2021-01-27T12:00:00Z',
             'stop': '2021-01-27T13:00:00Z',
-            'factory_configs': [factory_config_data_1, factory_config_data_2]
+            'factory_configs': [salad_factory_config_data, burger_factory_config_data],
+            'results': [salad_result_data, burger_result_data],
         }
-        response = client.post(path=reverse('api:simulations-list'), data=simulation_data, content_type='application/json')
+        response = client.post(
+            path=reverse('api:simulations-list'), data=simulation_data, content_type='application/json'
+        )
         assert response.status_code == status.HTTP_201_CREATED
 
         simulation_id = response.data['id']
@@ -68,6 +80,28 @@ class TestSimulationViewSet:
         assert simulation.description == simulation_data['description']
         assert get_drf_iso_date(simulation.start) == simulation_data['start']
         assert get_drf_iso_date(simulation.stop) == simulation_data['stop']
+
+        factory_configs = simulation.factory_configs.all()
+        assert len(factory_configs) == 2
+
+        salad_factory_config = next(fc for fc in factory_configs if fc.product_code == 'Salad')
+        for attribute, value in salad_factory_config_data.items():
+            assert getattr(salad_factory_config, attribute) == value
+
+        burger_factory_config = next(fc for fc in factory_configs if fc.product_code == 'Burger')
+        for attribute, value in burger_factory_config_data.items():
+            assert getattr(burger_factory_config, attribute) == value
+
+        results = simulation.results.all()
+        assert len(results) == 2
+
+        salad_result = next(r for r in results if r.efficiency == 0.99)
+        for attribute, value in salad_result_data.items():
+            assert getattr(salad_result, attribute) == value
+
+        burger_result = next(r for r in results if r.efficiency == 0.34)
+        for attribute, value in burger_result_data.items():
+            assert getattr(burger_result, attribute) == value
 
     def test_post_list_endpoint(self, client):
         simulation_data = {
@@ -87,7 +121,6 @@ class TestSimulationViewSet:
         assert simulation.description == simulation_data['description']
         assert get_drf_iso_date(simulation.start) == simulation_data['start']
         assert get_drf_iso_date(simulation.stop) == simulation_data['stop']
-
 
     def test_get_detail_endpoint(self, client):
         simulation = SimulationFactory()
