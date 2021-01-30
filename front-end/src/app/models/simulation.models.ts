@@ -5,6 +5,8 @@ import {ResultAPIResource} from './result.models';
 export interface SimulationAPIResource extends ApiResource {
   name: string;
   description: string;
-  factoryConfigs: FactoryConfigAPIResource[];
-  results: ResultAPIResource[];
+  start: string;
+  stop: string;
+  factoryConfigs?: FactoryConfigAPIResource[];
+  results?: ResultAPIResource[];
 }
