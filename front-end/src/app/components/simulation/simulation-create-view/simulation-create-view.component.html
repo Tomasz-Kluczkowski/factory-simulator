@@ -14,7 +14,7 @@
         fxFlex="100"
         appearance="{{this.appearance}}">
         <mat-label>Name</mat-label>
-        <input matInput placeholder="Enter simulation name" formControlName="name" required>
+        <input matInput placeholder="Enter simulation name" formControlName="name" required maxlength="30">
         <mat-error
           *ngIf="this.isControlInvalid(simulationForm,'name')">This field is required
         </mat-error>
@@ -24,7 +24,7 @@
         fxFlex="100"
         appearance="{{this.appearance}}">
         <mat-label>Description</mat-label>
-        <input matInput placeholder="Enter description" formControlName="description">
+        <input matInput placeholder="Enter description" formControlName="description" maxlength="255">
       </mat-form-field>
 
       <div formArrayName="factoryConfigs" fxLayout="row wrap" fxFlex="100">
