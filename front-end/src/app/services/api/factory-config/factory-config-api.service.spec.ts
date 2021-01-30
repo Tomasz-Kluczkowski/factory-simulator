@@ -1,13 +1,13 @@
 import {TestBed} from '@angular/core/testing';
 
-import {FactoryConfigService} from './factory-config.service';
+import {FactoryConfigAPIService} from './factory-config-api.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {FactoryConfigAPIResource} from '../../models/factory-config.models';
-import {environment} from '../../../environments/environment';
-import {ApiEndpoints} from '../../configuration/api-endpoints';
+import {FactoryConfigAPIResource} from '../../../models/factory-config.models';
+import {environment} from '../../../../environments/environment';
+import {ApiEndpoints} from '../../../configuration/api-endpoints';
 
 describe('FactoryConfigService', () => {
-  let service: FactoryConfigService;
+  let service: FactoryConfigAPIService;
   let backend: HttpTestingController;
   let mockFactoryConfigAPIResource: FactoryConfigAPIResource[];
 
@@ -17,7 +17,7 @@ describe('FactoryConfigService', () => {
         imports: [HttpClientTestingModule],
       }
     );
-    service = TestBed.inject(FactoryConfigService);
+    service = TestBed.inject(FactoryConfigAPIService);
     backend = TestBed.inject(HttpTestingController);
 
   });
