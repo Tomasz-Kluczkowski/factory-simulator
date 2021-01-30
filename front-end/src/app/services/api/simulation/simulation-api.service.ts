@@ -10,6 +10,6 @@ import {ApiEndpoints} from '../../../configuration/api-endpoints';
 export class SimulationAPIService extends ApiResourcesService<SimulationAPIResource> {
 
   constructor(httpClient: HttpClient) {
-    super(httpClient, ApiEndpoints.SIMULATIONS)
+    super(httpClient, ApiEndpoints.SIMULATIONS);
   }
 }
