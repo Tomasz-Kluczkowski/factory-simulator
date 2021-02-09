@@ -4,8 +4,8 @@ import {HttpErrorInterceptor} from '../interceptors/http-error/http-error.interc
 
 export const DEV_PROVIDERS = [];
 if (environment.debug) {
-  console.log('Adding dev only providers')
+  console.log('Adding dev only providers');
   DEV_PROVIDERS.push(
     {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}
-  )
+  );
 }

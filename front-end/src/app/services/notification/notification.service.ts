@@ -13,6 +13,6 @@ export class NotificationService {
   }
 
   showFailure(message: string): void {
-    this.snackbar.open(message, '', {duration: 5000, panelClass: ['notification-service-error']})
+    this.snackbar.open(message, '', {duration: 5000, panelClass: ['notification-service-error']});
   }
 }
