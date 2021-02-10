@@ -7,6 +7,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 describe('SimulationCreateViewComponent', () => {
   let component: SimulationCreateViewComponent;
@@ -20,7 +21,8 @@ describe('SimulationCreateViewComponent', () => {
         MatInputModule,
         MatIconModule,
         ReactiveFormsModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatSnackBarModule,
       ],
       declarations: [ SimulationCreateViewComponent ],
       providers: [FormBuilder]

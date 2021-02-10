@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Component} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {SimulationAPIService} from '../../../services/api/simulation/simulation-api.service';
+import {NotificationService} from '../../../services/notification/notification.service';
 
 @Component({
   selector: 'app-simulation-create-view',
@@ -10,8 +11,11 @@ import {SimulationAPIService} from '../../../services/api/simulation/simulation-
 export class SimulationCreateViewComponent {
   appearance = 'standard';
 
-  constructor(private fb: FormBuilder, private simulationAPIService: SimulationAPIService) {
-  }
+  constructor(
+    private fb: FormBuilder,
+    private simulationAPIService: SimulationAPIService,
+    private notificationService: NotificationService
+  ) {}
 
   simulationForm = this.fb.group({
     name: ['', Validators.required],
@@ -58,6 +62,10 @@ export class SimulationCreateViewComponent {
       data => {
         this.simulationForm.get('name').reset();
         this.simulationForm.get('description').reset();
+        this.notificationService.showSuccess('Created simulation successfully!');
+      },
+      error => {
+        this.notificationService.showFailure('Failed to create simulation! Please try again.');
       }
     );
   }

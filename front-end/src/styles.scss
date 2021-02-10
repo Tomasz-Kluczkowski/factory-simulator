@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~src/app/styles/app-theme";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -20,5 +21,20 @@ app-root {
 
 .error-dialog-panel mat-dialog-container {
   padding: 0;
-  box-shadow: #0f0f0f 1px 1px 1px;
+  box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+}
+
+.notification-service-base {
+  color: white;
+  box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+}
+
+.notification-service-success {
+  @extend .notification-service-base;
+  background: $accent;
+}
+
+.notification-service-error {
+  @extend .notification-service-base;
+  background: $warn;
 }

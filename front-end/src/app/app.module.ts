@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './modules/app-routing.module';
 import {AppComponent} from './app.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 import {HomeComponent} from './components/home/home.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -18,7 +18,8 @@ import { SimulationDetailViewComponent } from './components/simulation/simulatio
 import { SimulationCreateViewComponent } from './components/simulation/simulation-create-view/simulation-create-view.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { ErrorDialogComponent } from './components/error-dialog/error-dialog/error-dialog.component';
-import {HttpErrorInterceptor} from './interceptors/http-error/http-error.interceptor';
+import {DEV_PROVIDERS} from './configuration/debug-config';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import {HttpErrorInterceptor} from './interceptors/http-error/http-error.interce
     ReactiveFormsModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true}
+    ...DEV_PROVIDERS,
   ],
   bootstrap: [AppComponent]
 })
