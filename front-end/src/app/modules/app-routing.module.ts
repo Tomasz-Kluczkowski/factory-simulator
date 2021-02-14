@@ -11,6 +11,7 @@ import {
   SimulationListViewComponent
 } from '../components/simulation/simulation-list-view/simulation-list-view.component';
 import {SimulationCreateViewComponent} from '../components/simulation/simulation-create-view/simulation-create-view.component';
+import {SimulationDetailViewComponent} from '../components/simulation/simulation-detail-view/simulation-detail-view.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,10 @@ const routes: Routes = [
       {
         path: '',
         component: SimulationListViewComponent
+      },
+      {
+        path: ':id',
+        component: SimulationDetailViewComponent
       },
       {
         path: paths.create,
