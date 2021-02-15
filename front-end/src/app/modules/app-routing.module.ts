@@ -33,7 +33,7 @@ const routes: Routes = [
         component: SimulationListViewComponent
       },
       {
-        path: ':id',
+        path: 'detail/:id',
         component: SimulationDetailViewComponent
       },
       {
