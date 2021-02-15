@@ -1,7 +1,13 @@
 .simulation__list-container {
-  margin: 8px;
+  padding: 8px;
+}
+
+.simulation__card {
+  min-height: 300px;
 }
 
 .simulation__card-icon {
   font-size: 4rem;
 }
+
+
