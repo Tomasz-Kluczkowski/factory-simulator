@@ -2,39 +2,22 @@
   <h1>Simulations</h1>
   <div fxLayout="row wrap" fxLayoutGap="8px grid">
     <div *ngFor="let simulation of simulations$ | async" fxFlex="25%" fxFlex.sm="33%" fxFlex.xs="100%">
-      <mat-card class="mat-elevation-z2 simulation__card">
+      <mat-card class="mat-elevation-z2 simulation__card" fxLayout="column" fxLayoutAlign="space-between start">
         <mat-card-header>
           <mat-card-title>
-            Name: {{simulation.name}}
+            {{simulation.name}}
           </mat-card-title>
           <mat-card-subtitle>
-            Description: {{simulation.description}}
+            {{simulation.description}}
           </mat-card-subtitle>
         </mat-card-header>
         <mat-icon class="simulation__card-icon">analytics</mat-icon>
         <mat-card-content>
           Some details of the run go here...
         </mat-card-content>
-        <!--      <div *ngFor="let factoryConfig of simulation.factoryConfigs">-->
-        <!--        <h3>Factory configuration for experiment</h3>-->
-        <!--        <p>Materials: {{factoryConfig.materials}}</p>-->
-        <!--        <p>Product code: {{factoryConfig.productCode}}</p>-->
-        <!--        <p>Empty code: {{factoryConfig.emptyCode}}</p>-->
-        <!--        <p>Pickup time: {{factoryConfig.pickupTime}}</p>-->
-        <!--        <p>Drop time: {{factoryConfig.dropTime}}</p>-->
-        <!--        <p>Build time: {{factoryConfig.buildTime}}</p>-->
-        <!--        <p>Number of conveyor belt slots: {{factoryConfig.numberOfConveyorBeltSlots}}</p>-->
-        <!--        <p>Number of worker pairs: {{factoryConfig.numberOfWorkerPairs}}</p>-->
-        <!--        <p>Number of simulation steps: {{factoryConfig.numberOfSimulationSteps}}</p>-->
-        <!--      </div>-->
-
-        <!--      <div *ngFor="let result of simulation.results">-->
-        <!--        <h3>Results of simulation</h3>-->
-        <!--        <p>Efficiency: {{result.efficiency}}</p>-->
-        <!--      </div>-->
-        <mat-card-actions>
+        <mat-card-actions fxFlexAlign="center">
           <a routerLink="./detail/{{simulation.id}}">
-            <button mat-button>View Details</button>
+            <button class="mat-raised-button simulation__detail-button">View Details</button>
           </a>
         </mat-card-actions>
       </mat-card>
