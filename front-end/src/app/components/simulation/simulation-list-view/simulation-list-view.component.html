@@ -16,7 +16,7 @@
           Some details of the run go here...
         </mat-card-content>
         <mat-card-actions fxFlexAlign="center">
-          <a routerLink="./detail/{{simulation.id}}">
+          <a [routerLink]="['./detail', simulation.id]">
             <button class="mat-raised-button simulation__detail-button">View Details</button>
           </a>
         </mat-card-actions>
