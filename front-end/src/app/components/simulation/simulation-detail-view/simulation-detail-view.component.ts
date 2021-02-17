@@ -17,13 +17,13 @@ export class SimulationDetailViewComponent implements OnInit {
     private simulationAPIService: SimulationAPIService
   ) { }
 
-  simulation$: Observable<SimulationAPIResource>
+  simulation$: Observable<SimulationAPIResource>;
 
   @Input('simulation')
 
   ngOnInit(): void {
     this.simulation$ = this.activatedRoute.paramMap.pipe(
-      switchMap((params: ParamMap) => this.simulationAPIService.get(parseInt(params.get('id'))))
+      switchMap((params: ParamMap) => this.simulationAPIService.get(parseInt(params.get('id'), 10)))
     );
   }
 

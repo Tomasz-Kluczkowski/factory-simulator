@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SimulationDetailViewComponent } from './simulation-detail-view.component';
+import {ActivatedRoute} from '@angular/router';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {of} from 'rxjs';
 
 describe('SimulationDetailViewComponent', () => {
   let component: SimulationDetailViewComponent;
@@ -8,7 +11,17 @@ describe('SimulationDetailViewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SimulationDetailViewComponent ]
+      imports: [HttpClientTestingModule],
+      declarations: [ SimulationDetailViewComponent ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            paramMap: of({})
+          }
+        }
+      ]
+
     })
     .compileComponents();
   }));
