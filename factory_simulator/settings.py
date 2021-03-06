@@ -155,6 +155,11 @@ REST_FRAMEWORK = {
     ),
 }
 
+# Celery configuration
+CELERY_TASK_IGNORE_RESULT = False
+CELERY_TASK_SOFT_TIME_LIMIT = 4 * 60 * 60
+CELERY_TASK_TIME_LIMIT = 6 * 60 * 60
+
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
