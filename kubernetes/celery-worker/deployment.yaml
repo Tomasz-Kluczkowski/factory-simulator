@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: factory-simulator-celery-worker
+  labels:
+    app: factory-simulator-celery-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: factory-simulator-celery-worker
+  template:
+    metadata:
+      labels:
+        app: factory-simulator-celery-worker
+    spec:
+      containers:
+        - name: django-backend
+          image: kilthar/factory-simulator-django:latest
+          imagePullPolicy: Always
+          command: ["celery", "-A", "factory_simulator", "worker", "-l", "INFO"]
+          env:
+            - name: DEBUG
+              value: "False"
+            - name: ALLOWED_HOSTS
+              value: "factory-simulator.com"
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: django-backend-secrets
+                  key: SECRET_KEY
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secrets
+                  key: POSTGRES_PASSWORD
+          envFrom:
+            - configMapRef:
+                name: django-backend-config
+            - configMapRef:
+                 name: celery-worker-config
