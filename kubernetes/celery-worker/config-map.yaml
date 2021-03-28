@@ -7,9 +7,9 @@ data:
   BROKER: "amqp"
   BROKER_USERNAME: "guest"
   BROKER_PASSWORD: "guest"
-  BROKER_HOST: "localhost"
+  BROKER_HOST: rabbitmq-broker-service
   BROKER_PORT: "5672"
   BROKER_VIRTUAL_HOST: "/"
   RESULT_BACKEND: "redis"
-  RESULT_BACKEND_HOST: "localhost"
+  RESULT_BACKEND_HOST: redis-result-backend-service
   RESULT_BACKEND_DB: "0"
