@@ -44,6 +44,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: django-backend-config
+            - configMapRef:
+                name: celery-worker-config
           volumeMounts:
             - mountPath: /var/lib/busybox
               name: postgres-volume-mount
