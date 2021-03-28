@@ -160,7 +160,8 @@ INTERNAL_IPS = [
 ]
 
 # Development Settings
-if DEBUG:  # pragma: no cover
+DEBUG_TOOLBAR = config('DEBUG_TOOLBAR', default=False, cast=bool)
+if DEBUG_TOOLBAR:  # pragma: no cover
     INSTALLED_APPS.append('debug_toolbar')  # noqa
     MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')  # noqa
 
