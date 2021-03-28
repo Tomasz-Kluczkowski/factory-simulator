@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: factory-simulator-redis-result-backend
+  labels:
+    app: factory-simulator-redis-result-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: factory-simulator-redis-result-backend
+  template:
+    metadata:
+      labels:
+        app: factory-simulator-redis-result-backend
+    spec:
+      containers:
+        - name: redis-result-backend
+          image: redis
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 6379

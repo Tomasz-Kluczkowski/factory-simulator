@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-result-backend-service
+spec:
+  type: ClusterIP
+  selector:
+    app: factory-simulator-redis-result-backend
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
