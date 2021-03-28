@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {SimulationAPIService} from '../../../services/api/simulation/simulation-api.service';
 import {NotificationService} from '../../../services/notification/notification.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-simulation-create-view',
@@ -12,6 +13,8 @@ export class SimulationCreateViewComponent {
   appearance = 'standard';
 
   constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder,
     private simulationAPIService: SimulationAPIService,
     private notificationService: NotificationService
@@ -60,9 +63,8 @@ export class SimulationCreateViewComponent {
   onSubmit() {
     this.simulationAPIService.create(this.simulationForm.value).subscribe(
       data => {
-        this.simulationForm.get('name').reset();
-        this.simulationForm.get('description').reset();
         this.notificationService.showSuccess('Created simulation successfully!');
+        this.router.navigate([`../detail/${data.id}`], {relativeTo: this.activatedRoute});
       },
       error => {
         this.notificationService.showFailure('Failed to create simulation! Please try again.');

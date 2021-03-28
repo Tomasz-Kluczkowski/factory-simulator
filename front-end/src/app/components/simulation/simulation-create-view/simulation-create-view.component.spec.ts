@@ -8,6 +8,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {ActivatedRoute, Router} from '@angular/router';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('SimulationCreateViewComponent', () => {
   let component: SimulationCreateViewComponent;
@@ -23,9 +25,16 @@ describe('SimulationCreateViewComponent', () => {
         ReactiveFormsModule,
         BrowserAnimationsModule,
         MatSnackBarModule,
+        RouterTestingModule
       ],
       declarations: [ SimulationCreateViewComponent ],
-      providers: [FormBuilder]
+      providers: [
+        FormBuilder,
+        {
+          provide: ActivatedRoute,
+          useValue: {}
+        }
+      ]
     })
     .compileComponents();
   }));

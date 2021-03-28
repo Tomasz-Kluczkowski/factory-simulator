@@ -15,6 +15,10 @@ export abstract class ApiResourcesService<T extends ApiResource> {
     protected url: string = API_URL,
   ) { }
 
+  get(id: number, requestOptions?: RequestOptions): Observable<T> {
+    return this.httpClient.get<T>(this.getUrl(this.endpoint, id), requestOptions);
+  }
+
   list(requestOptions?: RequestOptions): Observable<T[]> {
     return this.httpClient.get<T[]>(this.getUrl(this.endpoint), requestOptions);
   }

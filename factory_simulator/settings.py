@@ -14,6 +14,7 @@ import os
 
 from decouple import config
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from factory_simulator.celery import get_celery_broker_url, get_celery_result_backend_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -154,6 +155,26 @@ REST_FRAMEWORK = {
         # Any other parsers
     ),
 }
+
+# Celery configuration
+CELERY_TASK_IGNORE_RESULT = False
+CELERY_TASK_SOFT_TIME_LIMIT = 4 * 60 * 60
+CELERY_TASK_TIME_LIMIT = 6 * 60 * 60
+CELERY_TASK_SEND_SENT_EVENT = True
+CELERY_WORKER_SEND_TASK_EVENTS = True
+CELERY_BROKER_URL = get_celery_broker_url(
+    broker=config('BROKER'),
+    broker_username=config('BROKER_USERNAME'),
+    broker_password=config('BROKER_PASSWORD'),
+    broker_host=config('BROKER_HOST'),
+    broker_port=config('BROKER_PORT'),
+    broker_virtual_host=config('BROKER_VIRTUAL_HOST'),
+)
+CELERY_RESULT_BACKEND = get_celery_result_backend_url(
+    result_backend=config('RESULT_BACKEND'),
+    result_backend_host=config('RESULT_BACKEND_HOST'),
+    result_backend_db=config('RESULT_BACKEND_DB'),
+)
 
 INTERNAL_IPS = [
     '127.0.0.1',

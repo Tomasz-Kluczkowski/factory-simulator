@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq-broker-service
+spec:
+  type: ClusterIP
+  selector:
+    app: factory-simulator-rabbitmq-broker
+  ports:
+    - name: amqp
+      protocol: TCP
+      port: 5672
+    - name: management
+      protocol: TCP
+      port: 15672
+    - name: prometheus
+      protocol: TCP
+      port: 15692

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: factory-simulator-rabbitmq-broker
+  labels:
+    app: factory-simulator-rabbitmq-broker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: factory-simulator-rabbitmq-broker
+  template:
+    metadata:
+      labels:
+        app: factory-simulator-rabbitmq-broker
+    spec:
+      containers:
+        - name: rabbitmq-broker
+          image: rabbitmq:3-management
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: amqp
+              containerPort: 5672
+            - name: management
+              containerPort: 15672
+            - name: prometheus
+              containerPort: 15692

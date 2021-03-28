@@ -1,22 +1,29 @@
-apiVersion: batch/v1
-kind: Job
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: postgres-migration
+  name: factory-simulator-celery-worker
+  labels:
+    app: factory-simulator-celery-worker
 spec:
-  backoffLimit: 10
-  ttlSecondsAfterFinished: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      app: factory-simulator-celery-worker
   template:
+    metadata:
+      labels:
+        app: factory-simulator-celery-worker
     spec:
       containers:
         - name: django-backend
           image: kilthar/factory-simulator-django:latest
           imagePullPolicy: Always
-          command: ["python", "manage.py", "migrate"]
+          command: ["celery", "-A", "factory_simulator", "worker", "-l", "INFO"]
           env:
+            - name: DEBUG
+              value: "False"
             - name: ALLOWED_HOSTS
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
+              value: "factory-simulator.com"
             - name: SECRET_KEY
               valueFrom:
                 secretKeyRef:
@@ -36,5 +43,4 @@ spec:
             - configMapRef:
                 name: django-backend-config
             - configMapRef:
-                name: celery-worker-config
-      restartPolicy: Never
+                 name: celery-worker-config

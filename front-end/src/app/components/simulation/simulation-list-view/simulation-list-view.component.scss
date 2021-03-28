@@ -1,0 +1,17 @@
+@import "~src/app/styles/app-theme";
+
+.simulation__list-container {
+  padding: 8px;
+}
+
+.simulation__card {
+  min-height: 300px;
+}
+
+.simulation__card-icon {
+  font-size: 4rem;
+}
+
+.simulation__detail-button {
+  background: $warn;
+}

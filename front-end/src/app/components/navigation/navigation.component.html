@@ -3,7 +3,7 @@
     <mat-toolbar color="primary">
       <a
         class="navigation__link"
-        routerLink="/"
+        [routerLink]="['/']"
         fxLayoutAlign="start center">
         <img
           class="navigation__brand-logo"
@@ -16,7 +16,7 @@
       <span class="navigation__fill-space"></span>
       <a
         class="navigation__link"
-        routerLink="/simulations"
+        [routerLink]="['/simulations']"
       >
         <button
           class="navigation__button"
@@ -28,7 +28,7 @@
       </a>
       <a
         class="navigation__link"
-        routerLink="/about"
+        [routerLink]="['/about']"
       >
         <button
           class="navigation__button"
@@ -40,7 +40,7 @@
       </a>
       <a
         class="navigation__link"
-        routerLink="/contact"
+        [routerLink]="['/contact']"
       >
         <button
           class="navigation__button"
@@ -52,7 +52,7 @@
       </a>
       <a *ngIf="'logged out'"
          class="navigation__link"
-         routerLink="/log-in"
+         [routerLink]="['/log-in']"
       >
         <button
           class="navigation__button"
@@ -64,7 +64,7 @@
       </a>
       <a *ngIf="'logged in'"
          class="navigation__link"
-         routerLink="/log-out"
+         [routerLink]="['/log-out']"
       >
         <button
           class="navigation__button"

@@ -1,1 +1,5 @@
 <p>simulation-detail-view works!</p>
+<div *ngIf="(simulation$ | async) as simulation">
+  <h1>{{simulation.name}}</h1>
+  <h2>{{simulation.description}}</h2>
+</div>
