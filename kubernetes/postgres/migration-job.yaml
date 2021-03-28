@@ -35,4 +35,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: django-backend-config
+            - configMapRef:
+                name: celery-worker-config
       restartPolicy: Never
